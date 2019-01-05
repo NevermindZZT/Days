@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">纪念日</string>
+    <string name="appwidget_text">Anniversary</string>
+    <string name="add_widget">添加微件</string>
+</resources>
