@@ -8,8 +8,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/Toolbar"
@@ -25,7 +24,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_margin="0dp"
         android:divider="@drawable/split_line"
         android:showDividers="middle|end"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -34,14 +33,16 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
                 android:src="@drawable/ic_text"/>
 
             <EditText
@@ -49,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginVertical="16dp"
                 android:singleLine="true"
                 android:hint="有意义的事情"
                 android:background="@null"
@@ -64,66 +66,76 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
                 android:src="@drawable/ic_date"/>
 
-            <TextView
-                android:id="@+id/text_year"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="18sp"
-                android:textColor="@color/textColorStress"/>
+                android:layout_marginVertical="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="14sp"
-                android:gravity="end"
-                android:text=" 年 "
-                android:textColor="@color/textColorItemName"/>
+                <TextView
+                    android:id="@+id/text_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorStress"/>
 
-            <TextView
-                android:id="@+id/text_mouth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="18sp"
-                android:textColor="@color/textColorStress"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:gravity="end"
+                    android:text=" 年 "
+                    android:textColor="@color/textColorItemName"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="14sp"
-                android:gravity="end"
-                android:text=" 月 "
-                android:textColor="@color/textColorItemName"/>
+                <TextView
+                    android:id="@+id/text_mouth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorStress"/>
 
-            <TextView
-                android:id="@+id/text_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="18sp"
-                android:textColor="@color/textColorStress"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:gravity="end"
+                    android:text=" 月 "
+                    android:textColor="@color/textColorItemName"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="14sp"
-                android:gravity="end"
-                android:text=" 日 "
-                android:textColor="@color/textColorItemName"/>
+                <TextView
+                    android:id="@+id/text_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColorStress"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14sp"
+                    android:gravity="end"
+                    android:text=" 日 "
+                    android:textColor="@color/textColorItemName"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -132,14 +144,16 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
                 android:src="@drawable/ic_type"/>
 
             <TextView
@@ -147,6 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginVertical="16dp"
                 android:textSize="18sp"
                 android:text="纪念日"
                 android:textColor="@color/textColorItemName"/>

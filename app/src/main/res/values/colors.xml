@@ -2,10 +2,11 @@
 <resources>
     <color name="colorPrimary">#fafafa</color>
     <color name="colorPrimaryDark">#fafafa</color>
-    <color name="colorAccent">#775549</color>
+    <color name="colorAccent">#6f9aa1</color>
     <color name="textColorPrimary">#1a1a1a</color>
     <color name="textColorItemName">#1a1a1a</color>
     <color name="textColorItemHint">#999999</color>
     <color name="textColorAnniHint">#333333</color>
     <color name="textColorStress">#2222AA</color>
+    <color name="colorSplitLine">#e0e0e0</color>
 </resources>
