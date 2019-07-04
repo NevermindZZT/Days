@@ -2,4 +2,14 @@
     <string name="app_name">纪念日</string>
     <string name="appwidget_text">Anniversary</string>
     <string name="add_widget">添加微件</string>
+
+    <string name="positive_button">确认</string>
+    <string name="negative_button">取消</string>
+
+    <string name="date_format_split">%d-%d-%d</string>
+    <string name="date_format">%d年 %d月 %d日</string>
+    <string name="date_lunar_format">%d年 %s %s</string>
+
+    <string name="anni_day_format_only_once_positive">%d天</string>
+    <string name="anni_day_format_only_once_negative">差%d天</string>
 </resources>

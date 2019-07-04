@@ -1,6 +1,5 @@
 package com.letter.days.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -14,7 +13,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haibin.calendarview.Calendar;
 import com.letter.days.R;
+import com.letter.days.anniversary.AnniUtils;
 import com.letter.days.anniversary.Anniversary;
 
 import org.litepal.LitePal;
@@ -87,22 +88,14 @@ public class AnniversaryActivity extends AppCompatActivity {
             case R.id.delete:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(AnniversaryActivity.this);
                 dialog.setMessage("确认删除这个纪念日？");
-                dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.setPositiveButton("确认", (dialogInterface, i) -> {
                         LitePal.delete(Anniversary.class, anniversary.getId());
-                        Intent intent = new Intent();
-                        setResult(RESULT_OK, intent);
+                        Intent intent1 = new Intent();
+                        setResult(RESULT_OK, intent1);
                         Toast.makeText(AnniversaryActivity.this, "已删除", Toast.LENGTH_SHORT).show();
                         finish();
-                    }
-                });
-                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
+                    });
+                dialog.setNegativeButton("取消", (dialogInterface, i) -> {});
                 dialog.show();
                 break;
 
@@ -145,8 +138,12 @@ public class AnniversaryActivity extends AppCompatActivity {
 
     private void freshData() {
         anniversary = LitePal.find(Anniversary.class, anniId);
+        Calendar calendar = new Calendar();
+        AnniUtils.setCalendarTime(calendar, anniversary.getTime());
         anniText.setText(anniversary.getText());
-        anniDate.setText(new SimpleDateFormat("yyyy-MM-dd").format(anniversary.getTime()));
+        anniDate.setText(AnniUtils.getFormatDate(getString(R.string.date_format_split),
+                getString(R.string.date_lunar_format),
+                calendar, anniversary.isLunar()));
         anniDays.setText(anniversary.getDaysText());
         anniType.setText(anniversary.getTypeText());
     }

@@ -85,55 +85,12 @@
                 android:layout_marginVertical="16dp">
 
                 <TextView
-                    android:id="@+id/text_year"
+                    android:id="@+id/text_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorStress"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:gravity="end"
-                    android:text=" 年 "
-                    android:textColor="@color/textColorItemName"/>
-
-                <TextView
-                    android:id="@+id/text_mouth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorStress"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:gravity="end"
-                    android:text=" 月 "
-                    android:textColor="@color/textColorItemName"/>
-
-                <TextView
-                    android:id="@+id/text_day"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:textColor="@color/textColorStress"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14sp"
-                    android:gravity="end"
-                    android:text=" 日 "
-                    android:textColor="@color/textColorItemName"/>
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -167,6 +124,46 @@
                 android:textColor="@color/textColorItemName"/>
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lunar_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
+                android:src="@drawable/ic_lunar"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="16dp"
+                android:textSize="18sp"
+                android:text="农历"
+                android:textColor="@color/textColorItemName"/>
+
+            <CheckBox
+                android:id="@+id/lunar_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

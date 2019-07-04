@@ -19,7 +19,6 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
 
     private Context mContext;
     private List<Anniversary> mAnniversaryList;
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View anniView;
@@ -54,13 +53,10 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.anniversary_item, viewGroup, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.anniView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.anniView.setOnClickListener((v) -> {
                 int position = holder.getAdapterPosition();
                 onAnniItemClickListener.onItemClick(position);
-            }
-        });
+            });
         return holder;
     }
 
@@ -68,7 +64,8 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Anniversary anniversary = mAnniversaryList.get(position);
         holder.anniDays.setText(anniversary.getDaysText());
-        holder.anniDate.setText(format.format(anniversary.getTime()));
+        holder.anniDate.setText(anniversary.getDateText(mContext.getString(R.string.date_format_split),
+                mContext.getString(R.string.date_lunar_format)));
         holder.anniText.setText(anniversary.getText());
         holder.anniType.setText(anniversary.getTypeText());
     }

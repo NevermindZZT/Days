@@ -1,8 +1,6 @@
 package com.letter.days.activity;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,47 +9,41 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.haibin.calendarview.Calendar;
+import com.haibin.calendarview.LunarCalendar;
+import com.haibin.calendarview.LunarUtil;
 import com.letter.days.R;
+import com.letter.days.anniversary.AnniUtils;
 import com.letter.days.anniversary.Anniversary;
 
 import org.litepal.LitePal;
 
-import java.util.Calendar;
-
-public class AddItemActivity extends AppCompatActivity {
+public class AddItemActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int ITEM_ADD = 0;
     public static final int ITEM_EDIT = 1;
 
     private int editType;
 
-    private Calendar selectCalender = Calendar.getInstance();
+    private Calendar calendar = new Calendar();
 
-    private TextView textYear;
-    private TextView textMouth;
-    private TextView textDay;
-
-    private ActionBar actionBar;
+    private TextView textTime;
 
     private EditText editTextName;
 
     private LinearLayout dateChoose;
-
-    private DatePickerDialog datePickerDialog;
-
-    private AlertDialog.Builder typeDialog;
-
     private LinearLayout typeLayout;
+    private LinearLayout lunarLayout;
 
     private TextView textType;
-
     private Anniversary anniversary;
+    private CheckBox lunarCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +53,7 @@ public class AddItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
-        actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
@@ -80,47 +72,48 @@ public class AddItemActivity extends AppCompatActivity {
         editTextName.setText(anniversary.getText());
 
         dateChoose = findViewById(R.id.date_choose);
-        selectCalender.setTimeInMillis(anniversary.getTime());
-        freshDate(selectCalender);
+        AnniUtils.setCalendarTime(calendar, anniversary.getTime());
+        freshDate();
 
-        datePickerDialog = new DatePickerDialog(AddItemActivity.this);
-        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int mouth, int day) {
-                selectCalender.set(year, mouth, day);
-                anniversary.setTime(selectCalender.getTimeInMillis());
-                freshDate(selectCalender);
-            }
-        });
-
-        dateChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
-            }
-        });
+        dateChoose.setOnClickListener(this);
 
         textType = findViewById(R.id.type);
         textType.setText(Anniversary.typeText[anniversary.getType()]);
 
-        typeDialog = new AlertDialog.Builder(this).setTitle("纪念日类型")
-                .setItems(Anniversary.typeText, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        textType.setText(Anniversary.typeText[i]);
-                        anniversary.setType(i);
-                    }
-                });
-
-
         typeLayout = findViewById(R.id.type_layout);
-        typeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                typeDialog.show();
-            }
-        });
+        typeLayout.setOnClickListener(this);
 
+        lunarLayout = findViewById(R.id.lunar_layout);
+        lunarLayout.setOnClickListener(this);
+        lunarCheck = findViewById(R.id.lunar_check);
+        lunarCheck.setChecked(anniversary.isLunar());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == dateChoose) {
+            DateDialog dialog = new DateDialog.Builder(AddItemActivity.this)
+                    .setOnDateSetListener((year, month, day) -> {
+                        calendar.setYear(year);
+                        calendar.setMonth(month);
+                        calendar.setDay(day);
+                        anniversary.setTime(calendar.getTimeInMillis());
+                        freshDate();
+                    })
+                    .create();
+            dialog.show();
+        } else if (v == typeLayout) {
+            AlertDialog dialog = new AlertDialog.Builder(this).setTitle("纪念日类型")
+                    .setItems(Anniversary.typeText, (dialogInterface, i) -> {
+                            textType.setText(Anniversary.typeText[i]);
+                            anniversary.setType(i);
+                        }).create();
+            dialog.show();
+        } else if (v == lunarLayout) {
+            lunarCheck.setChecked(!lunarCheck.isChecked());
+            anniversary.setLunar(lunarCheck.isChecked());
+            freshDate();
+        }
     }
 
     @Override
@@ -171,13 +164,12 @@ public class AddItemActivity extends AppCompatActivity {
         finish();
     }
 
-    private void freshDate(Calendar calendar) {
-        textYear = findViewById(R.id.text_year);
-        textMouth = findViewById(R.id.text_mouth);
-        textDay = findViewById(R.id.text_day);
+    private void freshDate() {
+        textTime = findViewById(R.id.text_time);
 
-        textYear.setText(String.valueOf(calendar.get(Calendar.YEAR)));
-        textMouth.setText(String.valueOf(calendar.get(Calendar.MONTH) + 1));
-        textDay.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        textTime.setText(AnniUtils.getFormatDate(getString(R.string.date_format),
+                getString(R.string.date_lunar_format),
+                calendar, anniversary.isLunar()));
+
     }
 }

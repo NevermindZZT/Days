@@ -1,16 +1,21 @@
 package com.letter.days.anniversary;
 
+import com.haibin.calendarview.Calendar;
+import com.haibin.calendarview.LunarUtil;
+
 import org.litepal.crud.LitePalSupport;
 
-import java.util.Calendar;
 
 /**
- * @brief 纪念日
+ * 纪念日
  */
 public class Anniversary extends LitePalSupport {
     public static final int ANNI_TYPE_ONLY_ONCE = 0;
     public static final int ANNI_TYPE_EVERY_YEAR = 1;
     public static final int ANNI_TYPE_COUNT_DOWN = 2;
+
+    public static final int DISTANCE_NEXT = 0;
+    public static final int DISTANCE_ABS = 1;
 
     private static final long MS_ONE_DAY = 86400000L;
 
@@ -24,11 +29,13 @@ public class Anniversary extends LitePalSupport {
     private long time;
     private String text;
     private int type;
+    private boolean lunar;
 
     public Anniversary() {
-        this.time = (Calendar.getInstance().getTimeInMillis() / MS_ONE_DAY) * MS_ONE_DAY;
+        this.time = AnniUtils.getCalendar(java.util.Calendar.getInstance().getTimeInMillis()).getTimeInMillis();
         this.text = "";
         this.type = ANNI_TYPE_ONLY_ONCE;
+        this.lunar = false;
     }
 
     public int getId() {
@@ -63,83 +70,121 @@ public class Anniversary extends LitePalSupport {
         this.type = type;
     }
 
-    public String getDaysText() {
-        String text = new String();
-        Calendar now = Calendar.getInstance();
-        AnniUtils.setTimeToZero(now);
+    public boolean isLunar() {
+        return lunar;
+    }
+
+    public void setLunar(boolean lunar) {
+        this.lunar = lunar;
+    }
+
+    /**
+     * 获得日期到当前时间的距离
+     * @param distanceType 每年循环或者绝对距离
+     * @return 日期距离
+     */
+    public int getDistance(int distanceType) {
+        Calendar now = AnniUtils.getCalendar(java.util.Calendar.getInstance().getTimeInMillis());
+        Calendar anni = AnniUtils.getCalendar(time);
+        int distance = 0;
         switch (type) {
             case ANNI_TYPE_ONLY_ONCE:
-                if (time <= now.getTimeInMillis()) {
-                    text = String.valueOf((now.getTimeInMillis() - time) / MS_ONE_DAY) + "天";
-                } else {
-                    text = "差" + String.valueOf((time - now.getTimeInMillis()) / MS_ONE_DAY) + "天";
-                }
+                distance = now.differ(anni);
                 break;
-
             case ANNI_TYPE_EVERY_YEAR:
-                if (time <= now.getTimeInMillis()) {
-                    text = String.valueOf((now.getTimeInMillis() - time) / MS_ONE_DAY) + "天";
+                if (distanceType == DISTANCE_ABS) {
+                    distance = now.differ(anni);
                 } else {
-                    text = "差" + String.valueOf((time - now.getTimeInMillis()) / MS_ONE_DAY) + "天";
+                    Calendar tmpCalender = new Calendar();
+                    if (lunar) {
+                        int[] lunarDate = LunarUtil.solarToLunar(anni.getYear(), anni.getMonth(), anni.getDay());
+                        int[] nowLunarDate = LunarUtil.solarToLunar(now.getYear(), now.getMonth(), now.getDay());
+                        int[] nextLunarDate = {nowLunarDate[0], lunarDate[1], lunarDate[2], lunarDate[3]};
+                        if ((nextLunarDate[0] * 10000 + nextLunarDate[1] * 100 + nextLunarDate[2]) <
+                                (nowLunarDate[0] * 10000 + nowLunarDate[1]*100 + nextLunarDate[2])) {
+                            nextLunarDate[0] += 1;
+                        }
+                        int[] nextSolarDate = LunarUtil.lunarToSolar(nextLunarDate[0], nextLunarDate[1],
+                                nextLunarDate[2], nextLunarDate[3] == 1);
+                        tmpCalender.setYear(nextSolarDate[0]);
+                        tmpCalender.setMonth(nextSolarDate[1]);
+                        tmpCalender.setDay(nextSolarDate[2]);
+
+                        distance = tmpCalender.differ(now);
+                    } else {
+                        tmpCalender.setYear(now.getYear());
+                        tmpCalender.setMonth(anni.getMonth());
+                        tmpCalender.setDay(anni.getDay());
+
+                        distance = tmpCalender.differ(now);
+                        if (distance < 0) {
+                            tmpCalender.setYear(now.getYear() + 1);
+                            distance = tmpCalender.differ(now);
+                        }
+                    }
                 }
                 break;
-
             case ANNI_TYPE_COUNT_DOWN:
-                if (time < now.getTimeInMillis()) {
-                    text = "已过" + String.valueOf((now.getTimeInMillis() - time) / MS_ONE_DAY) + "天";
-                } else if (time == now.getTimeInMillis()) {
-                    text = "今天";
-                } else {
-                    text = "余" + String.valueOf((time - now.getTimeInMillis()) / MS_ONE_DAY) + "天";
-                }
+                distance = now.differ(anni);
                 break;
-
             default:
                 break;
+        }
+        return distance;
+    }
+
+    /**
+     * 获取绝对日期文本
+     * @return 文本
+     */
+    public String getDaysText() {
+        String text;
+        int day = getDistance(DISTANCE_ABS);
+        if (day > 0) {
+            text = day + "天";
+        } else if (day == 0) {
+            text = "今天";
+        } else {
+            text = "差" + (-day) + "天";
         }
         return text;
     }
 
+    /**
+     * 获取格式化日期文本
+     * @return 日期文本
+     */
     public String getDateText () {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(time);
-        return String.valueOf(calendar.get(Calendar.YEAR) + "-"
-                + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "-"
-                + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        return AnniUtils.getFormatDate("%d-%d-%d", "%d %s %s", time, lunar);
     }
 
+    /**
+     * 获取格式化日期文本
+     * @param format 公历格式
+     * @param lunarFormat 农历格式
+     * @return 日期文本
+     */
+    public String getDateText(String format, String lunarFormat) {
+        return AnniUtils.getFormatDate(format, lunarFormat, time, lunar);
+    }
+
+    /**
+     * 获取类型文本
+     * @return 类型文本
+     */
     public String getTypeText () {
-        String text = new String();
-        Calendar now = Calendar.getInstance();
-        AnniUtils.setTimeToZero(now);
+        String text = "";
         switch (type) {
             case ANNI_TYPE_ONLY_ONCE:
                 text = typeText[type];
                 break;
 
             case ANNI_TYPE_EVERY_YEAR:
-                if (time <= now.getTimeInMillis()) {
-                    Calendar anniCalender = Calendar.getInstance();
-                    anniCalender.setTimeInMillis(time);
-                    int nowYear = now.get(Calendar.YEAR);
-
-                    int month = anniCalender.get(Calendar.MONTH);
-                    int day = anniCalender.get(Calendar.DAY_OF_MONTH);
-
-                    Calendar tmpCalender = Calendar.getInstance();
-                    AnniUtils.setTimeToZero(tmpCalender);
-                    tmpCalender.set(nowYear, month, day);
-
-                    if (tmpCalender.getTimeInMillis() - now.getTimeInMillis() > 0) {
-                        text = typeText[type] + " · "
-                                + String.valueOf((tmpCalender.getTimeInMillis() - now.getTimeInMillis()) / MS_ONE_DAY) + "天";
-                    } else if (tmpCalender.getTimeInMillis() - now.getTimeInMillis() == 0) {
-                        text = typeText[type] + " · 今天";
-                    } else {
-                        tmpCalender.set(Calendar.YEAR, nowYear + 1);
-                        text = typeText[type] + " · "
-                                + String.valueOf((tmpCalender.getTimeInMillis() - now.getTimeInMillis()) / MS_ONE_DAY) + "天";
-                    }
+                int day = getDistance(DISTANCE_NEXT);
+                if (day > 0) {
+                    text = typeText[type] + " · " + day + "天";
+                } else if (day == 0) {
+                    text = typeText[type] + " · 今天";
                 } else {
                     text = typeText[type];
                 }
@@ -155,43 +200,23 @@ public class Anniversary extends LitePalSupport {
         return text;
     }
 
+    /**
+     * 获取纪念日的下一次时间
+     * @return 时间
+     */
     public long getNextTime () {
         long nextTime = -1;
-        Calendar now = Calendar.getInstance();
-        AnniUtils.setTimeToZero(now);
         switch (type) {
             case ANNI_TYPE_ONLY_ONCE:
                 nextTime = -1;
                 break;
 
             case ANNI_TYPE_EVERY_YEAR:
-                if (time <= now.getTimeInMillis()) {
-                    Calendar anniCalender = Calendar.getInstance();
-                    anniCalender.setTimeInMillis(time);
-                    int nowYear = now.get(Calendar.YEAR);
-
-                    int month = anniCalender.get(Calendar.MONTH);
-                    int day = anniCalender.get(Calendar.DAY_OF_MONTH);
-
-                    Calendar tmpCalender = Calendar.getInstance();
-                    AnniUtils.setTimeToZero(tmpCalender);
-                    tmpCalender.set(nowYear, month, day);
-
-                    if (tmpCalender.getTimeInMillis() - now.getTimeInMillis() >= 0) {
-                        nextTime = (tmpCalender.getTimeInMillis() - now.getTimeInMillis()) / MS_ONE_DAY;
-                    } else {
-                        tmpCalender.set(Calendar.YEAR, nowYear + 1);
-                        nextTime = (tmpCalender.getTimeInMillis() - now.getTimeInMillis()) / MS_ONE_DAY;
-                    }
-                } else {
-                    nextTime = -1;
-                }
+                nextTime = getDistance(DISTANCE_NEXT);
                 break;
 
             case ANNI_TYPE_COUNT_DOWN:
-                if (time >= now.getTimeInMillis()) {
-                    nextTime = (time - now.getTimeInMillis()) / MS_ONE_DAY;
-                } else {
+                if ((nextTime = getDistance(DISTANCE_ABS)) < 0) {
                     nextTime = -1;
                 }
                 break;
