@@ -26,6 +26,7 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
     private var lunarText: TextView? = null
     private var positiveButton: Button? = null
     private var negativeButton: Button? = null
+    private var yearLayout: LinearLayout? = null
 
     private var onDateSetListener: OnDateSetListener? = null
 
@@ -42,10 +43,13 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         lunarText = view.findViewById(R.id.lunar_text)
         positiveButton = view.findViewById(R.id.positive_button)
         negativeButton = view.findViewById(R.id.negative_button)
+        yearLayout = view.findViewById(R.id.year_layout)
 
         calendarView?.setOnCalendarSelectListener(this)
+        dayText?.setOnClickListener(this)
         positiveButton?.setOnClickListener(this)
         negativeButton?.setOnClickListener(this)
+        yearLayout?.setOnClickListener(this)
 
         val list: MutableList<String> = mutableListOf()
         for (i in 1970 until 2100) {
@@ -56,13 +60,7 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         yearSpinner?.adapter = adapter
         yearSpinner?.onItemSelectedListener = this
 
-        val curCalendar: java.util.Calendar = java.util.Calendar.getInstance()
-        calendar = Calendar()
-        calendar?.year = curCalendar.get(java.util.Calendar.YEAR)
-        calendar?.month = curCalendar.get(java.util.Calendar.MONTH) + 1
-        calendar?.day = curCalendar.get(java.util.Calendar.DAY_OF_MONTH)
-        calendarView?.scrollToCalendar(calendar?.year ?: 0,
-                calendar?.month ?: 0, calendar?.day ?: 0)
+        scrollToCurrent()
     }
 
     constructor(context: Context): this(context, R.style.Base_Theme_AppCompat_Light_Dialog)
@@ -82,6 +80,16 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         this.lunarText?.text = "${calendar?.lunar}"
     }
 
+    private fun scrollToCurrent() {
+        val curCalendar: java.util.Calendar = java.util.Calendar.getInstance()
+        calendar = Calendar()
+        calendar?.year = curCalendar.get(java.util.Calendar.YEAR)
+        calendar?.month = curCalendar.get(java.util.Calendar.MONTH) + 1
+        calendar?.day = curCalendar.get(java.util.Calendar.DAY_OF_MONTH)
+        calendarView?.scrollToCalendar(calendar?.year ?: 0,
+                calendar?.month ?: 0, calendar?.day ?: 0)
+    }
+
     override fun onCalendarSelect(calendar: Calendar?, isClick: Boolean) {
         this.calendar = calendar
         freshDate(this.calendar)
@@ -93,12 +101,18 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
 
     override fun onClick(v: View?) {
         when (v) {
+            dayText -> {
+                scrollToCurrent()
+            }
             positiveButton -> {
                 this.onDateSetListener?.onDateSet(calendar?.year!!, calendar?.month!!, calendar?.day!!)
                 dismiss()
             }
             negativeButton -> {
                 dismiss()
+            }
+            yearLayout -> {
+                yearSpinner?.performClick()
             }
         }
     }
