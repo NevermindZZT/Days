@@ -33,14 +33,15 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <Spinner
-                android:id="@+id/year_spinner"
+            <TextView
+                android:id="@+id/year_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:background="@android:color/transparent"
                 android:clickable="false"
-                android:focusable="false" />
+                android:focusable="false"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/lunar_text"
@@ -53,35 +54,55 @@
 
     </LinearLayout>
 
-    <com.haibin.calendarview.CalendarLayout
-        android:id="@+id/calendarLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="360dp"
-        android:layout_marginHorizontal="8dp"
-        android:orientation="vertical"
-        app:calendar_show_mode="only_month_view"
-        app:default_status="shrink">
 
-        <com.haibin.calendarview.CalendarView
-            android:id="@+id/calendar_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:calendar_height="50dp"
-            app:current_month_lunar_text_color="#CFCFCF"
-            app:min_year="1970"
-            app:month_view="com.letter.days.activity.MonthView"
-            app:month_view_show_mode="mode_only_current"
-            app:other_month_text_color="@color/colorPrimary"
-            app:scheme_text_color="@color/textColorPrimary"
-            app:scheme_theme_color="@color/textColorItemName"
-            app:selected_lunar_text_color="@color/colorPrimary"
-            app:selected_text_color="@color/colorPrimary"
-            app:selected_theme_color="@color/colorAccent"
-            app:week_background="@color/colorPrimary"
-            app:week_start_with="sun"
-            app:week_text_color="@color/textColorPrimary" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="320dp"
+        android:layout_height="360dp">
 
-    </com.haibin.calendarview.CalendarLayout>
+        <com.haibin.calendarview.CalendarLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:calendar_show_mode="only_month_view"
+            app:default_status="shrink"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:calendar_height="50dp"
+                app:current_month_lunar_text_color="#CFCFCF"
+                app:min_year="1970"
+                app:month_view="com.letter.days.activity.MonthView"
+                app:month_view_show_mode="mode_only_current"
+                app:other_month_text_color="@color/colorPrimary"
+                app:scheme_text_color="@color/textColorPrimary"
+                app:scheme_theme_color="@color/textColorItemName"
+                app:selected_lunar_text_color="@color/colorPrimary"
+                app:selected_text_color="@color/colorPrimary"
+                app:selected_theme_color="@color/colorAccent"
+                app:week_background="@color/colorPrimary"
+                app:week_start_with="sun"
+                app:week_text_color="@color/textColorPrimary" />
+
+        </com.haibin.calendarview.CalendarLayout>
+
+        <ListView
+            android:id="@+id/year_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:choiceMode="singleChoice"
+            android:divider="@null"
+            android:visibility="gone" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,7 +132,9 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="8dp"
-            android:text="@string/positive_button" />
+            android:text="@string/positive_button"
+            android:textColor="@color/colorAccent" />
     </LinearLayout>
+
 
 </LinearLayout>

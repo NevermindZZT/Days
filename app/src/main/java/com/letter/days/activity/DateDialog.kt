@@ -18,15 +18,16 @@ import com.letter.days.R
  */
 class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         CalendarView.OnCalendarSelectListener, View.OnClickListener,
-        AdapterView.OnItemSelectedListener {
+        AdapterView.OnItemClickListener {
 
     private var calendarView: CalendarView? = null
     private var dayText: TextView? = null
-    private var yearSpinner: Spinner? = null
+    private var yearText: TextView? = null
     private var lunarText: TextView? = null
     private var positiveButton: Button? = null
     private var negativeButton: Button? = null
     private var yearLayout: LinearLayout? = null
+    private var yearList: ListView? = null
 
     private var onDateSetListener: OnDateSetListener? = null
 
@@ -39,11 +40,12 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
 
         calendarView = view.findViewById(R.id.calendar_view)
         dayText = view.findViewById(R.id.day_text)
-        yearSpinner = view.findViewById(R.id.year_spinner)
+        yearText = view.findViewById(R.id.year_text)
         lunarText = view.findViewById(R.id.lunar_text)
         positiveButton = view.findViewById(R.id.positive_button)
         negativeButton = view.findViewById(R.id.negative_button)
         yearLayout = view.findViewById(R.id.year_layout)
+        yearList = view.findViewById(R.id.year_list)
 
         calendarView?.setOnCalendarSelectListener(this)
         dayText?.setOnClickListener(this)
@@ -55,10 +57,9 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         for (i in 1970 until 2100) {
             list.add(i.toString())
         }
-        val adapter = ArrayAdapter(context, R.layout.item_year_spinner, list)
-        adapter.setDropDownViewResource(R.layout.item_year_spinner_drop)
-        yearSpinner?.adapter = adapter
-        yearSpinner?.onItemSelectedListener = this
+        val adapter = ArrayAdapter(context, R.layout.item_year_list, list)
+        yearList?.adapter = adapter
+        yearList?.onItemClickListener = this
 
         scrollToCurrent()
     }
@@ -76,7 +77,7 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
 
         val string = "${month}月${day}日"
         this.dayText?.text = string
-        yearSpinner?.setSelection(year - 1970, true)
+        yearText?.text = year.toString()
         this.lunarText?.text = "${calendar?.lunar}"
     }
 
@@ -112,18 +113,21 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
                 dismiss()
             }
             yearLayout -> {
-                yearSpinner?.performClick()
+                yearList?.setSelection((calendar?.year ?: 1970) - 1970)
+                yearList?.setItemChecked((calendar?.year ?: 1970) - 1970, true)
+                yearList?.visibility = View.VISIBLE
+                calendarView?.visibility = View.GONE
             }
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         calendar?.year = position + 1970
         calendarView?.scrollToCalendar(calendar?.year ?: 0,
                 calendar?.month ?: 0, calendar?.day ?: 0)
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
+        yearList?.visibility = View.GONE
+        calendarView?.visibility = View.VISIBLE
+        yearText?.text = (position + 1970).toString()
     }
 
     class Builder(var context: Context) {
