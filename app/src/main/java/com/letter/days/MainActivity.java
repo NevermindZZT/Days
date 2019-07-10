@@ -1,14 +1,9 @@
 package com.letter.days;
 
-import android.annotation.TargetApi;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,9 +14,7 @@ import android.view.View;
 import com.letter.days.activity.AddItemActivity;
 import com.letter.days.activity.AnniversaryActivity;
 import com.letter.days.anniversary.AnniAdapter;
-import com.letter.days.anniversary.AnniUtils;
 import com.letter.days.anniversary.Anniversary;
-import com.letter.days.anniversary.OnAnniItemClickListener;
 import com.letter.days.common.SpacesItemDecoration;
 import com.letter.days.service.NotifyService;
 
@@ -53,39 +46,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration(1));
         anniAdapter = new AnniAdapter(anniversaryList);
-        anniAdapter.setOnAnniItemClickListener(new OnAnniItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, AnniversaryActivity.class);
-                intent.putExtra("anniId", anniversaryList.get(position).getId());
-                startActivityForResult(intent, 1);
-            }
+        anniAdapter.setOnAnniItemClickListener((position) -> {
+            Intent intent = new Intent(MainActivity.this, AnniversaryActivity.class);
+            intent.putExtra("anniId", anniversaryList.get(position).getId());
+            startActivityForResult(intent, 1);
         });
         recyclerView.setAdapter(anniAdapter);
 
         final FloatingActionButton floatingActionButton = findViewById(R.id.fab);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
-                intent.putExtra("editType", AddItemActivity.ITEM_ADD);
-                startActivityForResult(intent, 1);
-            }
+        floatingActionButton.setOnClickListener((view) -> {
+            Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+            intent.putExtra("editType", AddItemActivity.ITEM_ADD);
+            startActivityForResult(intent, 1);
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            String channelId = "anni";
-            String channelName = "纪念日提醒";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            createNotificationChannel(channelId, channelName, importance);
-        }
+    }
 
-//        Intent broadIntent  = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
-//        getApplicationContext().sendBroadcast(broadIntent);
-
-        if (AnniUtils.isNotifyServiceRunning(getApplicationContext()) != true) {
-            startService(new Intent(this, NotifyService.class));
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startService(new Intent(this, NotifyService.class));
     }
 
     @Override
@@ -104,11 +84,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
-    private void createNotificationChannel(String channelId, String channelName, int importance) {
-        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
-        NotificationManager notificationManager = (NotificationManager) getSystemService(
-                NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(channel);
-    }
 }

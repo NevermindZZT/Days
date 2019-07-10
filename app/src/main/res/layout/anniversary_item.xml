@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:layout_margin="4dp"
+    android:background="@color/colorItemBackground"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="1dp">
+    app:cardBackgroundColor="@color/colorItemBackground"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_weight="3">
+            android:layout_weight="3"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/anni_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:layout_margin="5dp"
-                android:textSize="18sp"
-                android:textColor="@color/textColorItemName"/>
+                android:maxLines="1"
+                android:textColor="@color/textColorItemName"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/anni_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textSize="12sp"
-                android:textColor="@color/textColorItemHint"/>
+                android:textColor="@color/textColorItemHint"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/anni_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:textSize="12sp"
-                android:textColor="@color/textColorItemHint"/>
+                android:textColor="@color/textColorItemHint"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:layout_margin="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/anni_days"
@@ -64,8 +65,8 @@
                 android:layout_margin="5dp"
                 android:gravity="center_vertical|end"
                 android:textAlignment="viewEnd"
-                android:textSize="20sp"
-                android:textColor="@color/textColorItemHint"/>
+                android:textColor="@color/textColorItemHint"
+                android:textSize="20sp" />
 
         </LinearLayout>
 

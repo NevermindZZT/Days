@@ -2,25 +2,38 @@ package com.letter.days.service;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import com.letter.days.R;
 import com.letter.days.activity.AnniversaryActivity;
 import com.letter.days.anniversary.AnniUtils;
 import com.letter.days.anniversary.Anniversary;
 
+import org.litepal.LitePal;
+
 import java.util.Calendar;
 import java.util.List;
-import java.util.Random;
+
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
 public class NotifyService extends Service {
+
+//    private static final String TAG = "NotifyService";
+
+    private static final long MILLIS_AN_HOUR = 60 * 60 * 1000;
+
+    private static final String INTENT_KEY = "type";
+    private static final String INTENT_ID = "id";
+
+    private static final int TYPE_NONE = 0;
+    private static final int TYPE_NOTIFY = 1;
+
     public NotifyService() {
     }
 
@@ -31,82 +44,95 @@ public class NotifyService extends Service {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+
+        String channelId = "anni";
+        String channelName = "纪念日提醒";
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        createNotificationChannel(channelId, channelName, importance);
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // TODO: 通知
-                Log.d("Notify", "run notify");
-                List<Anniversary> anniversaryList = AnniUtils.getNotifyAnni();
-                if (anniversaryList != null) {
-                    Log.d("Notify", "some days to notify");
-                    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    int id = 0;
-                    for (Anniversary anni : anniversaryList) {
-                        Intent intentItem =  new Intent(getApplicationContext(), AnniversaryActivity.class);
-                        intentItem.putExtra("anniId", anni.getId());
-                        intentItem.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), new Random().nextInt(), intentItem, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            Notification notification = new Notification.Builder(getApplicationContext(), "anni")
-                                    .setContentTitle(anni.getTypeText())
-                                    .setContentText(anni.getText() + "  日子到了哦")
-                                    .setWhen(System.currentTimeMillis())
-                                    .setSmallIcon(R.drawable.ic_notify)
-                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon))
-                                    .setContentIntent(pi)
-                                    .setAutoCancel(true)
-                                    .build();
-
-                            manager.notify(++id, notification);
-                            Log.d("Notify", anni.getText() + " - " + anni.getTypeText());
-                        } else {
-                            Notification notification = new Notification.Builder(getApplicationContext())
-                                    .setContentTitle(anni.getTypeText())
-                                    .setContentText(anni.getText() + "  日子到了哦")
-                                    .setWhen(System.currentTimeMillis())
-                                    .setSmallIcon(R.drawable.ic_notify)
-                                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon))
-                                    .setContentIntent(pi)
-                                    .setAutoCancel(true)
-                                    .build();
-
-                            manager.notify(++id, notification);
-                            Log.d("Notify", anni.getText() + " - " + anni.getTypeText());
-                        }
-                    }
-                }
-            }
-        }).start();
-
-        Log.d("Notify", "onStartCommand: service start");
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        Calendar calendar = Calendar.getInstance();
-        Log.d("Time", "onStartCommand: " + String.valueOf(calendar.get(Calendar.YEAR)) + "-"
-                + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "-"
-                + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + " "
-                + String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-                + String.valueOf(calendar.get(Calendar.MINUTE)));
-        if (calendar.get(Calendar.HOUR_OF_DAY) >= 9) {
-            calendar.setTimeInMillis(calendar.getTimeInMillis() + 24 * 60 * 60 * 1000);
+        if (intent.getIntExtra(INTENT_KEY, TYPE_NONE) == TYPE_NOTIFY) {
+            showNotification(intent.getIntExtra(INTENT_ID, 0));
         }
-        calendar.set(Calendar.HOUR_OF_DAY, 9);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 10);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Log.d("Alarm", "onStartCommand: " + String.valueOf(calendar.get(Calendar.YEAR)) + "-"
-                + String.valueOf(calendar.get(Calendar.MONTH) + 1) + "-"
-                + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)) + " "
-                + String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)) + ":"
-                + String.valueOf(calendar.get(Calendar.MINUTE)));
-
-        Intent intent1 = new Intent(getApplicationContext(), NotifyService.class);
-        PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0, intent1, 0);
-        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pi);
+        setAlarm();
 
         return super.onStartCommand(intent, flags, startId);
     }
+
+    /**
+     * 设置通知闹钟
+     */
+    private void setAlarm() {
+        List<Anniversary> anniversaryList = LitePal.findAll(Anniversary.class);
+        int requestCode = 0;
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        if (alarmManager == null) {
+            return;
+        }
+        for (Anniversary anniversary: anniversaryList) {
+            long time = anniversary.getNextCalendar().getTimeInMillis();
+            time = AnniUtils.setTimeToZero(time) + 9 * MILLIS_AN_HOUR;
+            if (time > Calendar.getInstance().getTimeInMillis()) {
+                Intent intent = new Intent(this, NotifyService.class);
+                intent.putExtra(INTENT_KEY, TYPE_NOTIFY);
+                intent.putExtra(INTENT_ID, anniversary.getId());
+                PendingIntent pi = PendingIntent.getService(this, requestCode, intent, FLAG_UPDATE_CURRENT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, time, pi);
+            }
+            requestCode ++;
+        }
+    }
+
+    /**
+     * 显示通知
+     * @param anniId 纪念日ID
+     */
+    private void showNotification(int anniId) {
+        Anniversary anniversary = LitePal.find(Anniversary.class, anniId);
+        if (anniversary == null) {
+            return;
+        }
+        Intent intentItem =  new Intent(getApplicationContext(), AnniversaryActivity.class);
+        intentItem.putExtra("anniId", anniId);
+        intentItem.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pi = PendingIntent.getActivity(this, anniId, intentItem,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new Notification.Builder(getApplicationContext(), "anni")
+                .setContentTitle(anniversary.getTypeText())
+                .setContentText(anniversary.getText() + "  日子到了哦")
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.ic_notify)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.icon))
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build();
+
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (manager == null) {
+            return;
+        }
+        manager.notify(anniId, notification);
+    }
+
+    /**
+     * 创建通知渠道
+     * @param channelId id
+     * @param channelName 名称
+     * @param importance 重要性
+     */
+    private void createNotificationChannel(String channelId, String channelName, int importance) {
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(
+                NOTIFICATION_SERVICE);
+        if (notificationManager == null) {
+            return;
+        }
+        notificationManager.createNotificationChannel(channel);
+    }
+
 }

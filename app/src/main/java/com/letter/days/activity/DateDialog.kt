@@ -10,8 +10,6 @@ import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.CalendarView
 import com.letter.days.R
 
-
-
 /**
  * @author Letter(zhangkeqiang@ut.cn)
  * @version 1.0
@@ -64,7 +62,7 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
         scrollToCurrent()
     }
 
-    constructor(context: Context): this(context, R.style.Base_Theme_AppCompat_Light_Dialog)
+    constructor(context: Context): this(context, R.style.DialogTheme)
 
     constructor(builder: Builder): this(builder.context, builder.getTheme()) {
         this.onDateSetListener = builder.getOnDateSetListener()
@@ -132,7 +130,7 @@ class DateDialog(context: Context, theme: Int) : Dialog(context, theme),
 
     class Builder(var context: Context) {
         private var onDateSetListener: OnDateSetListener? = null
-        private var theme: Int = R.style.Base_Theme_AppCompat_Light_Dialog
+        private var theme: Int = R.style.DialogTheme
 
         fun setOnDateSetListener(listener: OnDateSetListener): Builder {
             onDateSetListener = listener

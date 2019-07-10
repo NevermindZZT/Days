@@ -14,10 +14,8 @@ public class Anniversary extends LitePalSupport {
     public static final int ANNI_TYPE_EVERY_YEAR = 1;
     public static final int ANNI_TYPE_COUNT_DOWN = 2;
 
-    public static final int DISTANCE_NEXT = 0;
-    public static final int DISTANCE_ABS = 1;
-
-    private static final long MS_ONE_DAY = 86400000L;
+    private static final int DISTANCE_NEXT = 0;
+    private static final int DISTANCE_ABS = 1;
 
     public static final String[] typeText = {
             "纪念日",
@@ -79,11 +77,58 @@ public class Anniversary extends LitePalSupport {
     }
 
     /**
+     * 获取下一次纪念日日期
+     * @return 日期
+     */
+    public Calendar getNextCalendar() {
+        Calendar now = AnniUtils.getCalendar(java.util.Calendar.getInstance().getTimeInMillis());
+        Calendar anni = AnniUtils.getCalendar(time);
+        Calendar calendar = null;
+        switch (type) {
+            case ANNI_TYPE_ONLY_ONCE:
+                calendar = anni;
+                break;
+            case ANNI_TYPE_EVERY_YEAR:
+                Calendar tmpCalender = new Calendar();
+                if (lunar) {
+                    int[] lunarDate = LunarUtil.solarToLunar(anni.getYear(), anni.getMonth(), anni.getDay());
+                    int[] nowLunarDate = LunarUtil.solarToLunar(now.getYear(), now.getMonth(), now.getDay());
+                    int[] nextLunarDate = {nowLunarDate[0], lunarDate[1], lunarDate[2], lunarDate[3]};
+                    if ((nextLunarDate[0] * 10000 + nextLunarDate[1] * 100 + nextLunarDate[2]) <
+                            (nowLunarDate[0] * 10000 + nowLunarDate[1]*100 + nextLunarDate[2])) {
+                        nextLunarDate[0] += 1;
+                    }
+                    int[] nextSolarDate = LunarUtil.lunarToSolar(nextLunarDate[0], nextLunarDate[1],
+                            nextLunarDate[2], nextLunarDate[3] == 1);
+                    tmpCalender.setYear(nextSolarDate[0]);
+                    tmpCalender.setMonth(nextSolarDate[1]);
+                    tmpCalender.setDay(nextSolarDate[2]);
+
+                    calendar = tmpCalender;
+                } else {
+                    tmpCalender.setYear(now.getYear());
+                    tmpCalender.setMonth(anni.getMonth());
+                    tmpCalender.setDay(anni.getDay());
+
+                    if (tmpCalender.differ(now) < 0) {
+                        tmpCalender.setYear(now.getYear() + 1);
+                    }
+                    calendar = tmpCalender;
+                }
+                break;
+            case ANNI_TYPE_COUNT_DOWN:
+                calendar = anni;
+                break;
+        }
+        return calendar;
+    }
+
+    /**
      * 获得日期到当前时间的距离
      * @param distanceType 每年循环或者绝对距离
      * @return 日期距离
      */
-    public int getDistance(int distanceType) {
+    private int getDistance(int distanceType) {
         Calendar now = AnniUtils.getCalendar(java.util.Calendar.getInstance().getTimeInMillis());
         Calendar anni = AnniUtils.getCalendar(time);
         int distance = 0;
@@ -95,33 +140,7 @@ public class Anniversary extends LitePalSupport {
                 if (distanceType == DISTANCE_ABS) {
                     distance = now.differ(anni);
                 } else {
-                    Calendar tmpCalender = new Calendar();
-                    if (lunar) {
-                        int[] lunarDate = LunarUtil.solarToLunar(anni.getYear(), anni.getMonth(), anni.getDay());
-                        int[] nowLunarDate = LunarUtil.solarToLunar(now.getYear(), now.getMonth(), now.getDay());
-                        int[] nextLunarDate = {nowLunarDate[0], lunarDate[1], lunarDate[2], lunarDate[3]};
-                        if ((nextLunarDate[0] * 10000 + nextLunarDate[1] * 100 + nextLunarDate[2]) <
-                                (nowLunarDate[0] * 10000 + nowLunarDate[1]*100 + nextLunarDate[2])) {
-                            nextLunarDate[0] += 1;
-                        }
-                        int[] nextSolarDate = LunarUtil.lunarToSolar(nextLunarDate[0], nextLunarDate[1],
-                                nextLunarDate[2], nextLunarDate[3] == 1);
-                        tmpCalender.setYear(nextSolarDate[0]);
-                        tmpCalender.setMonth(nextSolarDate[1]);
-                        tmpCalender.setDay(nextSolarDate[2]);
-
-                        distance = tmpCalender.differ(now);
-                    } else {
-                        tmpCalender.setYear(now.getYear());
-                        tmpCalender.setMonth(anni.getMonth());
-                        tmpCalender.setDay(anni.getDay());
-
-                        distance = tmpCalender.differ(now);
-                        if (distance < 0) {
-                            tmpCalender.setYear(now.getYear() + 1);
-                            distance = tmpCalender.differ(now);
-                        }
-                    }
+                    distance = getNextCalendar().differ(now);
                 }
                 break;
             case ANNI_TYPE_COUNT_DOWN:

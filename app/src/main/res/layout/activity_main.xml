@@ -11,7 +11,8 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
@@ -48,6 +49,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorRecyclerView"
         android:clipToPadding="false"
         android:paddingBottom="48dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
