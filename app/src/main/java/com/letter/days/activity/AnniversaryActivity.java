@@ -2,6 +2,7 @@ package com.letter.days.activity;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,30 +11,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.haibin.calendarview.Calendar;
 import com.letter.days.R;
-import com.letter.days.anniversary.AnniUtils;
+import com.letter.days.anniversary.AnniPagerTransformer;
 import com.letter.days.anniversary.Anniversary;
+import com.letter.days.anniversary.AnniversaryFragment;
 
 import org.litepal.LitePal;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnniversaryActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
-    private Anniversary anniversary;
 
-    private TextView anniDate;
-    private TextView anniDays;
-    private TextView anniText;
-    private TextView anniType;
+    private ViewPager viewPager;
 
     private int anniId;
-    private int isEdited = 0;
+    private boolean isEdited = false;
+
+    List<Anniversary> anniversaryList;
+    List<AnniversaryFragment> anniversaryFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +51,41 @@ public class AnniversaryActivity extends AppCompatActivity {
         }
 
         anniId = getIntent().getIntExtra("anniId", 0);
-        anniversary = LitePal.find(Anniversary.class, anniId);
 
-        if (anniversary == null) {
-            Toast.makeText(AnniversaryActivity.this, "发生错误", Toast.LENGTH_SHORT).show();
-        } else {
-            anniversary = new Anniversary();
+        viewPager = findViewById(R.id.view_pager);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        anniversaryList = LitePal.findAll(Anniversary.class);
+        anniversaryFragments = new ArrayList<>();
+        for (Anniversary anniversary: anniversaryList) {
+            anniversaryFragments.add(AnniversaryFragment.newInstance(anniversary.getId()));
         }
+        AnniFragmentPagerAdapter<AnniversaryFragment> adapter =
+                new AnniFragmentPagerAdapter<>(getSupportFragmentManager(), anniversaryFragments);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(getFragmentPositionById(anniId), true);
+        viewPager.setPageTransformer(false, new AnniPagerTransformer());
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        anniText = findViewById(R.id.anni_text);
-        anniDate = findViewById(R.id.anni_date);
-        anniDays = findViewById(R.id.anni_days);
-        anniType = findViewById(R.id.anni_type);
+            }
 
-        freshData();
+            @Override
+            public void onPageSelected(int position) {
+                anniId = anniversaryFragments.get(viewPager.getCurrentItem()).getAnniId();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -78,7 +99,7 @@ public class AnniversaryActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (isEdited == 1) {
+                if (isEdited) {
                     intent = new Intent();
                     setResult(RESULT_OK, intent);
                 }
@@ -89,7 +110,7 @@ public class AnniversaryActivity extends AppCompatActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(AnniversaryActivity.this);
                 dialog.setMessage("确认删除这个纪念日？");
                 dialog.setPositiveButton("确认", (dialogInterface, i) -> {
-                        LitePal.delete(Anniversary.class, anniversary.getId());
+                        LitePal.delete(Anniversary.class, anniId);
                         Intent intent1 = new Intent();
                         setResult(RESULT_OK, intent1);
                         Toast.makeText(AnniversaryActivity.this, "已删除", Toast.LENGTH_SHORT).show();
@@ -102,7 +123,7 @@ public class AnniversaryActivity extends AppCompatActivity {
             case R.id.edit:
                 intent = new Intent(AnniversaryActivity.this, AddItemActivity.class);
                 intent.putExtra("editType", AddItemActivity.ITEM_EDIT);
-                intent.putExtra("anniId", anniversary.getId());
+                intent.putExtra("anniId", anniId);
                 startActivityForResult(intent, 1);
                 break;
 
@@ -114,7 +135,7 @@ public class AnniversaryActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isEdited == 1) {
+        if (isEdited) {
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
         }
@@ -126,8 +147,7 @@ public class AnniversaryActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    isEdited = 1;
-                    freshData();
+                    isEdited = true;
                 }
                 break;
 
@@ -136,15 +156,13 @@ public class AnniversaryActivity extends AppCompatActivity {
         }
     }
 
-    private void freshData() {
-        anniversary = LitePal.find(Anniversary.class, anniId);
-        Calendar calendar = new Calendar();
-        AnniUtils.setCalendarTime(calendar, anniversary.getTime());
-        anniText.setText(anniversary.getText());
-        anniDate.setText(AnniUtils.getFormatDate(getString(R.string.date_format_split),
-                getString(R.string.date_lunar_format),
-                calendar, anniversary.isLunar()));
-        anniDays.setText(anniversary.getDaysText());
-        anniType.setText(anniversary.getTypeText());
+    private int getFragmentPositionById(int id) {
+        for (int i = 0; i < anniversaryList.size(); i++) {
+            if (anniversaryList.get(i).getId() == id) {
+                return i;
+            }
+        }
+        return 0;
     }
+
 }

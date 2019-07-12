@@ -28,6 +28,7 @@ public class Anniversary extends LitePalSupport {
     private String text;
     private int type;
     private boolean lunar;
+    private int color;
 
     public Anniversary() {
         this.time = AnniUtils.getCalendar(java.util.Calendar.getInstance().getTimeInMillis()).getTimeInMillis();
@@ -74,6 +75,14 @@ public class Anniversary extends LitePalSupport {
 
     public void setLunar(boolean lunar) {
         this.lunar = lunar;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     /**
@@ -235,7 +244,7 @@ public class Anniversary extends LitePalSupport {
                 break;
 
             case ANNI_TYPE_COUNT_DOWN:
-                if ((nextTime = getDistance(DISTANCE_ABS)) < 0) {
+                if ((nextTime = -getDistance(DISTANCE_ABS)) < 0) {
                     nextTime = -1;
                 }
                 break;

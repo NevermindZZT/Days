@@ -12,4 +12,6 @@
 
     <string name="anni_day_format_only_once_positive">%d天</string>
     <string name="anni_day_format_only_once_negative">差%d天</string>
+
+    <style name="color_picker_title">选择主题色</style>
 </resources>

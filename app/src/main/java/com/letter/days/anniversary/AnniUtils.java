@@ -95,4 +95,8 @@ public class AnniUtils {
     public static String getLunarDayText(int day) {
         return LUNAR_DAY[day - 1];
     }
+
+    public static Anniversary getAnniversaryById(int id) {
+        return LitePal.find(Anniversary.class, id);
+    }
 }

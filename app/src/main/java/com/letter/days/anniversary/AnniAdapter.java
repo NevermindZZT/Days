@@ -1,16 +1,21 @@
 package com.letter.days.anniversary;
 
 import android.content.Context;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.letter.days.R;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
@@ -26,6 +31,7 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
         TextView anniDays;
         TextView anniText;
         TextView anniType;
+        ProgressBar anniProgress;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -34,6 +40,7 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
             anniDays = itemView.findViewById(R.id.anni_days);
             anniText = itemView.findViewById(R.id.anni_text);
             anniType = itemView.findViewById(R.id.anni_type);
+            anniProgress = itemView.findViewById(R.id.anni_progress);
         }
     }
 
@@ -68,11 +75,28 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
                 mContext.getString(R.string.date_lunar_format)));
         holder.anniText.setText(anniversary.getText());
         holder.anniType.setText(anniversary.getTypeText());
+        setProgressColor(holder.anniProgress, anniversary.getColor());
+        int progress = 366;
+        if (anniversary.getNextTime() > 366) {
+            progress = 0;
+        } else if (anniversary.getNextTime() > 0) {
+            progress = 366 - (int)anniversary.getNextTime();
+        }
+        holder.anniProgress.setProgress(progress);
     }
 
     @Override
     public int getItemCount() {
         return mAnniversaryList.size();
+    }
+
+    private void setProgressColor(@NonNull ProgressBar progressBar, int color) {
+        LayerDrawable drawable = (LayerDrawable) progressBar.getProgressDrawable();
+        GradientDrawable gradientDrawable = new GradientDrawable();
+        gradientDrawable.setColor(color);
+        ClipDrawable clipDrawable = new ClipDrawable(gradientDrawable, Gravity.START, ClipDrawable.HORIZONTAL);
+        drawable.setDrawableByLayerId(android.R.id.progress, clipDrawable);
+        progressBar.setProgressDrawable(drawable);
     }
 
 }

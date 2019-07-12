@@ -165,6 +165,42 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/color_layout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="10dp"
+                android:src="@drawable/ic_theme"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginVertical="16dp"
+                android:textSize="18sp"
+                android:text="主题色"
+                android:textColor="@color/textColorItemName"/>
+
+            <com.letter.days.widget.ColorPane
+                android:id="@+id/theme_color"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                app:color="@color/colorAccent" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

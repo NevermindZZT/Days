@@ -16,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.haibin.calendarview.Calendar;
-import com.haibin.calendarview.LunarCalendar;
-import com.haibin.calendarview.LunarUtil;
 import com.letter.days.R;
 import com.letter.days.anniversary.AnniUtils;
 import com.letter.days.anniversary.Anniversary;
+import com.letter.days.widget.ColorPane;
+import com.letter.days.widget.ColorPickerDialog;
 
 import org.litepal.LitePal;
 
@@ -40,10 +40,13 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout dateChoose;
     private LinearLayout typeLayout;
     private LinearLayout lunarLayout;
+    private LinearLayout colorLayout;
 
     private TextView textType;
     private Anniversary anniversary;
     private CheckBox lunarCheck;
+
+    private ColorPane colorPane;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,11 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
         lunarLayout.setOnClickListener(this);
         lunarCheck = findViewById(R.id.lunar_check);
         lunarCheck.setChecked(anniversary.isLunar());
+
+        colorLayout = findViewById(R.id.color_layout);
+        colorLayout.setOnClickListener(this);
+        colorPane = findViewById(R.id.theme_color);
+        colorPane.setColor(anniversary.getColor());
     }
 
     @Override
@@ -113,6 +121,15 @@ public class AddItemActivity extends AppCompatActivity implements View.OnClickLi
             lunarCheck.setChecked(!lunarCheck.isChecked());
             anniversary.setLunar(lunarCheck.isChecked());
             freshDate();
+        } else if (v == colorLayout) {
+            ColorPickerDialog dialog = new ColorPickerDialog.Builder(AddItemActivity.this)
+                    .setOnColorSelectListener((color) -> {
+                        colorPane.setColor(color);
+                        anniversary.setColor(color);
+                    })
+                    .setColor(anniversary.getColor())
+                    .create();
+            dialog.show();
         }
     }
 
