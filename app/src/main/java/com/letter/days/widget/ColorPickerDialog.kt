@@ -53,7 +53,7 @@ class ColorPickerDialog(context: Context, theme: Int) : Dialog(context, theme),
     constructor(builder: Builder): this(builder.context, builder.getTheme()) {
         this.onColorSelectListener = builder.getOnColorSelectListener()
         this.selectColor = builder.getColor()
-        freshColorPickerSub(selectColor, colors.size - 1)
+        freshColorPickerSub(selectColor, colors.size)
         colorPickerSub.selectedItem = colors.size - 1
     }
 
@@ -72,7 +72,7 @@ class ColorPickerDialog(context: Context, theme: Int) : Dialog(context, theme),
     override fun onColorClick(view: View, color: Int) {
         when (view) {
             colorPickerMain -> {
-                freshColorPickerSub(color, colors.size)
+                freshColorPickerSub(color, colors.size + 1)
                 selectColor = color
             }
             colorPickerSub -> {
@@ -88,9 +88,9 @@ class ColorPickerDialog(context: Context, theme: Int) : Dialog(context, theme),
         val stepG = (0xFF - color.and(0x0000FF00).ushr(8)) / level
         val stepB = (0xFF - color.and(0x000000FF)) / level
         for (i in colors.indices) {
-            colors[i] = (color + (stepR * (level - i)).shl(16)
-                    + (stepG * (level - i)).shl(8)
-                    + (stepB * (level - i)))
+            colors[i] = (color + (stepR * (level - i - 1)).shl(16)
+                    + (stepG * (level - i - 1)).shl(8)
+                    + (stepB * (level - i - 1)))
         }
         colorPickerSub.setColors(colors)
     }
