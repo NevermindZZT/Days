@@ -59,7 +59,7 @@ class ColorPane @JvmOverloads
         paint.style = Paint.Style.FILL
 
         canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
-                (min(width, height) / 2).toFloat(), paint)
+                (min(width, height) / 2 - if (strokeWidth > 0) 1 else 0).toFloat(), paint)
 
         if (strokeWidth > 0) {
             paint.color = strokeColor
