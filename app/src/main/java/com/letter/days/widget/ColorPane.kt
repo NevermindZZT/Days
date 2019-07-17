@@ -70,19 +70,10 @@ class ColorPane @JvmOverloads
         }
 
         if (checked) {
-//            if (color > 0
-//                    || (color.and(0x00FF0000) > 0x00800000
-//                    && color.and(0x0000FF00) > 0x00008000
-//                    && color.and(0x000000FF) > 0x00000080)) {
-//                paint.color = Color.BLACK
-//            } else {
-//                paint.color = Color.WHITE
-//            }
-//            paint.color = color.toLong().inv().or(0xFF000000).toInt()
             val bright = (color.and(0x00FF0000).ushr(16) * 0.3
                     + color.and(0x0000FF00).ushr(8) * 0.6
                     + color.and(0x000000FF) * 0.1)
-            if (bright > 0x80) {
+            if (bright > 0x80 || color.toLong().and(0xFF000000).ushr(24) < 0x20) {
                 paint.color = Color.BLACK
             } else {
                 paint.color = Color.WHITE

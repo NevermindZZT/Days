@@ -1,10 +1,10 @@
 package com.letter.days.anniversary;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -33,7 +33,7 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
         TextView anniType;
         ProgressBar anniProgress;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             anniView = itemView;
             anniDate = itemView.findViewById(R.id.anni_date);
@@ -82,7 +82,10 @@ public class AnniAdapter extends RecyclerView.Adapter<AnniAdapter.ViewHolder> {
         } else if (anniversary.getNextTime() > 0) {
             progress = 366 - (int)anniversary.getNextTime();
         }
-        holder.anniProgress.setProgress(progress);
+//        holder.anniProgress.setProgress(progress);
+        ObjectAnimator.ofInt(holder.anniProgress, "progress", 0, progress)
+                .setDuration(500)
+                .start();
     }
 
     @Override
