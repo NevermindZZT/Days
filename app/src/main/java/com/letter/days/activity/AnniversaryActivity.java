@@ -54,12 +54,6 @@ public class AnniversaryActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         anniversaryList = LitePal.findAll(Anniversary.class);
         anniversaryFragments = new ArrayList<>();
         for (Anniversary anniversary: anniversaryList) {
@@ -86,6 +80,11 @@ public class AnniversaryActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
