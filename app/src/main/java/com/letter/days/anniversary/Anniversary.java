@@ -104,7 +104,7 @@ public class Anniversary extends LitePalSupport {
                     int[] nowLunarDate = LunarUtil.solarToLunar(now.getYear(), now.getMonth(), now.getDay());
                     int[] nextLunarDate = {nowLunarDate[0], lunarDate[1], lunarDate[2], lunarDate[3]};
                     if ((nextLunarDate[0] * 10000 + nextLunarDate[1] * 100 + nextLunarDate[2]) <
-                            (nowLunarDate[0] * 10000 + nowLunarDate[1]*100 + nextLunarDate[2])) {
+                            (nowLunarDate[0] * 10000 + nowLunarDate[1]*100 + nowLunarDate[2])) {
                         nextLunarDate[0] += 1;
                     }
                     int[] nextSolarDate = LunarUtil.lunarToSolar(nextLunarDate[0], nextLunarDate[1],
