@@ -1,6 +1,6 @@
 package com.letter.days.anniversary
 
-import android.support.v4.view.ViewPager
+import androidx.viewpager.widget.ViewPager
 import android.view.View
 import kotlin.math.abs
 
@@ -8,14 +8,14 @@ import kotlin.math.abs
  * @author Letter(zhangkeqiang@ut.cn)
  * @version 1.0
  */
-class AnniPagerTransformer: ViewPager.PageTransformer {
+class AnniPagerTransformer: androidx.viewpager.widget.ViewPager.PageTransformer {
 
-    private var viewPager: ViewPager? = null
+    private var viewPager: androidx.viewpager.widget.ViewPager? = null
 
     override fun transformPage(view: View, position: Float) {
 
         if (viewPager == null) {
-            viewPager = view.parent as ViewPager
+            viewPager = view.parent as androidx.viewpager.widget.ViewPager
         }
 
         val leftInScreen = view.left - viewPager?.scrollX!!

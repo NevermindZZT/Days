@@ -1,7 +1,7 @@
 package com.letter.days.anniversary
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ import com.letter.days.R
  * @author Letter(zhangkeqiang@ut.cn)
  * @version 1.0
  */
-class AnniversaryFragment: Fragment() {
+class AnniversaryFragment: androidx.fragment.app.Fragment() {
 
     var anniId = arguments?.getInt("anniId") ?: -1
 

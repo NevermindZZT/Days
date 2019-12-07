@@ -1,4 +1,4 @@
-package com.letter.days.activity
+package com.letter.days.dialog
 
 import android.app.Dialog
 import android.content.Context

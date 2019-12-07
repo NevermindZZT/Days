@@ -1,24 +1,24 @@
 package com.letter.days.activity
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 
 /**
  * @author Letter(zhangkeqiang@ut.cn)
  * @version 1.0
  */
-class AnniFragmentPagerAdapter<T: Fragment>: FragmentPagerAdapter {
+class AnniFragmentPagerAdapter<T: androidx.fragment.app.Fragment>: androidx.fragment.app.FragmentPagerAdapter {
 
     var list: List<T>? = null
 
-    constructor(fm: FragmentManager): super(fm)
+    constructor(fm: androidx.fragment.app.FragmentManager): super(fm)
 
-    constructor(fm: FragmentManager, list: List<T>): super(fm) {
+    constructor(fm: androidx.fragment.app.FragmentManager, list: List<T>): super(fm) {
         this.list = list
     }
 
-    override fun getItem(p0: Int): Fragment {
+    override fun getItem(p0: Int): androidx.fragment.app.Fragment {
         return list?.get(p0)!!
     }
 
