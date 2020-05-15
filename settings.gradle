@@ -1,1 +1,3 @@
+rootProject.name='Days'
 include ':app'
+include ':utils'
