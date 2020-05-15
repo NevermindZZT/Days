@@ -6,18 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.letter.days.R
+import com.letter.days.databinding.FragmentDaysListBinding
 
 /**
- * A simple [Fragment] subclass.
+ * 纪念日列表Fragment
+ *
+ * @author Letter(nevermindzzt@gmail.com)
+ * @since 1.0.0
  */
 class DaysListFragment : Fragment() {
+
+    private lateinit var binding: FragmentDaysListBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_days_list, container, false)
+        binding = FragmentDaysListBinding.inflate(inflater)
+        return binding.root
     }
 
 }
