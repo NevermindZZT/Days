@@ -3,15 +3,4 @@
     <color name="colorPrimary">#FAFAFA</color>
     <color name="colorPrimaryDark">#FAFAFA</color>
     <color name="colorAccent">#6F9AA1</color>
-    <color name="colorWindowBackground">#FAFAFA</color>
-
-    <color name="textColorPrimary">#1A1A1A</color>
-    <color name="textColorItemName">#1A1A1A</color>
-    <color name="textColorItemHint">#999999</color>
-    <color name="textColorAnniHint">#333333</color>
-    <color name="textColorStress">#2222AA</color>
-    <color name="colorSplitLine">#e0e0e0</color>
-
-    <color name="colorItemBackground">#FFFFFF</color>
-    <color name="colorRecyclerView">#FAFAFA</color>
 </resources>
