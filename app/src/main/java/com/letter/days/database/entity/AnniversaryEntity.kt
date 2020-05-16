@@ -14,6 +14,9 @@ import androidx.room.PrimaryKey
  * @property lunar Boolean 是否为农历
  * @property color Int 主题色
  * @constructor 构造一个纪念日数据
+ *
+ * @author Letter(nevermindzzt@gmail.com)
+ * @since 1.0.0
  */
 @Entity(tableName = "anniversary")
 data class AnniversaryEntity

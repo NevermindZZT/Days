@@ -1,9 +1,6 @@
 package com.letter.days.database.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.letter.days.database.entity.AnniversaryEntity
 
 /**
@@ -35,12 +32,19 @@ interface AnniversaryDao {
      * @return AnniversaryEntity 纪念日数据
      */
     @Query("SELECT * FROM anniversary where id = :id")
-    fun get(id: Int): AnniversaryEntity
+    fun get(id: Int): AnniversaryEntity?
 
     /**
      * 更新纪念日数据
-     * @param anniversary AnniversaryEntity 金纪念日数据
+     * @param anniversary AnniversaryEntity 纪念日数据
      */
     @Update
     fun update(anniversary: AnniversaryEntity)
+
+    /**
+     * 删除纪念日数据
+     * @param anniversary AnniversaryEntity 纪念日数据
+     */
+    @Delete
+    fun delete(anniversary: AnniversaryEntity)
 }
