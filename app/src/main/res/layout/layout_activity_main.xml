@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="com.letter.days.presenter.ViewPresenter" />
+        <import type="com.letter.presenter.ViewPresenter" />
         <variable
             name="presenter"
             type="ViewPresenter" />

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.letter.days.R
 import com.letter.days.databinding.ActivityMainBinding
-import com.letter.days.presenter.ViewPresenter
+import com.letter.presenter.ViewPresenter
 import com.letter.utils.toast
 
 /**

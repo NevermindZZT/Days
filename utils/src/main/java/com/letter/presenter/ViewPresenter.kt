@@ -1,4 +1,4 @@
-package com.letter.days.presenter
+package com.letter.presenter
 
 import android.view.View
 
