@@ -1,7 +1,5 @@
 package com.letter.presenter
 
-import android.widget.Adapter
-
 /**
  * 列表item点击 Presenter
  *
@@ -9,5 +7,5 @@ import android.widget.Adapter
  * @since 1.0.0
  */
 interface ItemClickPresenter {
-    fun onItemClick(adapter: Adapter, position: Int)
+    fun onItemClick(adapter: Any, position: Int)
 }

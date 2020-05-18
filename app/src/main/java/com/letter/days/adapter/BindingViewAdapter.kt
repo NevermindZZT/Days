@@ -1,4 +1,4 @@
-package com.letter.adapter
+package com.letter.days.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableList
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import com.letter.days.BR
 import com.letter.presenter.ItemClickPresenter
 import com.letter.presenter.ItemLongClickPresenter
 
@@ -27,14 +28,13 @@ import com.letter.presenter.ItemLongClickPresenter
 class BindingViewAdapter<T>
 constructor(private val context: Context,
             @LayoutRes private val layoutRes: Int,
-            private val list: ObservableList<T>,
-            private val br: Class<Any>,
+            private val list: ObservableList<T>?,
             private val itemClickPresenter: ItemClickPresenter? = null,
             private val itemLongClickPresenter: ItemLongClickPresenter? = null)
     : RecyclerView.Adapter<BindingViewAdapter.BindingViewHolder<ViewDataBinding>>() {
 
     init {
-        list.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<T>>() {
+        list?.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<T>>() {
             override fun onChanged(sender: ObservableList<T>?) {
                 notifyDataSetChanged()
             }
@@ -91,21 +91,21 @@ constructor(private val context: Context,
         holder: BindingViewHolder<ViewDataBinding>,
         position: Int
     ) {
-        holder.binding.setVariable(br.getDeclaredField("adapter").getInt(br), this)
-        holder.binding.setVariable(br.getDeclaredField("list").getInt(br), list)
-        holder.binding.setVariable(br.getDeclaredField("position").getInt(br), position)
+        holder.binding.setVariable(BR.adapter, this)
+        holder.binding.setVariable(BR.list, list)
+        holder.binding.setVariable(BR.position, position)
         if (itemClickPresenter != null) {
-            holder.binding.setVariable(br.getDeclaredField("itemClickPresenter").getInt(br),
+            holder.binding.setVariable(BR.itemClickPresenter,
                 itemClickPresenter)
         }
         if (itemLongClickPresenter != null) {
-            holder.binding.setVariable(br.getDeclaredField("itemLongClickPresenter").getInt(br),
+            holder.binding.setVariable(BR.itemLongClickPresenter,
                 itemLongClickPresenter)
         }
         holder.binding.executePendingBindings()
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = list?.size ?: 0
 
     /**
      * DataBinding 列表适配器ViewHolder
@@ -119,20 +119,4 @@ constructor(private val context: Context,
     class BindingViewHolder<out T : ViewDataBinding>
     constructor(val binding : T)
         : RecyclerView.ViewHolder(binding.root)
-
-//    /**
-//     * DataBinding 列表适配器BR
-//     *
-//     * @author Letter(nevermindzzt@gmail.com)
-//     * @since 1.0.0
-//     */
-//    data class BR(var adapter: Int = 0,
-//                  var list: Int = 0,
-//                  var position: Int = 0,
-//                  var itemClickPresenter: Int = 0,
-//                  var itemLongClickPresenter: Int = 0) {
-//        companion object {
-//            const val _all = 0
-//        }
-//    }
 }

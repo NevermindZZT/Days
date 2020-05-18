@@ -3,4 +3,7 @@
     <color name="colorPrimary">#FAFAFA</color>
     <color name="colorPrimaryDark">#FAFAFA</color>
     <color name="colorAccent">#6F9AA1</color>
+
+    <color name="textColorPrimary">#1A1A1A</color>
+    <color name="textColorItemHint">#999999</color>
 </resources>

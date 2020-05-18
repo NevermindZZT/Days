@@ -17,14 +17,14 @@ interface AnniversaryDao {
      * @param anniversaries Array<out AnniversaryEntity> 纪念日数据
      */
     @Insert
-    fun insert(vararg anniversaries: AnniversaryEntity)
+    suspend fun insert(vararg anniversaries: AnniversaryEntity)
 
     /**
      * 获取所有纪念日数据
      * @return List<AnniversaryEntity> 纪念日数据列表
      */
     @Query("SELECT * FROM anniversary")
-    fun getAll(): List<AnniversaryEntity>
+    suspend fun getAll(): List<AnniversaryEntity>
 
     /**
      * 获取纪念日数据
@@ -32,19 +32,19 @@ interface AnniversaryDao {
      * @return AnniversaryEntity 纪念日数据
      */
     @Query("SELECT * FROM anniversary where id = :id")
-    fun get(id: Int): AnniversaryEntity?
+    suspend fun get(id: Int): AnniversaryEntity?
 
     /**
      * 更新纪念日数据
      * @param anniversary AnniversaryEntity 纪念日数据
      */
     @Update
-    fun update(anniversary: AnniversaryEntity)
+    suspend fun update(anniversary: AnniversaryEntity)
 
     /**
      * 删除纪念日数据
      * @param anniversary AnniversaryEntity 纪念日数据
      */
     @Delete
-    fun delete(anniversary: AnniversaryEntity)
+    suspend fun delete(anniversary: AnniversaryEntity)
 }
