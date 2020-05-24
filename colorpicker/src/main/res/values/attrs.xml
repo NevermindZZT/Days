@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name = "ColorPane">
+        <attr name="color" format="color" />
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="checked" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorPickerView">
+        <attr name="colorResource" format="reference" />
+        <attr name="colorPaneSize" format="dimension" />
+        <attr name="colorPaneStroke" format="color" />
+    </declare-styleable>
+</resources>

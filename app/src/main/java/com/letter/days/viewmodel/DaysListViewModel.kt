@@ -29,6 +29,9 @@ class DaysListViewModel(application: Application) : AndroidViewModel(application
         loadDays()
     }
 
+    /**
+     * 加载纪念日数据
+     */
     fun loadDays() {
         viewModelScope.launch {
             daysList.value?.clear()

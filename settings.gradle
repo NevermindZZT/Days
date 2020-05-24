@@ -1,3 +1,3 @@
 rootProject.name='Days'
-include ':app'
+include ':app', ':colorpicker'
 include ':utils'

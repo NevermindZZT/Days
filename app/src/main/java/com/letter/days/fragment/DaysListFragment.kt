@@ -1,5 +1,6 @@
 package com.letter.days.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.letter.days.adapter.BindingViewAdapter
 import com.letter.days.LetterApplication
 import com.letter.days.R
+import com.letter.days.activity.AnniEditActivity
 import com.letter.days.databinding.FragmentDaysListBinding
 import com.letter.days.viewmodel.DaysListViewModel
 import com.letter.presenter.ItemClickPresenter
@@ -57,7 +59,9 @@ class DaysListFragment : Fragment(), ItemClickPresenter {
     }
 
     override fun onItemClick(adapter: Any, position: Int) {
-        toast("position: $position")
+        val intent = Intent(this@DaysListFragment.requireContext(), AnniEditActivity::class.java)
+        intent.putExtra("anniId", model.daysList.value?.get(position)?.id ?: -1)
+        startActivity(intent)
     }
 }
 

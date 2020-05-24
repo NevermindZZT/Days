@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Days</string>
+    <string name="app_name">纪念日</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -7,6 +7,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="title_activity_anni_edit">编辑</string>
+    <string name="activity_anni_edit_lunar_name">农历</string>
+    <string name="activity_anni_edit_theme_name">主题色</string>
+    <string name="activity_anni_edit_date_format">%s年 %s %s</string>
+    <string name="activity_anni_edit_toolbar_save">保存</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>

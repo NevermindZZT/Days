@@ -1,9 +1,12 @@
 package com.letter.days.activity
 
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.GravityCompat
 import com.letter.days.R
 import com.letter.days.databinding.ActivityMainBinding
 import com.letter.presenter.ViewPresenter
@@ -48,12 +51,28 @@ class MainActivity : AppCompatActivity(), ViewPresenter {
     }
 
     /**
+     * 菜单选项点击处理
+     * @param item MenuItem 菜单选项
+     * @return Boolean 事件是否被处理
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        return true
+    }
+
+    /**
      * View点击处理
      * @param v View? view
      */
     override fun onClick(v: View?) {
         when (v) {
-            binding.mainLayout.fab -> toast("fab")
+            binding.mainLayout.fab -> {
+                val intent = Intent(this, AnniEditActivity::class.java)
+                intent.putExtra("anniId", -1)
+                startActivity(intent)
+            }
         }
     }
 }

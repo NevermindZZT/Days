@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <com.letter.colorpicker.ColorPickerView
+            android:id="@+id/color_picker_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorPaneSize="50dp"
+            app:colorPaneStroke="#F0F0F0"
+            android:horizontalSpacing="16dp"
+            android:numColumns="4"
+            android:verticalSpacing="8dp" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/split_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#E0E0E0" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <com.letter.colorpicker.ColorPickerView
+            android:id="@+id/color_picker_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:colorPaneSize="50dp"
+            app:colorPaneStroke="#F0F0F0"
+            android:horizontalSpacing="16dp"
+            android:numColumns="4"
+            android:verticalSpacing="8dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:gravity="center_vertical|end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/negative_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="16dp"
+            android:text="@string/color_picker_dialog_negative_button" />
+
+        <Button
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="16dp"
+            android:text="@string/color_picker_dialog_positive_button" />
+    </LinearLayout>
+
+</LinearLayout>

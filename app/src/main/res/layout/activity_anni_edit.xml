@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.letter.days.utils.AnniversaryUtilKt" />
+        <import type="com.letter.days.viewmodel.AnniEditViewModel" />
+        <variable
+            name="vm"
+            type="AnniEditViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.letter.days.activity.AnniEditActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:title="@string/title_activity_anni_edit" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableStart="@drawable/ic_edit_day"
+                    android:drawablePadding="16dp"
+                    android:maxLines="1"
+                    android:padding="16dp"
+                    android:text="@={vm.anniversary.name}"
+                    android:textSize="18sp"
+                    tools:ignore="all"
+                    tools:text="纪念日" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_edit_date"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:text="@{AnniversaryUtilKt.getDateString(vm.anniversary, @string/activity_anni_edit_date_format)}"
+                    android:textSize="18sp"
+                    tools:text="2020年5月20日" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_edit_type"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:padding="16dp"
+                    android:textSize="18sp"
+                    tools:text="纪念日" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_edit_lunar"
+                    android:drawablePadding="16dp"
+                    android:layoutDirection="rtl"
+                    android:padding="16dp"
+                    android:text="@string/activity_anni_edit_lunar_name"
+                    android:textSize="18sp"
+                    tools:ignore="all" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_edit_theme"
+                        android:drawablePadding="16dp"
+                        android:padding="16dp"
+                        android:textSize="18sp"
+                        android:text="@string/activity_anni_edit_theme_name" />
+
+                    <com.letter.colorpicker.ColorPane
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        app:color="@color/colorAccent" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
