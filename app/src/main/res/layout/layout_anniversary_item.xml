@@ -9,6 +9,7 @@
         <import type="com.letter.days.adapter.BindingViewAdapter" />
         <import type="com.letter.presenter.ItemClickPresenter" />
         <import type="com.letter.presenter.ItemLongClickPresenter" />
+        <import type="com.letter.days.utils.AnniversaryUtilKt" />
 
         <variable
             name="list"
@@ -63,6 +64,7 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/textColorItemHint"
                 android:textSize="12sp"
+                android:text="@{AnniversaryUtilKt.getDateString(list[position], @string/activity_main_item_date_format, @string/activity_main_item_date_format_lunar)}"
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
                 tools:text="2020-01-01" />
@@ -74,6 +76,7 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/textColorItemHint"
                 android:textSize="12sp"
+                android:text="@{AnniversaryUtilKt.getTypeText(list[position])}"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:text="Anniversary" />
@@ -82,11 +85,13 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@{AnniversaryUtilKt.getDayText(list[position])}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="1080 Days" />
+                tools:text="100 Days" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -95,7 +100,8 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="6dp"
                 android:max="366"
-                android:progressDrawable="@drawable/bg_progress_bar"
+                android:progress="@{366 - AnniversaryUtilKt.getNextTime(list[position])}"
+                android:progressDrawable="@{AnniversaryUtilKt.getProgressDrawable(list[position])}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

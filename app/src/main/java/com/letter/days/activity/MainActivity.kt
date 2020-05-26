@@ -10,7 +10,6 @@ import androidx.core.view.GravityCompat
 import com.letter.days.R
 import com.letter.days.databinding.ActivityMainBinding
 import com.letter.presenter.ViewPresenter
-import com.letter.utils.toast
 
 /**
  * 主活动
@@ -32,6 +31,9 @@ class MainActivity : AppCompatActivity(), ViewPresenter {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+
+        binding.mainLayout.collapsingToolbar.setExpandedTitleColor(0xff1a1a1a.toInt())
+        binding.mainLayout.collapsingToolbar.setCollapsedTitleTextColor(0xff1a1a1a.toInt())
 
         /* 设置Action Bar并使能home按钮 */
         setSupportActionBar(binding.mainLayout.toolbar)

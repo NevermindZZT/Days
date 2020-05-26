@@ -32,4 +32,9 @@ data class AnniversaryEntity
         const val ANNI_TYPE_EVERY_YEAR = 1
         const val ANNI_TYPE_COUNT_DOWN = 2
     }
+
+    enum class DistanceMode {
+        DISTANCE_ABS,
+        DISTANCE_NEXT,
+    }
 }
