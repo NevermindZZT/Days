@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "anniversary")
 data class AnniversaryEntity
-    constructor(@PrimaryKey var id: Int = 0,
+    constructor(@PrimaryKey(autoGenerate = true) var id: Int = 0,
                 @ColumnInfo(name = "time") var time: Long = System.currentTimeMillis(),
                 @ColumnInfo(name = "name") var name: String? = null,
                 @ColumnInfo(name = "type") var type: Int = ANNI_TYPE_ONLY_ONCE,
@@ -31,6 +31,12 @@ data class AnniversaryEntity
         const val ANNI_TYPE_ONLY_ONCE = 0
         const val ANNI_TYPE_EVERY_YEAR = 1
         const val ANNI_TYPE_COUNT_DOWN = 2
+
+        val ANNI_TYPE_TEXT = arrayOf(
+            "纪念日",
+            "周年纪念",
+            "倒计时"
+        )
     }
 
     enum class DistanceMode {

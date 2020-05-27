@@ -25,13 +25,10 @@ class DaysListViewModel(application: Application) : AndroidViewModel(application
         ObservableArrayList()
     )
 
-    init {
-        loadDays()
-    }
-
     /**
      * 加载纪念日数据
      */
+    @Synchronized
     fun loadDays() {
         viewModelScope.launch {
             daysList.value?.clear()

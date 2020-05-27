@@ -73,7 +73,8 @@
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
             android:onClick="@{view->presenter.onClick(view)}"
-            app:srcCompat="@drawable/ic_main_add" />
+            app:srcCompat="@drawable/ic_main_add"
+            app:layout_behavior="com.letter.days.behavior.FabScrollBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -6,9 +6,14 @@
     <data>
         <import type="com.letter.days.utils.AnniversaryUtilKt" />
         <import type="com.letter.days.viewmodel.AnniEditViewModel" />
+        <import type="com.letter.presenter.ViewPresenter" />
+        <import type="android.graphics.Color" />
         <variable
             name="vm"
             type="AnniEditViewModel" />
+        <variable
+            name="presenter"
+            type="ViewPresenter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -55,6 +60,7 @@
                     tools:text="纪念日" />
 
                 <TextView
+                    android:id="@+id/date_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -63,11 +69,13 @@
                     android:drawablePadding="16dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:onClick="@{view -> presenter.onClick(view)}"
                     android:text="@{AnniversaryUtilKt.getDateString(vm.anniversary, @string/activity_anni_edit_date_format, @string/activity_anni_edit_date_format_lunar)}"
                     android:textSize="18sp"
                     tools:text="2020年5月20日" />
 
                 <TextView
+                    android:id="@+id/type_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
@@ -76,27 +84,33 @@
                     android:drawablePadding="16dp"
                     android:focusable="true"
                     android:padding="16dp"
+                    android:onClick="@{view -> presenter.onClick(view)}"
+                    android:text="@{AnniversaryUtilKt.getTypeText(vm.anniversary)}"
                     android:textSize="18sp"
                     tools:text="纪念日" />
 
                 <CheckBox
-                    android:id="@+id/checkBox"
+                    android:id="@+id/lunar_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_edit_lunar"
                     android:drawablePadding="16dp"
                     android:layoutDirection="rtl"
                     android:padding="16dp"
+                    android:checked="@={vm.anniversary.lunar}"
+                    android:onClick="@{view -> presenter.onClick(view)}"
                     android:text="@string/activity_anni_edit_lunar_name"
                     android:textSize="18sp"
                     tools:ignore="all" />
 
                 <LinearLayout
+                    android:id="@+id/theme_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:focusable="true" >
+                    android:focusable="true"
+                    android:onClick="@{view -> presenter.onClick(view)}" >
 
                     <TextView
                         android:layout_width="0dp"
@@ -113,7 +127,7 @@
                         android:layout_height="32dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="16dp"
-                        app:color="@color/colorAccent" />
+                        app:color="@{vm.anniversary.color}" />
 
                 </LinearLayout>
 

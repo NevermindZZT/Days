@@ -49,6 +49,11 @@ fun getDayText(anniversary: AnniversaryEntity?) =
 fun getNextTime(anniversary: AnniversaryEntity?) =
     anniversary?.getNextTime()
 
+/**
+ * 获取进度条Drawable
+ * @param anniversary AnniversaryEntity? 纪念日
+ * @return Drawable? Drawable
+ */
 fun getProgressDrawable(anniversary: AnniversaryEntity?): Drawable? {
     if (anniversary == null) {
         return null

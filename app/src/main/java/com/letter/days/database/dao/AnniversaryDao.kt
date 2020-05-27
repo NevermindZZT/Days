@@ -16,7 +16,7 @@ interface AnniversaryDao {
      * 插入纪念日数据
      * @param anniversaries Array<out AnniversaryEntity> 纪念日数据
      */
-    @Insert
+    @Insert(onConflict=OnConflictStrategy.REPLACE)
     suspend fun insert(vararg anniversaries: AnniversaryEntity)
 
     /**
@@ -38,7 +38,7 @@ interface AnniversaryDao {
      * 更新纪念日数据
      * @param anniversary AnniversaryEntity 纪念日数据
      */
-    @Update
+    @Update(onConflict=OnConflictStrategy.REPLACE)
     suspend fun update(anniversary: AnniversaryEntity)
 
     /**

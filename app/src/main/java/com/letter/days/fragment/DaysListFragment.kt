@@ -41,6 +41,11 @@ class DaysListFragment : Fragment(), ItemClickPresenter {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        model.loadDays()
+    }
+
     private fun initModel() {
         model.apply {
             daysList.observe(this@DaysListFragment.viewLifecycleOwner) {

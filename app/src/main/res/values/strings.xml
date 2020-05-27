@@ -12,5 +12,10 @@
     <string name="activity_anni_edit_date_format">%s年 %s月 %s日</string>
     <string name="activity_anni_edit_date_format_lunar">%s年 %s %s</string>
     <string name="activity_anni_edit_toolbar_save">保存</string>
+    <string name="activity_anni_type_dialog_title">纪念日类型</string>
+    <string name="activity_anni_theme_dialog_title">选择主题色</string>
+    <string name="activity_anni_edit_toast_save_success">保存成功</string>
 
+    <string name="dialog_positive_button">确认</string>
+    <string name="dialog_negative_button">取消</string>
 </resources>

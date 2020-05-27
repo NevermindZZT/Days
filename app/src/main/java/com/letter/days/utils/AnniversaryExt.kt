@@ -6,6 +6,7 @@ import com.letter.days.database.entity.AnniversaryEntity
 import com.letter.days.database.entity.AnniversaryEntity.Companion.ANNI_TYPE_COUNT_DOWN
 import com.letter.days.database.entity.AnniversaryEntity.Companion.ANNI_TYPE_EVERY_YEAR
 import com.letter.days.database.entity.AnniversaryEntity.Companion.ANNI_TYPE_ONLY_ONCE
+import com.letter.days.database.entity.AnniversaryEntity.Companion.ANNI_TYPE_TEXT
 
 typealias JCalendar = java.util.Calendar
 
@@ -15,12 +16,6 @@ typealias JCalendar = java.util.Calendar
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0
  */
-
-private val ANNI_TYPE_TEXT = arrayOf(
-    "纪念日",
-    "周年纪念",
-    "倒计时"
-)
 
 /**
  * 获取纪念日日期字符串文本
@@ -58,9 +53,9 @@ fun AnniversaryEntity.getTypeText(): String =
         ANNI_TYPE_EVERY_YEAR -> {
             val distance = getDistance(AnniversaryEntity.DistanceMode.DISTANCE_NEXT)
             if (distance > 0) {
-                "$ANNI_TYPE_TEXT[ANNI_TYPE_EVERY_YEAR] · $(distance)天"
+                "${ANNI_TYPE_TEXT[ANNI_TYPE_EVERY_YEAR]} · ${distance}天"
             } else if (distance == 0) {
-                "$ANNI_TYPE_TEXT[ANNI_TYPE_EVERY_YEAR] · 今天"
+                "${ANNI_TYPE_TEXT[ANNI_TYPE_EVERY_YEAR]} · 今天"
             } else {
                 ANNI_TYPE_TEXT[ANNI_TYPE_EVERY_YEAR]
             }
@@ -76,11 +71,11 @@ fun AnniversaryEntity.getTypeText(): String =
 fun AnniversaryEntity.getDayText() = run {
     val distance = getDistance(AnniversaryEntity.DistanceMode.DISTANCE_ABS)
     if (distance > 0) {
-        "$(distance)天"
+        "${distance}天"
     } else if (distance == 0) {
         "今天"
     } else {
-        "差$(distance)天"
+        "差${distance}天"
     }
 }
 

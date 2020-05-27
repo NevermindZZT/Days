@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/day_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="36sp"
+                tools:text="5月20日" />
+
+            <LinearLayout
+                android:id="@+id/year_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/year_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="2020" />
+
+                <TextView
+                    android:id="@+id/lunar_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/colorPrimary"
+                    tools:text="闰四月廿八" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.haibin.calendarview.CalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:calendar_height="50dp"
+                app:current_month_lunar_text_color="#CFCFCF"
+                app:min_year="1970"
+                app:month_view="com.letter.days.dialog.datepicker.view.MonthView"
+                app:month_view_show_mode="mode_only_current"
+                app:other_month_text_color="@color/colorPrimary"
+                app:scheme_text_color="@color/textColorPrimary"
+                app:scheme_theme_color="@color/textColorPrimary"
+                app:selected_lunar_text_color="@color/colorPrimary"
+                app:selected_text_color="@color/colorPrimary"
+                app:selected_theme_color="@color/colorAccent"
+                app:week_background="@color/colorPrimary"
+                app:week_start_with="sun"
+                app:week_text_color="@color/textColorPrimary" />
+
+            <ListView
+                android:id="@+id/year_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:divider="@null"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+</layout>

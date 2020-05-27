@@ -30,7 +30,7 @@ private val LUNAR_DAY =
  * @return String 农历月份文本
  */
 fun getLunarMonthText(month: Int, isLeap: Int) =
-    if (isLeap == 1) "闰%d".format(LUNAR_MONTH[month - 1]) else LUNAR_MONTH[month - 1]
+    if (isLeap == 1) "闰%s".format(LUNAR_MONTH[month - 1]) else LUNAR_MONTH[month - 1]
 
 /**
  * 获取农历天文本
