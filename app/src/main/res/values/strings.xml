@@ -16,6 +16,20 @@
     <string name="activity_anni_theme_dialog_title">选择主题色</string>
     <string name="activity_anni_edit_toast_save_success">保存成功</string>
 
+    <string name="activity_setting_title">设置</string>
+
+    <string name="activity_about_title">关于</string>
+    <string name="activity_about_github_text">Github</string>
+    <string name="activity_about_open_source_text">开源相关</string>
+    <string name="activity_about_open_source_address">https://github.com/NevermindZZT/Days</string>
+    <string name="activity_about_copyright_text">© 2020 Letter All rights reserved</string>
+
+    <string name="activity_open_source_title">开源相关</string>
+
     <string name="dialog_positive_button">确认</string>
     <string name="dialog_negative_button">取消</string>
+
+    <string name="setting_slogan_default">记住值得铭记的</string>
+    <string name="setting_slogan_title">标语</string>
+    <string name="setting_slogan_summary">展示在抽屉里应用名下方</string>
 </resources>

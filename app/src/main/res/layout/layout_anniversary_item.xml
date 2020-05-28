@@ -16,7 +16,7 @@
             type="ObservableList&lt;AnniversaryEntity>" />
         <variable
             name="adapter"
-            type="com.letter.days.adapter.BindingViewAdapter" />
+            type="BindingViewAdapter" />
         <variable
             name="position"
             type="int" />
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/textColorPrimary"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:text="@{list[position].name}"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/textColorItemHint"
+                android:textColor="?android:attr/textColorHint"
                 android:textSize="12sp"
                 android:text="@{AnniversaryUtilKt.getDateString(list[position], @string/activity_main_item_date_format, @string/activity_main_item_date_format_lunar)}"
                 app:layout_constraintStart_toStartOf="@+id/textView"
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/textColorItemHint"
+                android:textColor="?android:attr/textColorHint"
                 android:textSize="12sp"
                 android:text="@{AnniversaryUtilKt.getTypeText(list[position])}"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -86,6 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:textColor="?android:attr/textColorHint"
                 android:text="@{AnniversaryUtilKt.getDayText(list[position])}"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"

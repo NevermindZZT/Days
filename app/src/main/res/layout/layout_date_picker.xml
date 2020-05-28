@@ -16,7 +16,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
+            android:background="?android:colorAccent"
             android:orientation="horizontal">
 
             <TextView
@@ -26,7 +26,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:padding="8dp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="?android:colorPrimary"
                 android:textSize="36sp"
                 tools:text="5月20日" />
 
@@ -48,7 +48,7 @@
                     android:background="@android:color/transparent"
                     android:clickable="false"
                     android:focusable="false"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="?android:colorPrimary"
                     tools:text="2020" />
 
                 <TextView
@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="?android:colorPrimary"
                     tools:text="闰四月廿八" />
 
             </LinearLayout>
@@ -76,15 +76,15 @@
                 app:min_year="1970"
                 app:month_view="com.letter.days.dialog.datepicker.view.MonthView"
                 app:month_view_show_mode="mode_only_current"
-                app:other_month_text_color="@color/colorPrimary"
-                app:scheme_text_color="@color/textColorPrimary"
-                app:scheme_theme_color="@color/textColorPrimary"
-                app:selected_lunar_text_color="@color/colorPrimary"
-                app:selected_text_color="@color/colorPrimary"
-                app:selected_theme_color="@color/colorAccent"
-                app:week_background="@color/colorPrimary"
+                app:other_month_text_color="?android:colorPrimary"
+                app:scheme_text_color="?android:textColorPrimary"
+                app:scheme_theme_color="?android:textColorPrimary"
+                app:selected_lunar_text_color="?android:colorPrimary"
+                app:selected_text_color="?android:colorPrimary"
+                app:selected_theme_color="?android:colorAccent"
+                app:week_background="?android:colorPrimary"
                 app:week_start_with="sun"
-                app:week_text_color="@color/textColorPrimary" />
+                app:week_text_color="?android:textColorPrimary" />
 
             <ListView
                 android:id="@+id/year_list"

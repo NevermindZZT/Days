@@ -23,14 +23,15 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:elevation="0dp" >
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:theme="@style/AppTheme"
                 app:title="@string/activity_anni_edit_title" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -55,6 +56,7 @@
                     android:maxLines="1"
                     android:padding="16dp"
                     android:text="@={vm.anniversary.name}"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
                     tools:ignore="all"
                     tools:text="纪念日" />
@@ -71,6 +73,7 @@
                     android:padding="16dp"
                     android:onClick="@{view -> presenter.onClick(view)}"
                     android:text="@{AnniversaryUtilKt.getDateString(vm.anniversary, @string/activity_anni_edit_date_format, @string/activity_anni_edit_date_format_lunar)}"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
                     tools:text="2020年5月20日" />
 
@@ -86,6 +89,7 @@
                     android:padding="16dp"
                     android:onClick="@{view -> presenter.onClick(view)}"
                     android:text="@{AnniversaryUtilKt.getTypeText(vm.anniversary)}"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
                     tools:text="纪念日" />
 
@@ -93,13 +97,15 @@
                     android:id="@+id/lunar_check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
+                    android:checked="@={vm.anniversary.lunar}"
                     android:drawableLeft="@drawable/ic_edit_lunar"
                     android:drawablePadding="16dp"
                     android:layoutDirection="rtl"
-                    android:padding="16dp"
-                    android:checked="@={vm.anniversary.lunar}"
                     android:onClick="@{view -> presenter.onClick(view)}"
+                    android:padding="16dp"
                     android:text="@string/activity_anni_edit_lunar_name"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
                     tools:ignore="all" />
 
@@ -120,7 +126,8 @@
                         android:drawablePadding="16dp"
                         android:padding="16dp"
                         android:textSize="18sp"
-                        android:text="@string/activity_anni_edit_theme_name" />
+                        android:text="@string/activity_anni_edit_theme_name"
+                        android:textColor="?android:attr/textColorPrimary" />
 
                     <com.letter.colorpicker.ColorPane
                         android:layout_width="32dp"

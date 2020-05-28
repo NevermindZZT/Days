@@ -1,8 +1,6 @@
 package com.letter.days.activity
 
 import android.graphics.Color
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -23,10 +21,8 @@ import com.letter.days.utils.setTimeInMillis
 import com.letter.days.viewmodel.AnniEditViewModel
 import com.letter.presenter.ViewPresenter
 import com.letter.utils.toast
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * 纪念日编辑活动
@@ -36,7 +32,7 @@ import kotlinx.coroutines.withContext
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0
  */
-class AnniEditActivity : AppCompatActivity(), ViewPresenter {
+class AnniEditActivity : BaseActivity(), ViewPresenter {
 
     private lateinit var binding: ActivityAnniEditBinding
     private val model by lazy {
@@ -49,11 +45,6 @@ class AnniEditActivity : AppCompatActivity(), ViewPresenter {
         super.onCreate(savedInstanceState)
         binding = ActivityAnniEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        /* Android O以上支持，设置浅色状态栏 */
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
 
         /* 设置Action Bar并使能home按钮 */
         setSupportActionBar(binding.toolbar)

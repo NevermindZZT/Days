@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="slogan"
+        android:title="@string/setting_slogan_title"
+        android:summary="@string/setting_slogan_summary"
+        android:defaultValue="@string/setting_slogan_default"
+        android:inputType="text"/>
+
+</PreferenceScreen>
