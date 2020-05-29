@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressView">
+        <attr name="android:text" format="string" />
+        <attr name="android:textColor" format="color" />
+        <attr name="android:textSize" format="dimension" />
+        <attr name="android:background" format="color" />
+        <attr name="android:max" format="integer" />
+        <attr name="android:progress" format="integer" />
+        <attr name="strokeColor" format="color" />
+        <attr name="strokeBackground" format="color" />
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="fitWidth" format="boolean" />
+    </declare-styleable>
+</resources>

@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.letter.days.adapter.BindingViewAdapter
 import com.letter.days.LetterApplication
 import com.letter.days.R
-import com.letter.days.activity.AnniEditActivity
+import com.letter.days.activity.AnniversaryActivity
 import com.letter.days.databinding.FragmentDaysListBinding
 import com.letter.days.viewmodel.DaysListViewModel
 import com.letter.presenter.ItemClickPresenter
-import com.letter.utils.toast
 
 /**
  * 纪念日列表Fragment
@@ -64,7 +63,7 @@ class DaysListFragment : Fragment(), ItemClickPresenter {
     }
 
     override fun onItemClick(adapter: Any, position: Int) {
-        val intent = Intent(this@DaysListFragment.requireContext(), AnniEditActivity::class.java)
+        val intent = Intent(this@DaysListFragment.requireContext(), AnniversaryActivity::class.java)
         intent.putExtra("anniId", model.daysList.value?.get(position)?.id ?: -1)
         startActivity(intent)
     }

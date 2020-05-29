@@ -43,6 +43,22 @@ fun Context.isDarkTheme(): Boolean {
 }
 
 /**
+ * dp转px
+ * @receiver Context context
+ * @param dp Int dp
+ * @return Float px
+ */
+fun Context.dp2px(dp: Int): Float  = dp * resources.displayMetrics.density
+
+/**
+ * px转dp
+ * @receiver Context context
+ * @param px Float px
+ * @return Float dp
+ */
+fun Context.px2dp(px: Float): Float = px / resources.displayMetrics.density
+
+/**
  * 启动活动
  * @receiver Activity
  * @param clazz Class<Activity> 活动

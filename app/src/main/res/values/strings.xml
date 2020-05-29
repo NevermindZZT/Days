@@ -16,6 +16,10 @@
     <string name="activity_anni_theme_dialog_title">选择主题色</string>
     <string name="activity_anni_edit_toast_save_success">保存成功</string>
 
+    <string name="activity_anniversary_toolbar_delete">删除</string>
+    <string name="activity_anniversary_toolbar_edit">编辑</string>
+    <string name="activity_anniversary_delete_dialog_message">确认删除这个纪念日?</string>
+
     <string name="activity_setting_title">设置</string>
 
     <string name="activity_about_title">关于</string>
@@ -32,4 +36,5 @@
     <string name="setting_slogan_default">记住值得铭记的</string>
     <string name="setting_slogan_title">标语</string>
     <string name="setting_slogan_summary">展示在抽屉里应用名下方</string>
+
 </resources>

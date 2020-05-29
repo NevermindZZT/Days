@@ -1,0 +1,98 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.letter.days.database.entity.AnniversaryEntity" />
+        <import type="com.letter.days.utils.AnniversaryUtilKt" />
+        <variable
+            name="anniversary"
+            type="AnniversaryEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context="com.letter.days.fragment.AnniversaryFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/name_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@{anniversary.name}"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Day" />
+
+                <com.letter.days.view.ProgressView
+                    android:id="@+id/day_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:max="365"
+                    android:progress="@{365 - AnniversaryUtilKt.getNextTime(anniversary)}"
+                    android:text="@{AnniversaryUtilKt.getDayText(anniversary)}"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="28sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_text"
+                    app:strokeBackground="?android:attr/colorPrimary"
+                    app:strokeWidth="4dp"
+                    tools:strokeColor="?android:attr/colorAccent"
+                    tools:progress="100"
+                    tools:text="25天" />
+
+
+                <TextView
+                    android:id="@+id/date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{AnniversaryUtilKt.getDateString(anniversary, @string/activity_main_item_date_format, @string/activity_main_item_date_format_lunar)"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day_text"
+                    tools:text="2020-5-20" />
+
+                <TextView
+                    android:id="@+id/type_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@{AnniversaryUtilKt.getTypeText(anniversary)"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/date_text"
+                    tools:text="纪念日" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>
