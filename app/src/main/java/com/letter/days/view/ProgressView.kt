@@ -111,12 +111,14 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
         /* 绘制背景 */
         backgroundPaint.color = background
         backgroundPaint.style = Paint.Style.FILL
+        backgroundPaint.isAntiAlias = true
         canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
             (min(width, height) / 2 - if (strokeWidth > 0) 1 else 0).toFloat(), backgroundPaint)
 
         /* 绘制边框背景 */
         strokeBackgroundPaint.color = strokeBackground
         strokeBackgroundPaint.style = Paint.Style.STROKE
+        strokeBackgroundPaint.isAntiAlias = true
         strokeBackgroundPaint.strokeWidth = strokeWidth
         canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
             (diameter / 2).toFloat() - (strokeWidth) / 2, strokeBackgroundPaint)
@@ -124,6 +126,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
         /* 绘制边框 */
         strokePaint.color = strokeColor
         strokePaint.style = Paint.Style.STROKE
+        strokePaint.isAntiAlias = true
         strokePaint.strokeWidth = strokeWidth
         canvas?.drawArc(((width - diameter) / 2).toFloat() + (strokeWidth) / 2,
             ((height - diameter) / 2).toFloat() + (strokeWidth) / 2,

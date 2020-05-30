@@ -14,6 +14,13 @@ interface WidgetDao {
     suspend fun insert(vararg widgets: WidgetEntity)
 
     /**
+     * 获取所有widget数据
+     * @return List<WidgetEntity> widget数据
+     */
+    @Query("SELECT * FROM widget")
+    suspend fun getAll(): List<WidgetEntity>
+
+    /**
      * 通过ID获取widget数据
      * @param id Int id
      * @return WidgetDao? widget数据

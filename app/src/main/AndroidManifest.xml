@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.WidgetSettingActivity"></activity>
+        <activity android:name=".activity.WidgetSettingActivity" />
 
         <receiver android:name=".widget.AnniversaryWidget">
             <intent-filter>

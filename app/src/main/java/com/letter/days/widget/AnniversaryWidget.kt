@@ -16,6 +16,7 @@ import com.letter.days.utils.getClosestAnniversary
 import com.letter.days.utils.getDateString
 import com.letter.days.utils.getDayText
 import com.letter.days.utils.getTypeText
+import com.letter.utils.dp2px
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,6 +45,23 @@ class AnniversaryWidget : AppWidgetProvider() {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    override fun onReceive(context: Context?, intent: Intent?) {
+        super.onReceive(context, intent)
+        val widgetId = intent?.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1) ?: -1
+        if (widgetId == -1) {
+            GlobalScope.launch {
+                AppDatabase.instance(context?.applicationContext!!)
+                    .widgetDao()
+                    .getAll()
+                    .forEach {
+                        updateAppWidget(context, AppWidgetManager.getInstance(context), it.id)
+                    }
+            }
+        } else {
+            updateAppWidget(context!!, AppWidgetManager.getInstance(context), widgetId)
+        }
+    }
+
     override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {
         super.onDeleted(context, appWidgetIds)
         GlobalScope.launch {
@@ -56,7 +74,7 @@ class AnniversaryWidget : AppWidgetProvider() {
     }
 }
 
-fun updateAppWidget(
+internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
@@ -98,18 +116,20 @@ fun updateAppWidget(
                 PendingIntent.FLAG_CANCEL_CURRENT)
             views.setOnClickPendingIntent(R.id.add_image, addPI)
 
-            if (widget.anniversaryId == -1) {
+            if (widget.anniversaryId != -1) {
                 views.setViewVisibility(R.id.title_layout, View.GONE)
             }
 
-            views.setViewVisibility(
-                R.id.back_layout,
-                if (PreferenceManager
-                        .getDefaultSharedPreferences(context)
-                        .getBoolean("widget_background", false))
-                    View.GONE
-                else
-                    View.VISIBLE)
+            if (PreferenceManager
+                    .getDefaultSharedPreferences(context)
+                    .getBoolean("widget_background", false)) {
+                views.setViewPadding(R.id.widget_layout, 0, 0, 0 , 0)
+                views.setViewVisibility(R.id.back_view, View.GONE)
+            } else {
+                val padding = context.resources.getDimension(R.dimen.widget_margin).toInt()
+                views.setViewPadding(R.id.widget_layout, padding, padding, padding , padding)
+                views.setViewVisibility(R.id.back_view, View.VISIBLE)
+            }
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

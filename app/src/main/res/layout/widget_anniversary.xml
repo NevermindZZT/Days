@@ -5,7 +5,7 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
-        android:id="@+id/back_layout"
+        android:id="@+id/back_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/ba_widget"
@@ -24,14 +24,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="8dp">
+            android:paddingBottom="16dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/app_name"
-                android:textColor="?android:textColorPrimary" />
+                android:textColor="@color/textColorPrimary" />
 
             <ImageView
                 android:id="@+id/add_image"
@@ -63,7 +63,7 @@
                     android:id="@+id/name_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="18sp"
                     tools:text="App 生日" />
 
@@ -71,8 +71,8 @@
                     android:id="@+id/date_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="?android:textColorHint"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/textColorHint"
                     android:textSize="12sp"
                     tools:text="2020-5-20" />
 
@@ -80,8 +80,8 @@
                     android:id="@+id/type_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textColor="?android:textColorHint"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/textColorHint"
                     android:textSize="12sp"
                     tools:text="纪念日" />
             </LinearLayout>
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:textColor="?android:textColorHint"
+                android:textColor="@color/textColorHint"
                 android:textSize="20sp"
                 tools:text="52天" />
         </LinearLayout>
