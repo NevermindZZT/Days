@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp"
-            app:cardElevation="2dp"
+            app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,14 +53,14 @@
                     android:progress="@{365 - AnniversaryUtilKt.getNextTime(anniversary)}"
                     android:text="@{AnniversaryUtilKt.getDayText(anniversary)}"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="28sp"
+                    android:textSize="36sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name_text"
                     app:strokeBackground="?android:attr/colorPrimary"
                     app:strokeWidth="4dp"
-                    tools:strokeColor="?android:attr/colorAccent"
                     tools:progress="100"
+                    tools:strokeColor="?android:attr/colorAccent"
                     tools:text="25天" />
 
 

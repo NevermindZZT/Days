@@ -1,8 +1,10 @@
 package com.letter.days.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.*
 import android.view.Gravity
+import com.letter.days.database.AppDatabase
 import com.letter.days.database.entity.AnniversaryEntity
 
 /**
@@ -71,4 +73,21 @@ fun getProgressDrawable(anniversary: AnniversaryEntity?): Drawable? {
     drawable.setId(1, android.R.id.progress)
 
     return drawable
+}
+
+/**
+ * 获取最近的纪念日
+ * @param context Context context
+ * @return AnniversaryEntity? 最近的纪念日
+ */
+suspend fun getClosestAnniversary(context: Context): AnniversaryEntity? {
+    val anniversaries = AppDatabase.instance(context.applicationContext)
+        .anniversaryDao()
+        .getAll().toMutableList()
+        ?: return null
+    anniversaries.sortedBy {
+        val nextTime = it.getNextTime()
+        if (nextTime < 0) 367 else nextTime
+    }
+    return anniversaries[0]
 }

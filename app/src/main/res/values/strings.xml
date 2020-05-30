@@ -28,6 +28,9 @@
     <string name="activity_about_open_source_address">https://github.com/NevermindZZT/Days</string>
     <string name="activity_about_copyright_text">© 2020 Letter All rights reserved</string>
 
+    <string name="activity_widget_setting_title">选择纪念日</string>
+    <string name="activity_widget_setting_closest_day">最近的纪念日</string>
+
     <string name="activity_open_source_title">开源相关</string>
 
     <string name="dialog_positive_button">确认</string>
@@ -36,5 +39,7 @@
     <string name="setting_slogan_default">记住值得铭记的</string>
     <string name="setting_slogan_title">标语</string>
     <string name="setting_slogan_summary">展示在抽屉里应用名下方</string>
+    <string name="setting_widget_background_title">Widget背景透明</string>
+    <string name="setting_widget_background_summary">设置桌面Widget控件是否背景透明</string>
 
 </resources>

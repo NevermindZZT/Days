@@ -75,7 +75,7 @@ fun AnniversaryEntity.getDayText() = run {
     } else if (distance == 0) {
         "今天"
     } else {
-        "差${distance}天"
+        "差${-distance}天"
     }
 }
 
@@ -87,6 +87,10 @@ fun AnniversaryEntity.getDayText() = run {
 fun AnniversaryEntity.getNextTime() =
     when (type) {
         ANNI_TYPE_EVERY_YEAR -> getDistance(AnniversaryEntity.DistanceMode.DISTANCE_NEXT)
+        ANNI_TYPE_COUNT_DOWN -> {
+            val nextTime = -getDistance(AnniversaryEntity.DistanceMode.DISTANCE_ABS)
+            if (nextTime < 0) -1 else nextTime
+        }
         else -> -1
     }
 

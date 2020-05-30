@@ -5,7 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.letter.days.database.dao.AnniversaryDao
+import com.letter.days.database.dao.WidgetDao
 import com.letter.days.database.entity.AnniversaryEntity
+import com.letter.days.database.entity.WidgetEntity
 
 /**
  * 数据库
@@ -13,7 +15,7 @@ import com.letter.days.database.entity.AnniversaryEntity
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0
  */
-@Database(entities = [AnniversaryEntity::class], version = 1)
+@Database(entities = [AnniversaryEntity::class, WidgetEntity::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
 
     /**
@@ -21,6 +23,12 @@ abstract class AppDatabase: RoomDatabase() {
      * @return AnniversaryDao Anniversary Dao
      */
     abstract fun anniversaryDao(): AnniversaryDao
+
+    /**
+     * 获取Widget Dao
+     * @return WidgetDao widget dao
+     */
+    abstract fun widgetDao(): WidgetDao
 
     companion object {
 
