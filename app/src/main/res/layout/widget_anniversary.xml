@@ -2,19 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/back_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ba_widget"
-        android:visibility="gone" />
+        android:background="@drawable/bg_widget"
+        android:orientation="horizontal" />
 
     <LinearLayout
         android:id="@+id/widget_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/widget_margin">
@@ -40,6 +41,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:paddingStart="4dp"
+                android:paddingEnd="0dp"
                 android:src="@drawable/ic_widget_add"
                 tools:ignore="contentDescription" />
 

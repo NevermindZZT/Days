@@ -84,8 +84,7 @@ suspend fun getClosestAnniversary(context: Context): AnniversaryEntity? {
     val anniversaries = AppDatabase.instance(context.applicationContext)
         .anniversaryDao()
         .getAll().toMutableList()
-        ?: return null
-    anniversaries.sortedBy {
+    anniversaries.sortBy {
         val nextTime = it.getNextTime()
         if (nextTime < 0) 367 else nextTime
     }

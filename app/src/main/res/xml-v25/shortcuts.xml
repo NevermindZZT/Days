@@ -1,0 +1,13 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="add_anni"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_add"
+        android:shortcutShortLabel="@string/shortcut_add_anni_short_label" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.letter.days2"
+            android:targetClass="com.letter.days.activity.AnniEditActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

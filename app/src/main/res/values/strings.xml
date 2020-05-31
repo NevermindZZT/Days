@@ -42,4 +42,6 @@
     <string name="setting_widget_background_title">Widget背景透明</string>
     <string name="setting_widget_background_summary">设置桌面Widget控件是否背景透明</string>
 
+    <string name="shortcut_add_anni_short_label">添加纪念日</string>
+
 </resources>
