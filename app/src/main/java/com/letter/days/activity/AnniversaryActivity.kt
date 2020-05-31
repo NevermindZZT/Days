@@ -1,18 +1,17 @@
 package com.letter.days.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.*
 import androidx.viewpager.widget.ViewPager
 import com.afollestad.materialdialogs.MaterialDialog
-import com.letter.days.LetterApplication
 import com.letter.days.R
 import com.letter.days.adapter.ViewPagerAdapter
 import com.letter.days.databinding.ActivityAnniversaryBinding
 import com.letter.days.transformer.AnniViewPagerTransformer
 import com.letter.days.viewmodel.AnniversaryViewModel
+import com.letter.utils.startActivity
 
 /**
  * 纪念日详情界面
@@ -116,9 +115,9 @@ class AnniversaryActivity : BaseActivity() {
                 }
             }
             R.id.edit -> {
-                val intent = Intent(this, AnniEditActivity::class.java)
-                intent.putExtra("anniId", model.getCurrentAnniversaryId())
-                startActivity(intent)
+                startActivity(AnniEditActivity::class.java) {
+                    putExtra("anniId", model.getCurrentAnniversaryId())
+                }
             }
         }
         return true

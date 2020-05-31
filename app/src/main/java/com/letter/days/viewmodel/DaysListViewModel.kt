@@ -45,18 +45,13 @@ class DaysListViewModel(application: Application) : AndroidViewModel(application
      * @param widgetId Int widget id
      * @param anniId Int 纪念日id
      */
-    fun saveWidgetInfo(widgetId: Int, anniId: Int) {
+    fun saveWidgetInfo(widgetId: Int, anniId: Int, action: (()->Unit)? = null) {
         viewModelScope.launch {
             AppDatabase.instance(getApplication()).widgetDao().insert(
                 WidgetEntity(widgetId, anniId)
             )
             withContext(Dispatchers.Main) {
-                val intent = Intent()
-                intent.apply {
-                    action = "android.appwidget.action.APPWIDGET_UPDATE"
-                    putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                }
-                getApplication<Application>().sendBroadcast(intent)
+                action?.invoke()
             }
         }
     }

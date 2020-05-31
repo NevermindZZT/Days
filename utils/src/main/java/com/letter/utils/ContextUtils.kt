@@ -60,9 +60,27 @@ fun Context.px2dp(px: Float): Float = px / resources.displayMetrics.density
 
 /**
  * 启动活动
- * @receiver Activity
+ * @receiver Context
  * @param clazz Class<Activity> 活动
+ * @param act  [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
  */
-fun <T: Activity> Activity.startActivity(clazz: Class<T>) {
-    startActivity(Intent(this, clazz))
+fun <T: Activity> Context.startActivity(clazz: Class<T>, act: (Intent.()->Unit)? = null) {
+    val intent = Intent(this, clazz)
+    act?.invoke(intent)
+    startActivity(intent)
+}
+
+/**
+ * 发送广播
+ * @receiver Context context
+ * @param action String 广播动作
+ * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
+ */
+fun Context.sendBroadcast(action: String, act: (Intent.()->Unit)? = null) {
+    val intent = Intent()
+    intent.apply {
+        this.action = action
+        act?.invoke(this)
+    }
+    sendBroadcast(intent)
 }

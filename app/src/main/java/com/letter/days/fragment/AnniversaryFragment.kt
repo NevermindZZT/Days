@@ -55,7 +55,7 @@ class AnniversaryFragment : Fragment() {
         }
         binding.apply {
             nameText.text = model.daysList.value?.get(anniPosition)?.name
-            val progress = 365 - getNextTime(model.daysList.value?.get(anniPosition)) !!
+            val progress = 365 - (getNextTime(model.daysList.value?.get(anniPosition)) ?: 0)
             ObjectAnimator.ofInt(dayText, "progress", 0, progress)
                 .setDuration(500)
                 .start()

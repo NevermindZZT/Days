@@ -98,9 +98,10 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
         when (item.itemId) {
             android.R.id.home -> finish()
             R.id.save -> {
-                model.saveAnniversary()
-                toast(R.string.activity_anni_edit_toast_save_success)
-                finish()
+                model.saveAnniversary {
+                    toast(R.string.activity_anni_edit_toast_save_success)
+                    finish()
+                }
             }
         }
         return true

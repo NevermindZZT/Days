@@ -1,6 +1,5 @@
 package com.letter.days.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -86,9 +85,9 @@ class MainActivity
     override fun onClick(v: View?) {
         when (v) {
             binding.mainLayout.fab -> {
-                val intent = Intent(this, AnniEditActivity::class.java)
-                intent.putExtra("anniId", -1)
-                startActivity(intent)
+                startActivity(AnniEditActivity::class.java) {
+                    putExtra("anniId", -1)
+                }
             }
         }
     }

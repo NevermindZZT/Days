@@ -136,7 +136,7 @@ fun AnniversaryEntity.getNextCalendar(): Calendar {
                     (nowDate[0] * 1000 + nowDate[1] * 100 + nowDate[2])) {
                     nextDate[0] += 1
                 }
-                val nextSolarDate = LunarUtil.lunarToSolar(nextDate[0], nextDate[2], nextDate[3], nextDate[4] == 1)
+                val nextSolarDate = LunarUtil.lunarToSolar(nextDate[0], nextDate[1], nextDate[2], nextDate[3] == 1)
                 tmpCalendar.year = nextSolarDate[0]
                 tmpCalendar.month = nextSolarDate[1]
                 tmpCalendar.day = nextSolarDate[2]

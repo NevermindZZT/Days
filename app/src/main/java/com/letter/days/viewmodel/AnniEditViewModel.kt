@@ -4,10 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.letter.days.R
 import com.letter.days.database.AppDatabase
 import com.letter.days.database.entity.AnniversaryEntity
-import com.letter.utils.toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,12 +25,15 @@ class AnniEditViewModel(application: Application) : AndroidViewModel(application
     /**
      * 保存纪念日
      */
-    fun saveAnniversary() {
+    fun saveAnniversary(action: (() -> Unit)? = null) {
         viewModelScope.launch {
             val anniversary = anniversary.value
             if (anniversary != null) {
                 AppDatabase.instance(getApplication())
                     .anniversaryDao().insert(anniversary)
+            }
+            withContext(Dispatchers.Main) {
+                action?.invoke()
             }
         }
     }

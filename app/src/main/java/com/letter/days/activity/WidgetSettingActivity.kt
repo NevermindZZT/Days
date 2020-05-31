@@ -14,6 +14,7 @@ import com.letter.days.databinding.ActivityWidgetSettingBinding
 import com.letter.days.viewmodel.DaysListViewModel
 import com.letter.presenter.ItemClickPresenter
 import com.letter.presenter.ViewPresenter
+import com.letter.utils.sendBroadcast
 import kotlin.properties.Delegates
 
 class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter {
@@ -47,17 +48,23 @@ class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter 
         initModel()
     }
 
+    override fun onResume() {
+        super.onResume()
+        model.loadDays()
+    }
+
+    /**
+     * 初始化试图绑定
+     */
     private fun initBinding() {
         binding.let {
             it.presenter = this
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        model.loadDays()
-    }
-
+    /**
+     * 初始化view model
+     */
     private fun initModel() {
         model.apply {
             daysList.observe(this@WidgetSettingActivity) {
@@ -76,6 +83,24 @@ class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter 
     }
 
     /**
+     * 包括widget数据
+     * @param widgetId Int widget id
+     * @param anniId Int 纪念日id
+     */
+    private fun saveWidgetInfo(widgetId: Int, anniId: Int) {
+        model.saveWidgetInfo(widgetId, anniId) {
+            sendBroadcast("android.appwidget.action.APPWIDGET_UPDATE") {
+                putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+            }
+
+            val result = Intent()
+            result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+            setResult(RESULT_OK, result)
+            finish()
+        }
+    }
+
+    /**
      * 菜单选项选择处理
      * @param item 被选中的选项
      * @return Boolean 动作是否被处理
@@ -87,22 +112,23 @@ class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter 
         return true
     }
 
+    /**
+     * item点击处理
+     * @param adapter Any 适配器
+     * @param position Int item位置
+     */
     override fun onItemClick(adapter: Any, position: Int) {
-        model.saveWidgetInfo(widgetId, model.daysList.value?.get(position)?.id ?: -1)
-        val result = Intent()
-        result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-        setResult(RESULT_OK, result)
-        finish()
+        saveWidgetInfo(widgetId, model.daysList.value?.get(position)?.id ?: -1)
     }
 
+    /**
+     * 视图点击处理
+     * @param v View? 视图
+     */
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.closest_text -> {
-                model.saveWidgetInfo(widgetId, -1)
-                val result = Intent()
-                result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                setResult(RESULT_OK, result)
-                finish()
+                saveWidgetInfo(widgetId, -1)
             }
         }
     }
