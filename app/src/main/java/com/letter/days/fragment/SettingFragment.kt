@@ -4,8 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.content.sendBroadcast
 import android.content.startService
 import android.os.Bundle
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.*
 import com.letter.days.R
 import com.letter.days.service.CoreService
 
@@ -18,6 +18,11 @@ class SettingFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.setting_preferences, rootKey)
+        val themeModePreference = findPreference<ListPreference>("theme_mode")
+        themeModePreference?.setOnPreferenceChangeListener { _, newValue ->
+            AppCompatDelegate.setDefaultNightMode((newValue as String).toInt())
+            true
+        }
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {

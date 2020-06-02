@@ -36,6 +36,9 @@
     <string name="dialog_positive_button">确认</string>
     <string name="dialog_negative_button">取消</string>
 
+    <string name="setting_group_basic">基础设置</string>
+    <string name="setting_group_theme">主题设置</string>
+
     <string name="setting_slogan_default">记住值得铭记的</string>
     <string name="setting_slogan_title">标语</string>
     <string name="setting_slogan_summary">展示在抽屉里应用名下方</string>
@@ -43,6 +46,7 @@
     <string name="setting_widget_background_summary">设置桌面Widget控件是否背景透明</string>
     <string name="setting_intent_notification_title">使用前台服务</string>
     <string name="setting_intent_notification_summary">通过显示一个前台通知保活，启动后可以将前台通知关闭</string>
+    <string name="setting_theme_mode_title">主题模式</string>
 
     <string name="shortcut_add_anni_short_label">添加纪念日</string>
 

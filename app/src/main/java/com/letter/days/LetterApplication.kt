@@ -3,6 +3,8 @@ package com.letter.days
 import android.app.Application
 import com.letter.days.service.CoreService
 import android.content.startService
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.preference.PreferenceManager
 
 /**
  * Application
@@ -29,5 +31,10 @@ class LetterApplication : Application() {
         super.onCreate()
         instance = this
         startService(CoreService::class.java)
+
+        AppCompatDelegate.setDefaultNightMode(
+            PreferenceManager.getDefaultSharedPreferences(this)
+                .getString("theme_mode", "-1")?.toInt() ?: -1
+        )
     }
 }

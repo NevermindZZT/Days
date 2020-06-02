@@ -2,23 +2,34 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:key="slogan"
-        android:title="@string/setting_slogan_title"
-        android:summary="@string/setting_slogan_summary"
-        android:defaultValue="@string/setting_slogan_default"
-        android:inputType="text"/>
+    <PreferenceCategory android:title="@string/setting_group_basic">
+        <EditTextPreference
+            android:key="slogan"
+            android:title="@string/setting_slogan_title"
+            android:summary="@string/setting_slogan_summary"
+            android:defaultValue="@string/setting_slogan_default"
+            android:inputType="text"/>
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="widget_background"
-        android:title="@string/setting_widget_background_title"
-        android:summary="@string/setting_widget_background_summary"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="widget_background"
+            android:title="@string/setting_widget_background_title"
+            android:summary="@string/setting_widget_background_summary"/>
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="intent_notification"
-        android:title="@string/setting_intent_notification_title"
-        android:summary="@string/setting_intent_notification_summary"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="intent_notification"
+            android:title="@string/setting_intent_notification_title"
+            android:summary="@string/setting_intent_notification_summary"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_group_theme">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/theme_mode_entries"
+            android:entryValues="@array/theme_mode_values"
+            android:key="theme_mode"
+            android:title="@string/setting_theme_mode_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
