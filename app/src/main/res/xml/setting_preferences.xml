@@ -15,4 +15,10 @@
         android:title="@string/setting_widget_background_title"
         android:summary="@string/setting_widget_background_summary"/>
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="intent_notification"
+        android:title="@string/setting_intent_notification_title"
+        android:summary="@string/setting_intent_notification_summary"/>
+
 </PreferenceScreen>

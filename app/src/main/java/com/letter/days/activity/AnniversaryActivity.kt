@@ -11,7 +11,7 @@ import com.letter.days.adapter.ViewPagerAdapter
 import com.letter.days.databinding.ActivityAnniversaryBinding
 import com.letter.days.transformer.AnniViewPagerTransformer
 import com.letter.days.viewmodel.AnniversaryViewModel
-import com.letter.utils.startActivity
+import android.content.startActivity
 
 /**
  * 纪念日详情界面

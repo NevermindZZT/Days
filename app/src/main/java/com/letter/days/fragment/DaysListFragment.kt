@@ -14,7 +14,7 @@ import com.letter.days.activity.AnniversaryActivity
 import com.letter.days.databinding.FragmentDaysListBinding
 import com.letter.days.viewmodel.DaysListViewModel
 import com.letter.presenter.ItemClickPresenter
-import com.letter.utils.startActivity
+import android.content.startActivity
 
 /**
  * 纪念日列表Fragment

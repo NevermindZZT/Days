@@ -1,12 +1,13 @@
 package com.letter.days.fragment
 
-import android.app.Application
 import android.appwidget.AppWidgetManager
-import android.content.Intent
+import android.content.sendBroadcast
+import android.content.startService
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.letter.days.R
+import com.letter.days.service.CoreService
 
 /**
  * 设置Fragment
@@ -22,12 +23,12 @@ class SettingFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         when (preference?.key) {
             "widget_background" -> {
-                val intent = Intent()
-                intent.apply {
-                    action = "android.appwidget.action.APPWIDGET_UPDATE"
+                context?.sendBroadcast("android.appwidget.action.APPWIDGET_UPDATE") {
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
                 }
-                context?.sendBroadcast(intent)
+            }
+            "intent_notification" -> {
+                context?.startService(CoreService::class.java)
             }
         }
         return true

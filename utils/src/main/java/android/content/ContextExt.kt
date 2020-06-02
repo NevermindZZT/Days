@@ -1,14 +1,18 @@
-package com.letter.utils
+package android.content
 
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.res.Configuration
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 
 /**
- * Context Utils
+ * Context 扩展
  *
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0
@@ -71,6 +75,18 @@ fun <T: Activity> Context.startActivity(clazz: Class<T>, act: (Intent.()->Unit)?
 }
 
 /**
+ * 启动服务
+ * @receiver Context context
+ * @param clazz Class<T> 服务
+ * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
+ */
+fun <T: Service> Context.startService(clazz: Class<T>, act: (Intent.()->Unit)? = null) {
+    val intent = Intent(this, clazz)
+    act?.invoke(intent)
+    startService(intent)
+}
+
+/**
  * 发送广播
  * @receiver Context context
  * @param action String 广播动作
@@ -83,4 +99,17 @@ fun Context.sendBroadcast(action: String, act: (Intent.()->Unit)? = null) {
         act?.invoke(this)
     }
     sendBroadcast(intent)
+}
+
+/**
+ * 创建通知渠道
+ * @receiver Context context
+ * @param channelId String 渠道ID
+ * @param channelName String 渠道名
+ * @param importance Int 通知重要性
+ */
+@RequiresApi(Build.VERSION_CODES.O)
+fun Context.createNotificationChannel(channelId: String, channelName: String, importance: Int) {
+    val channel = NotificationChannel(channelId, channelName, importance)
+    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager?)?.createNotificationChannel(channel)
 }

@@ -41,7 +41,17 @@
     <string name="setting_slogan_summary">展示在抽屉里应用名下方</string>
     <string name="setting_widget_background_title">Widget背景透明</string>
     <string name="setting_widget_background_summary">设置桌面Widget控件是否背景透明</string>
+    <string name="setting_intent_notification_title">使用前台服务</string>
+    <string name="setting_intent_notification_summary">通过显示一个前台通知保活，启动后可以将前台通知关闭</string>
 
     <string name="shortcut_add_anni_short_label">添加纪念日</string>
 
+    <string name="notification_channel_anni_id">anni</string>
+    <string name="notification_channel_anni_name">纪念日提醒</string>
+
+    <string name="notification_channel_intent_id">intent</string>
+    <string name="notification_channel_intent_name">前台服务</string>
+
+    <string name="notification_intent_title">@string/app_name</string>
+    <string name="notification_intent_content">纪念日通知服务运行中</string>
 </resources>

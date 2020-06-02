@@ -1,11 +1,10 @@
-package com.letter.utils
+package androidx.fragment.app
 
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.fragment.app.Fragment
 
 /**
- * Fragment Utils
+ * Fragment 扩展
  *
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0

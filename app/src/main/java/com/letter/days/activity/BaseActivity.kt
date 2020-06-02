@@ -4,7 +4,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.letter.utils.isDarkTheme
+import android.content.isDarkTheme
 
 /**
  * 基础活动

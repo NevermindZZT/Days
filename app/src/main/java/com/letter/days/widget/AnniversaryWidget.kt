@@ -16,7 +16,6 @@ import com.letter.days.utils.getClosestAnniversary
 import com.letter.days.utils.getDateString
 import com.letter.days.utils.getDayText
 import com.letter.days.utils.getTypeText
-import com.letter.utils.dp2px
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -92,16 +91,17 @@ internal fun updateAppWidget(
                     .anniversaryDao()
                     .get(widget.anniversaryId)
             })
+                ?: return@launch
         withContext(Dispatchers.Main) {
             val views = RemoteViews(context.packageName, R.layout.widget_anniversary)
 
-            views.setTextViewText(R.id.name_text, anniversary?.name)
-            views.setTextViewText(R.id.date_text, anniversary?.getDateString())
-            views.setTextViewText(R.id.type_text, anniversary?.getTypeText())
-            views.setTextViewText(R.id.day_text, anniversary?.getDayText())
+            views.setTextViewText(R.id.name_text, anniversary.name)
+            views.setTextViewText(R.id.date_text, anniversary.getDateString())
+            views.setTextViewText(R.id.type_text, anniversary.getTypeText())
+            views.setTextViewText(R.id.day_text, anniversary.getDayText())
 
             val itemIntent = Intent(context, AnniversaryActivity::class.java)
-            itemIntent.putExtra("anniId", anniversary?.id)
+            itemIntent.putExtra("anniId", anniversary.id)
             val itemPI = PendingIntent.getActivity(context,
                 (0..Int.MAX_VALUE).random(),
                 itemIntent,

@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
 import com.letter.days.R
-import com.letter.utils.dp2px
+import android.content.dp2px
 import kotlin.math.min
 import kotlin.properties.Delegates
 

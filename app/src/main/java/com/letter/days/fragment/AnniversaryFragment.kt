@@ -1,11 +1,13 @@
 package com.letter.days.fragment
 
 import android.animation.ObjectAnimator
+import android.animation.start
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.letter.days.databinding.FragmentAnniversaryBinding
@@ -57,8 +59,10 @@ class AnniversaryFragment : Fragment() {
             nameText.text = model.daysList.value?.get(anniPosition)?.name
             val progress = 365 - (getNextTime(model.daysList.value?.get(anniPosition)) ?: 0)
             ObjectAnimator.ofInt(dayText, "progress", 0, progress)
-                .setDuration(500)
-                .start()
+                .start {
+                    duration = 500
+                    interpolator = AccelerateDecelerateInterpolator()
+                }
             dayText.strokeColor = model.daysList.value?.get(anniPosition)?.color ?: 0
             dayText.text = model.daysList.value?.get(anniPosition)?.getDayText()
             dateText.text = model.daysList.value?.get(anniPosition)?.getDateString()

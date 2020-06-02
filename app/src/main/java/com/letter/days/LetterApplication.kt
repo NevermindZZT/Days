@@ -1,6 +1,8 @@
 package com.letter.days
 
 import android.app.Application
+import com.letter.days.service.CoreService
+import android.content.startService
 
 /**
  * Application
@@ -26,5 +28,6 @@ class LetterApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        startService(CoreService::class.java)
     }
 }

@@ -7,7 +7,7 @@ import android.view.MenuItem
 import com.letter.days.BuildConfig
 import com.letter.days.R
 import com.letter.days.databinding.ActivityAboutBinding
-import com.letter.utils.startActivity
+import android.content.startActivity
 
 /**
  * 关于活动

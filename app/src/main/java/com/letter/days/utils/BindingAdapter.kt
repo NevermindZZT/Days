@@ -1,6 +1,7 @@
 package com.letter.days.utils
 
-import android.animation.ObjectAnimator
+import android.animation.*
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 
@@ -20,6 +21,8 @@ import androidx.databinding.BindingAdapter
 fun setProgress(progressBar: ProgressBar, progress: Int) {
     val initValue = progressBar.progress
     ObjectAnimator.ofInt(progressBar, "progress", initValue, progress)
-        .setDuration(500)
-        .start()
+        .start {
+            duration = 500
+            interpolator = AccelerateDecelerateInterpolator()
+        }
 }

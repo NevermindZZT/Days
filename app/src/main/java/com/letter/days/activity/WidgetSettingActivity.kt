@@ -14,7 +14,7 @@ import com.letter.days.databinding.ActivityWidgetSettingBinding
 import com.letter.days.viewmodel.DaysListViewModel
 import com.letter.presenter.ItemClickPresenter
 import com.letter.presenter.ViewPresenter
-import com.letter.utils.sendBroadcast
+import android.content.sendBroadcast
 import kotlin.properties.Delegates
 
 class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter {

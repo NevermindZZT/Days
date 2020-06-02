@@ -10,8 +10,8 @@ import com.google.android.material.navigation.NavigationView
 import com.letter.days.R
 import com.letter.days.databinding.ActivityMainBinding
 import com.letter.presenter.ViewPresenter
-import com.letter.utils.isDarkTheme
-import com.letter.utils.startActivity
+import android.content.isDarkTheme
+import android.content.startActivity
 
 /**
  * 主活动
