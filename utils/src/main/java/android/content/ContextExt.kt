@@ -75,6 +75,18 @@ fun <T: Activity> Context.startActivity(clazz: Class<T>, act: (Intent.()->Unit)?
 }
 
 /**
+ * 启动活动
+ * @receiver Context context
+ * @param action String 动作
+ * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
+ */
+fun Context.startActivity(action: String, act: (Intent.()->Unit)? = null) {
+    val intent = Intent(action)
+    act?.invoke(intent)
+    startActivity(intent)
+}
+
+/**
  * 启动服务
  * @receiver Context context
  * @param clazz Class<T> 服务

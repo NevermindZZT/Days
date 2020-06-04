@@ -18,6 +18,7 @@
 
     <string name="activity_anniversary_toolbar_delete">删除</string>
     <string name="activity_anniversary_toolbar_edit">编辑</string>
+    <string name="activity_anniversary_toolbar_share">分享</string>
     <string name="activity_anniversary_delete_dialog_message">确认删除这个纪念日?</string>
 
     <string name="activity_setting_title">设置</string>
@@ -52,7 +53,6 @@
 
     <string name="notification_channel_anni_id">anni</string>
     <string name="notification_channel_anni_name">纪念日提醒</string>
-
     <string name="notification_channel_intent_id">intent</string>
     <string name="notification_channel_intent_name">前台服务</string>
 

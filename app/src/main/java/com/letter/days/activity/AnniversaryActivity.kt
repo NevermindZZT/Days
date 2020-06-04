@@ -76,7 +76,8 @@ class AnniversaryActivity : BaseActivity() {
                 binding.viewPager.apply {
                     adapter = ViewPagerAdapter(supportFragmentManager, it)
                     setCurrentItem(
-                        model.currentPosition.value ?: model.getFragmentPosition(intent.getIntExtra("anniId", -1)),
+                        model.currentPosition.value
+                            ?: model.getFragmentPosition(intent.getIntExtra("anniId", -1)),
                         true)
                     setPageTransformer(false, AnniViewPagerTransformer())
                     addOnPageChangeListener(onPageChangeListener)
@@ -86,7 +87,7 @@ class AnniversaryActivity : BaseActivity() {
     }
 
     /**
-     * 创建菜单那
+     * 创建菜单
      * @param menu Menu 菜单
      * @return Boolean 是否创建
      */
@@ -118,6 +119,9 @@ class AnniversaryActivity : BaseActivity() {
                 startActivity(AnniEditActivity::class.java) {
                     putExtra("anniId", model.getCurrentAnniversaryId())
                 }
+            }
+            R.id.share -> {
+                model.shareCurrentAnniversary()
             }
         }
         return true

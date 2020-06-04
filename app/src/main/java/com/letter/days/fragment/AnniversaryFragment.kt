@@ -2,6 +2,7 @@ package com.letter.days.fragment
 
 import android.animation.ObjectAnimator
 import android.animation.start
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.drawToBitmap
 import androidx.lifecycle.ViewModelProvider
 import com.letter.days.databinding.FragmentAnniversaryBinding
 import com.letter.days.utils.*

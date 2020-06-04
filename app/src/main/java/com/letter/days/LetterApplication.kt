@@ -1,6 +1,8 @@
 package com.letter.days
 
 import android.app.Application
+import android.appwidget.AppWidgetManager
+import android.content.sendBroadcast
 import com.letter.days.service.CoreService
 import android.content.startService
 import androidx.appcompat.app.AppCompatDelegate
@@ -36,5 +38,9 @@ class LetterApplication : Application() {
             PreferenceManager.getDefaultSharedPreferences(this)
                 .getString("theme_mode", "-1")?.toInt() ?: -1
         )
+
+        sendBroadcast("android.appwidget.action.APPWIDGET_UPDATE") {
+            putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
+        }
     }
 }

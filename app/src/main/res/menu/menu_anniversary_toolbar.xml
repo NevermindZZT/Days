@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" >
     <item
         android:id="@+id/delete"
-        android:icon="@drawable/ic_anni_delete"
+        android:icon="@drawable/ic_anni_toolbar_delete"
         android:title="@string/activity_anniversary_toolbar_delete"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/edit"
-        android:icon="@drawable/ic_anni_edit"
+        android:icon="@drawable/ic_anni_toolbar_edit"
         android:title="@string/activity_anniversary_toolbar_edit"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/ic_anni_toolbar_share"
+        android:title="@string/activity_anniversary_toolbar_share"
+        app:showAsAction="ifRoom" />
 </menu>

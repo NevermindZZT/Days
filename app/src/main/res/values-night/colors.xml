@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#1A1A1A</color>
     <color name="colorAccent">#5C6BC0</color>
     <color name="colorBackground">#1A1A1A</color>
+    <color name="colorCardBackground">#424242</color>
 
     <color name="textColorPrimary">#FAFAFA</color>
     <color name="textColorHint">#888888</color>

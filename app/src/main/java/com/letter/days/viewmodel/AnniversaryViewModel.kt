@@ -1,5 +1,9 @@
 package com.letter.days.viewmodel
 
+import android.content.Intent
+import android.content.startActivity
+import android.os.Environment
+import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +11,8 @@ import com.letter.days.database.AppDatabase
 import com.letter.days.database.entity.AnniversaryEntity
 import com.letter.days.fragment.AnniversaryFragment
 import com.letter.days.utils.getApplication
+import com.letter.days.view.SharedAnniversaryView
+import com.letter.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,7 +69,7 @@ class AnniversaryViewModel : ViewModel() {
      * @return Int 位置
      */
     fun getFragmentPosition(id: Int): Int {
-        for (i in 0 until daysList.value?.size !!) {
+        for (i in 0 until (daysList.value?.size ?: 0)) {
             if (daysList.value?.get(i)?.id == id) {
                 return i
             }
@@ -76,4 +82,30 @@ class AnniversaryViewModel : ViewModel() {
      * @return Int id
      */
     fun getCurrentAnniversaryId() = daysList.value?.get(currentPosition.value!!)?.id ?: -1
+
+    /**
+     * 分享当前纪念日
+     */
+    fun shareCurrentAnniversary() {
+        viewModelScope.launch {
+            val sharedAnniversaryView = SharedAnniversaryView(getApplication(),
+                anniversary = daysList.value?.get(currentPosition.value ?: 0))
+            val file = FileUtils.saveBitmapToExternalFilesDir(getApplication(),
+                Environment.DIRECTORY_PICTURES,
+                "tmp.jpg",
+                sharedAnniversaryView.getBitmap())
+            if (file != null) {
+                withContext(Dispatchers.Main) {
+                    getApplication().startActivity(Intent.ACTION_SEND) {
+                        type = "image/*"
+                        putExtra(Intent.EXTRA_STREAM,
+                            FileProvider.getUriForFile(getApplication(),
+                                "com.letter.days.fileprovider",
+                                file))
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                }
+            }
+        }
+    }
 }
