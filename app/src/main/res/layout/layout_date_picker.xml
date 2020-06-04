@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,6 +72,7 @@
                 app:min_year="1970"
                 app:month_view="com.letter.days.dialog.datepicker.view.MonthView"
                 app:month_view_show_mode="mode_only_current"
+                app:current_month_text_color="?android:textColorPrimary"
                 app:other_month_text_color="?android:colorPrimary"
                 app:scheme_text_color="?android:textColorPrimary"
                 app:scheme_theme_color="?android:textColorPrimary"
