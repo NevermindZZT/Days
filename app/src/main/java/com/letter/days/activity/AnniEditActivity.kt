@@ -21,8 +21,11 @@ import com.letter.days.utils.setTimeInMillis
 import com.letter.days.viewmodel.AnniEditViewModel
 import com.letter.presenter.ViewPresenter
 import android.content.toast
+import android.util.Log
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
+private const val TAG = "AnniEditActivity"
 
 /**
  * 纪念日编辑活动
@@ -137,13 +140,21 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
                 model.anniversary.notify()
             }
             R.id.theme_layout -> {
-                val colors = mutableListOf<Int>()
-                resources.getStringArray(R.array.color_picker_values).forEach {
-                    colors.add(Color.parseColor(it))
+                val colors = resources.getStringArray(R.array.color_picker_values).map {
+                    Color.parseColor(it)
                 }
+                val subColors = resources.getStringArray(R.array.color_picker_sub_values).map {
+                    Color.parseColor(it)
+                }
+                val sub = mutableListOf<IntArray>()
+                for (i in colors.indices) {
+                    sub.add(subColors.slice((i * 7) until ((i + 1) * 7)).toIntArray())
+                }
+                Log.d(TAG, "color size: ${colors.size}, subColor size: ${sub.size}")
                 MaterialDialog(this).show {
                     title(R.string.activity_anni_theme_dialog_title)
                     colorChooser(colors.toIntArray(),
+                        subColors = sub.toTypedArray(),
                         initialSelection = model.anniversary.value?.color ?: 0,
                         allowCustomArgb = true,
                         showAlphaSelector = true) {

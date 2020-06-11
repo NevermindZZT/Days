@@ -2,27 +2,167 @@
 <resources>
     <string-array name="color_picker_values">
         <item>#FFFFFFFF</item>
+
         <item>#FFFFFF00</item>
         <item>#FFFF00FF</item>
         <item>#FF00FFFF</item>
+
         <item>#FFFFFF80</item>
         <item>#FFFF80FF</item>
         <item>#FF80FFFF</item>
-        <item>#FF800000</item>
-        <item>#FF008000</item>
-        <item>#FF000080</item>
-        <item>#FF0080FF</item>
-        <item>#FFFf8000</item>
+
         <item>#FFFF0000</item>
         <item>#FF00FF00</item>
         <item>#FF0000FF</item>
-        <item>#FF000000</item>
+
+        <item>#FF0080FF</item>
+        <item>#FFFf0080</item>
+        <item>#FF80FF00</item>
+
+        <item>#FF00FF80</item>
+        <item>#FF8000FF</item>
+        <item>#FFFF8000</item>
     </string-array>
+
+    <string-array name="color_picker_sub_values">
+        <item>#FFFFFFFF</item>
+        <item>#FFCCCCCC</item>
+        <item>#FFAAAAAA</item>
+        <item>#FF888888</item>
+        <item>#FF666666</item>
+        <item>#FF444444</item>
+        <item>#FF222222</item>
+
+
+        <item>#FFFFFFC0</item>
+        <item>#FFFFFF80</item>
+        <item>#FFFFFF40</item>
+        <item>#FFFFFF00</item>
+        <item>#FFCCCC00</item>
+        <item>#FFAAAA00</item>
+        <item>#FF888800</item>
+
+        <item>#FFFFC0FF</item>
+        <item>#FFFF80FF</item>
+        <item>#FFFF40FF</item>
+        <item>#FFFF00FF</item>
+        <item>#FFCC00CC</item>
+        <item>#FFAA00AA</item>
+        <item>#FF880088</item>
+
+        <item>#FFC0FFFF</item>
+        <item>#FF80FFFF</item>
+        <item>#FF40FFFF</item>
+        <item>#FF00FFFF</item>
+        <item>#FF00CCCC</item>
+        <item>#FF00AAAA</item>
+        <item>#FF008888</item>
+
+
+        <item>#FFFFFFB0</item>
+        <item>#FFFFFFA0</item>
+        <item>#FFFFFF90</item>
+        <item>#FFFFFF80</item>
+        <item>#FFCCCC70</item>
+        <item>#FFAAAA60</item>
+        <item>#FF888850</item>
+
+        <item>#FFFFB0FF</item>
+        <item>#FFFFA0FF</item>
+        <item>#FFFF90FF</item>
+        <item>#FFFF80FF</item>
+        <item>#FFCC70CC</item>
+        <item>#FFAA60AA</item>
+        <item>#FF885088</item>
+
+        <item>#FFB0FFFF</item>
+        <item>#FFA0FFFF</item>
+        <item>#FF90FFFF</item>
+        <item>#FF80FFFF</item>
+        <item>#FF70CCCC</item>
+        <item>#FF60AAAA</item>
+        <item>#FF508888</item>
+
+
+        <item>#FFFFCCCC</item>
+        <item>#FFFF8888</item>
+        <item>#FFFF4444</item>
+        <item>#FFFF0000</item>
+        <item>#FFCC0000</item>
+        <item>#FFAA0000</item>
+        <item>#FF880000</item>
+
+        <item>#FFCCFFCC</item>
+        <item>#FF88FF88</item>
+        <item>#FF44FF44</item>
+        <item>#FF00FF00</item>
+        <item>#FF00CC00</item>
+        <item>#FF00AA00</item>
+        <item>#FF008800</item>
+
+        <item>#FFCCCCFF</item>
+        <item>#FF8888FF</item>
+        <item>#FF4444FF</item>
+        <item>#FF0000FF</item>
+        <item>#FF0000CC</item>
+        <item>#FF0000AA</item>
+        <item>#FF000088</item>
+
+        <item>#FF00B0FF</item>
+        <item>#FF00A0FF</item>
+        <item>#FF0090FF</item>
+        <item>#FF0080FF</item>
+        <item>#FF0070CC</item>
+        <item>#FF0060AA</item>
+        <item>#FF005088</item>
+
+        <item>#FFFF00B0</item>
+        <item>#FFFF00A0</item>
+        <item>#FFFF0090</item>
+        <item>#FFFF0080</item>
+        <item>#FFCC0070</item>
+        <item>#FFAA0060</item>
+        <item>#FF880050</item>
+
+        <item>#FFB0FF00</item>
+        <item>#FFA0FF00</item>
+        <item>#FF90FF00</item>
+        <item>#FF80FF00</item>
+        <item>#FF70CC00</item>
+        <item>#FF60AA00</item>
+        <item>#FF508800</item>
+
+        <item>#FF00FFB0</item>
+        <item>#FF00FFA0</item>
+        <item>#FF00FF90</item>
+        <item>#FF00FF80</item>
+        <item>#FF00CC70</item>
+        <item>#FF00AA60</item>
+        <item>#FF008850</item>
+
+        <item>#FFB000FF</item>
+        <item>#FFA000FF</item>
+        <item>#FF9000FF</item>
+        <item>#FF8000FF</item>
+        <item>#FF7000CC</item>
+        <item>#FF6000AA</item>
+        <item>#FF500088</item>
+
+        <item>#FFFFB000</item>
+        <item>#FFFFA000</item>
+        <item>#FFFF9000</item>
+        <item>#FFFF8000</item>
+        <item>#FFCC7000</item>
+        <item>#FFAA6000</item>
+        <item>#FF885000</item>
+    </string-array>
+
     <string-array name="theme_mode_entries">
         <item>跟随系统</item>
         <item>日间模式</item>
         <item>夜间模式</item>
     </string-array>
+
     <string-array name="theme_mode_values">
         <item>-1</item>
         <item>1</item>
