@@ -72,7 +72,7 @@ class WidgetSettingActivity : BaseActivity(), ItemClickPresenter, ViewPresenter 
                     this@WidgetSettingActivity,
                     R.layout.layout_anniversary_item,
                     it,
-                    this@WidgetSettingActivity
+                    itemClickPresenter = this@WidgetSettingActivity
                 )
                 binding.daysListView.apply {
                     this.adapter = adapter

@@ -21,11 +21,8 @@ import com.letter.days.utils.setTimeInMillis
 import com.letter.days.viewmodel.AnniEditViewModel
 import com.letter.presenter.ViewPresenter
 import android.content.toast
-import android.util.Log
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
-
-private const val TAG = "AnniEditActivity"
 
 /**
  * 纪念日编辑活动
@@ -150,7 +147,6 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
                 for (i in colors.indices) {
                     sub.add(subColors.slice((i * 7) until ((i + 1) * 7)).toIntArray())
                 }
-                Log.d(TAG, "color size: ${colors.size}, subColor size: ${sub.size}")
                 MaterialDialog(this).show {
                     title(R.string.activity_anni_theme_dialog_title)
                     colorChooser(colors.toIntArray(),

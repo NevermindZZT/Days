@@ -21,6 +21,12 @@
             android:key="intent_notification"
             android:title="@string/setting_intent_notification_title"
             android:summary="@string/setting_intent_notification_summary"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="time_line"
+            android:title="@string/setting_time_line_title"
+            android:summary="@string/setting_time_line_summary"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_group_theme">

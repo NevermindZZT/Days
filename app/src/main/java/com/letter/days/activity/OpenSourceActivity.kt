@@ -34,7 +34,7 @@ class OpenSourceActivity : BaseActivity(), ItemClickPresenter {
         BindingViewAdapter(this,
             R.layout.layout_open_source_item,
             model.openSourceList,
-            this)
+            itemClickPresenter = this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

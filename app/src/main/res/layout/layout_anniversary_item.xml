@@ -10,7 +10,12 @@
         <import type="com.letter.presenter.ItemClickPresenter" />
         <import type="com.letter.presenter.ItemLongClickPresenter" />
         <import type="com.letter.days.utils.AnniversaryUtilKt" />
+        <import type="android.view.View" />
+        <import type="com.letter.days.viewmodel.DaysListViewModel" />
 
+        <variable
+            name="vm"
+            type="DaysListViewModel" />
         <variable
             name="list"
             type="ObservableList&lt;AnniversaryEntity>" />
@@ -28,86 +33,127 @@
             type="ItemLongClickPresenter" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="@{vm.showTimeline ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_timeline_line"
+                tools:ignore="contentDescription" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_timeline_dot"
+                tools:ignore="contentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{view->itemClickPresenter.onItemClick(adapter, position)}"
-            android:background="?attr/selectableItemBackground" >
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="6dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:text="@{list[position].name}"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Days" />
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{view->itemClickPresenter.onItemClick(adapter, position)}"
+                android:background="@drawable/bg_card_view" >
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{AnniversaryUtilKt.getDateString(list[position], @string/activity_main_item_date_format, @string/activity_main_item_date_format_lunar)}"
-                android:textColor="?android:attr/textColorHint"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                tools:text="2020-01-01" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="@{list[position].name}"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Days" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{AnniversaryUtilKt.getTypeText(list[position])}"
-                android:textColor="?android:attr/textColorHint"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:text="Anniversary" />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{AnniversaryUtilKt.getDateString(list[position], @string/activity_main_item_date_format, @string/activity_main_item_date_format_lunar)}"
+                    android:textColor="?android:attr/textColorHint"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:text="2020-01-01" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="@{AnniversaryUtilKt.getDayText(list[position])}"
-                android:textColor="?android:attr/textColorHint"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="100 Days" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@{AnniversaryUtilKt.getTypeText(list[position])}"
+                    android:textColor="?android:attr/textColorHint"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView2"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    tools:text="Anniversary" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:max="366"
-                android:progressDrawable="@{AnniversaryUtilKt.getProgressDrawable(list[position])}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                app:progress="@{366 - AnniversaryUtilKt.getNextTime(list[position])}"
-                tools:progress="100" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{AnniversaryUtilKt.getDayText(list[position])}"
+                    android:textColor="?android:attr/textColorHint"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="100 Days" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="8dp"
+                    android:max="366"
+                    android:progressDrawable="@{AnniversaryUtilKt.getProgressDrawable(list[position])}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3"
+                    app:progress="@{366 - AnniversaryUtilKt.getNextTime(list[position])}"
+                    tools:progress="100" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 </layout>

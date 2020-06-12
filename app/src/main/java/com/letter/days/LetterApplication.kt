@@ -26,6 +26,7 @@ class LetterApplication : Application() {
          * 获取Application实例
          * @return ScheduleApplication Application实例
          */
+        @JvmStatic
         fun instance() = instance!!
     }
 

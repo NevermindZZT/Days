@@ -7,6 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableList
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
 import com.letter.days.BR
 import com.letter.presenter.ItemClickPresenter
@@ -29,6 +30,7 @@ class BindingViewAdapter<T>
 constructor(private val context: Context,
             @LayoutRes private val layoutRes: Int,
             private val list: ObservableList<T>?,
+            private val vm: ViewModel? = null,
             private val itemClickPresenter: ItemClickPresenter? = null,
             private val itemLongClickPresenter: ItemLongClickPresenter? = null)
     : RecyclerView.Adapter<BindingViewAdapter.BindingViewHolder<ViewDataBinding>>() {
@@ -94,6 +96,7 @@ constructor(private val context: Context,
         holder.binding.setVariable(BR.adapter, this)
         holder.binding.setVariable(BR.list, list)
         holder.binding.setVariable(BR.position, position)
+        holder.binding.setVariable(BR.vm, vm)
         if (itemClickPresenter != null) {
             holder.binding.setVariable(BR.itemClickPresenter,
                 itemClickPresenter)

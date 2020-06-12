@@ -86,6 +86,8 @@ class DatePickerView(context: Context):
         when (v?.id) {
             R.id.day_text -> {
                 scrollToCurrent()
+                binding.calendarView.visibility = View.VISIBLE
+                binding.yearList.visibility = View.GONE
             }
             R.id.year_layout -> {
                 binding.yearList.setSelection((calendar?.year ?: 1970) - 1970)

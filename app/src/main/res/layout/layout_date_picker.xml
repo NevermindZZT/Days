@@ -12,7 +12,7 @@
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorAccent"
+            android:background="@color/colorAccent"
             android:orientation="horizontal">
 
             <TextView
@@ -78,7 +78,7 @@
                 app:scheme_theme_color="?android:textColorPrimary"
                 app:selected_lunar_text_color="?android:colorPrimary"
                 app:selected_text_color="?android:colorPrimary"
-                app:selected_theme_color="?android:colorAccent"
+                app:selected_theme_color="@color/colorAccent"
                 app:week_background="?android:colorPrimary"
                 app:week_start_with="sun"
                 app:week_text_color="?android:textColorPrimary" />

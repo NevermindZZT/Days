@@ -21,12 +21,6 @@
         <item name="md_color_button_text">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme" />
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
     <style name="DialogTheme" parent="Theme.AppCompat.DayNight.Dialog">
         <item name="dialogCornerRadius">8dp</item>
     </style>

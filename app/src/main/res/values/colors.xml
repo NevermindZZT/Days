@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FAFAFA</color>
+    <color name="colorPrimary">#eff0fb</color>
     <color name="colorPrimaryDark">#909090</color>
-    <color name="colorAccent">#6F9AA1</color>
-    <color name="colorBackground">#FAFAFA</color>
-    <color name="colorCardBackground">#FFFFFF</color>
+    <color name="colorAccent">#4a69e1</color>
+    <color name="colorBackground">#eff0fb</color>
+    <color name="colorCardBackground">#f4f8fe</color>
 
     <color name="textColorPrimary">#1A1A1A</color>
     <color name="textColorHint">#999999</color>
     <color name="textColorItemHint">#999999</color>
-</resources>
+
+    <color name="colorRipple">#20000000</color>
+    </resources>

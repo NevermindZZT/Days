@@ -52,6 +52,7 @@ class DaysListFragment : Fragment(), ItemClickPresenter {
                     this@DaysListFragment.requireContext(),
                     R.layout.layout_anniversary_item,
                     it,
+                    model,
                     this@DaysListFragment
                 )
                 binding.daysListView.apply {
