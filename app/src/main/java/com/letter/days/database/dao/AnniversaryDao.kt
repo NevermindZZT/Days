@@ -20,6 +20,13 @@ interface AnniversaryDao {
     suspend fun insert(vararg anniversaries: AnniversaryEntity)
 
     /**
+     * 插入纪念日数据
+     * @param anniversaries Array<out AnniversaryEntity> 纪念日数据
+     */
+    @Insert(onConflict=OnConflictStrategy.REPLACE)
+    suspend fun insert(anniversaries: Collection<AnniversaryEntity>)
+
+    /**
      * 获取所有纪念日数据
      * @return List<AnniversaryEntity> 纪念日数据列表
      */

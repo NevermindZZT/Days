@@ -38,4 +38,17 @@
             android:title="@string/setting_theme_mode_title" />
     </PreferenceCategory>
 
+
+    <PreferenceCategory android:title="@string/setting_group_backup">
+        <Preference
+            android:key="backup"
+            android:title="@string/setting_backup_title"
+            android:summary="@string/setting_backup_summary" />
+
+        <Preference
+            android:key="restore"
+            android:title="@string/setting_restore_title"
+            android:summary="@string/setting_restore_summary" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

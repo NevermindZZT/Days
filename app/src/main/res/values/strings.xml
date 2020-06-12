@@ -22,6 +22,10 @@
     <string name="activity_anniversary_delete_dialog_message">确认删除这个纪念日?</string>
 
     <string name="activity_setting_title">设置</string>
+    <string name="activity_setting_toast_backup_success">成功备份至%s</string>
+    <string name="activity_setting_toast_restore_success">恢复数据成功</string>
+    <string name="activity_setting_dialog_backup_fail_message">数据备份失败</string>
+    <string name="activity_setting_dialog_restore_fail_message">数据恢复失败</string>
 
     <string name="activity_about_title">关于</string>
     <string name="activity_about_github_text">Github</string>
@@ -39,6 +43,7 @@
 
     <string name="setting_group_basic">基础设置</string>
     <string name="setting_group_theme">主题设置</string>
+    <string name="setting_group_backup">备份与恢复</string>
 
     <string name="setting_slogan_default">记住值得铭记的</string>
     <string name="setting_slogan_title">标语</string>
@@ -50,6 +55,10 @@
     <string name="setting_time_line_title">显示时间轴</string>
     <string name="setting_time_line_summary">纪念日列表显示时间轴，同时纪念日会按照时间排列</string>
     <string name="setting_theme_mode_title">主题模式</string>
+    <string name="setting_backup_title">备份</string>
+    <string name="setting_backup_summary">备份纪念日数据到Documents目录</string>
+    <string name="setting_restore_title">恢复</string>
+    <string name="setting_restore_summary">从文件中恢复纪念日数据</string>
 
     <string name="shortcut_add_anni_short_label">添加纪念日</string>
 
