@@ -55,20 +55,22 @@ class SettingFragment : PreferenceFragmentCompat() {
                 }
             }
             "restore" -> {
-                val initialFolder = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+                model.requestPermission {
+                    val initialFolder = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
 
-                MaterialDialog(requireContext()).show {
-                    fileChooser(requireContext(), initialDirectory = initialFolder) { dialog, file ->
-                        model.restore(file)  {
-                            MaterialDialog(requireContext()).show {
-                                message(R.string.activity_setting_dialog_restore_fail_message)
-                                positiveButton(R.string.dialog_positive_button)
+                    MaterialDialog(requireContext()).show {
+                        fileChooser(requireContext(), initialDirectory = initialFolder) { dialog, file ->
+                            model.restore(file)  {
+                                MaterialDialog(requireContext()).show {
+                                    message(R.string.activity_setting_dialog_restore_fail_message)
+                                    positiveButton(R.string.dialog_positive_button)
+                                }
                             }
+                            dialog.dismiss()
                         }
-                        dialog.dismiss()
+                        positiveButton(R.string.dialog_positive_button)
+                        negativeButton(R.string.dialog_negative_button)
                     }
-                    positiveButton(R.string.dialog_positive_button)
-                    negativeButton(R.string.dialog_negative_button)
                 }
             }
         }

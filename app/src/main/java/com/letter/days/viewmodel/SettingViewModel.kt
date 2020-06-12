@@ -28,4 +28,10 @@ class SettingViewModel(application: Application): AndroidViewModel(application) 
             }
         }
     }
+
+    fun requestPermission(onGranted: (()->Unit)? = null) {
+        backupRepo.checkPermission {
+            onGranted?.invoke()
+        }
+    }
 }
