@@ -73,16 +73,20 @@ class BackupRepo {
     suspend fun restore(context: Context, file: String,  onFail: (()->Unit)? = null) {
         val data = FileIOUtils.readFile2String(file)
         val type = object : TypeToken<List<AnniversaryEntity>>() {}.type
-        val anniversaries = Gson().fromJson<List<AnniversaryEntity>>(data, type)
-        if (anniversaries?.isNotEmpty() == true) {
-            anniversaries.forEach {
-                it.id = 0
+        try {
+            val anniversaries = Gson().fromJson<List<AnniversaryEntity>>(data, type)
+            if (anniversaries?.isNotEmpty() == true) {
+                anniversaries.forEach {
+                    it.id = 0
+                }
+                AppDatabase.instance(context).anniversaryDao().insert(anniversaries)
+                withContext(Dispatchers.Main) {
+                    context.toast(R.string.activity_setting_toast_restore_success)
+                }
+            } else {
+                onFail?.invoke()
             }
-            AppDatabase.instance(context).anniversaryDao().insert(anniversaries)
-            withContext(Dispatchers.Main) {
-                context.toast(R.string.activity_setting_toast_restore_success)
-            }
-        } else {
+        } catch (e: Exception) {
             onFail?.invoke()
         }
     }

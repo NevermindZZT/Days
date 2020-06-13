@@ -37,5 +37,13 @@ class OpenSourceViewModel(application: Application) : AndroidViewModel(applicati
             "huanghaibin-dev",
             "https://github.com/huanghaibin-dev/CalendarView",
             "Android上一个优雅、万能自定义UI、支持周视图、自定义周起始、性能高效的日历控件"))
+        openSourceList.add(OpenSourceBean("AndroidUtilCode",
+            "Blankj",
+            "https://github.com/Blankj/AndroidUtilCode",
+            "AndroidUtilCode is a powerful & easy to use library for Android."))
+        openSourceList.add(OpenSourceBean("gson",
+            "google",
+            "https://github.com/google/gson",
+            "A Java serialization/deserialization library to convert Java Objects into JSON and back"))
     }
 }

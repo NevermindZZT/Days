@@ -8,25 +8,29 @@
             android:title="@string/setting_slogan_title"
             android:summary="@string/setting_slogan_summary"
             android:defaultValue="@string/setting_slogan_default"
+            android:icon="@drawable/ic_setting_logo_slogan"
             android:inputType="text"/>
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="widget_background"
             android:title="@string/setting_widget_background_title"
-            android:summary="@string/setting_widget_background_summary"/>
+            android:summary="@string/setting_widget_background_summary"
+            android:icon="@drawable/ic_setting_logo_widget" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="intent_notification"
             android:title="@string/setting_intent_notification_title"
-            android:summary="@string/setting_intent_notification_summary"/>
+            android:summary="@string/setting_intent_notification_summary"
+            android:icon="@drawable/ic_setting_logo_intent" />
 
         <SwitchPreference
             android:defaultValue="false"
             android:key="time_line"
             android:title="@string/setting_time_line_title"
-            android:summary="@string/setting_time_line_summary"/>
+            android:summary="@string/setting_time_line_summary"
+            android:icon="@drawable/ic_setting_logo_time_line" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/setting_group_theme">
@@ -35,7 +39,8 @@
             android:entries="@array/theme_mode_entries"
             android:entryValues="@array/theme_mode_values"
             android:key="theme_mode"
-            android:title="@string/setting_theme_mode_title" />
+            android:title="@string/setting_theme_mode_title"
+            android:icon="@drawable/ic_setting_logo_theme" />
     </PreferenceCategory>
 
 
@@ -43,12 +48,14 @@
         <Preference
             android:key="backup"
             android:title="@string/setting_backup_title"
-            android:summary="@string/setting_backup_summary" />
+            android:summary="@string/setting_backup_summary"
+            android:icon="@drawable/ic_setting_logo_backup" />
 
         <Preference
             android:key="restore"
             android:title="@string/setting_restore_title"
-            android:summary="@string/setting_restore_summary" />
+            android:summary="@string/setting_restore_summary"
+            android:icon="@drawable/ic_setting_logo_restore" />
     </PreferenceCategory>
 
 </PreferenceScreen>

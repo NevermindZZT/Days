@@ -60,7 +60,7 @@ class SettingFragment : PreferenceFragmentCompat() {
 
                     MaterialDialog(requireContext()).show {
                         fileChooser(requireContext(), initialDirectory = initialFolder) { dialog, file ->
-                            model.restore(file)  {
+                            model.restore(file) {
                                 MaterialDialog(requireContext()).show {
                                     message(R.string.activity_setting_dialog_restore_fail_message)
                                     positiveButton(R.string.dialog_positive_button)
