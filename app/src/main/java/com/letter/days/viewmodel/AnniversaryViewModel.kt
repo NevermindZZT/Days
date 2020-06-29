@@ -7,10 +7,12 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.letter.days.database.AppDatabase
 import com.letter.days.database.entity.AnniversaryEntity
 import com.letter.days.fragment.AnniversaryFragment
 import com.letter.days.utils.getApplication
+import com.letter.days.utils.getDistance
 import com.letter.days.view.SharedAnniversaryView
 import com.letter.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +30,7 @@ import kotlinx.coroutines.withContext
  */
 class AnniversaryViewModel : ViewModel() {
 
-    val daysList = MutableLiveData<List<AnniversaryEntity>>()
+    val daysList = MutableLiveData<MutableList<AnniversaryEntity>>()
     val fragmentList: MutableLiveData<List<AnniversaryFragment>> = MutableLiveData()
     val currentPosition: MutableLiveData<Int> = MutableLiveData()
 
@@ -38,7 +40,12 @@ class AnniversaryViewModel : ViewModel() {
     @Synchronized
     fun loadDays() {
         viewModelScope.launch {
-            daysList.value = AppDatabase.instance(getApplication()).anniversaryDao().getAll()
+            daysList.value = AppDatabase.instance(getApplication()).anniversaryDao().getAll().toMutableList()
+            if (PreferenceManager.getDefaultSharedPreferences(getApplication()).getBoolean("time_line", false)) {
+                daysList.value?.sortWith(compareBy(
+                    {it.getDistance(AnniversaryEntity.DistanceMode.DISTANCE_NEXT)},
+                    {it.getDistance(AnniversaryEntity.DistanceMode.DISTANCE_ABS)}))
+            }
             val fragments = mutableListOf<AnniversaryFragment>()
             if (daysList.value?.isNotEmpty() == true) {
                 for (i in 0 until daysList.value?.size!!) {

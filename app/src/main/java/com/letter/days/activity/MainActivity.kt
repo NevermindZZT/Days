@@ -12,6 +12,7 @@ import com.letter.days.databinding.ActivityMainBinding
 import com.letter.presenter.ViewPresenter
 import android.content.isDarkTheme
 import android.content.startActivity
+import android.graphics.Color
 
 /**
  * 主活动
@@ -36,7 +37,8 @@ class MainActivity
             binding.mainLayout.collapsingToolbar.setExpandedTitleColor(0xff1a1a1a.toInt())
             binding.mainLayout.collapsingToolbar.setCollapsedTitleTextColor(0xff1a1a1a.toInt())
         } else {
-            binding.mainLayout.barImage.setImageResource(R.drawable.bg_main_bar_night)
+            binding.mainLayout.barImage.setColorFilter(Color.parseColor("#80000000"))
+//            binding.mainLayout.barImage.setImageResource(R.drawable.bg_main_bar_night)
         }
 
         /* 设置Action Bar并使能home按钮 */
