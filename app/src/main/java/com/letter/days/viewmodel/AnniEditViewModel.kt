@@ -1,11 +1,17 @@
 package com.letter.days.viewmodel
 
 import android.app.Application
+import android.net.Uri
+import android.net.toBitmap
+import android.os.Environment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.blankj.utilcode.util.ImageUtils
 import com.letter.days.database.AppDatabase
 import com.letter.days.database.entity.AnniversaryEntity
+import com.letter.days.utils.getApplication
+import com.letter.utils.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,5 +42,14 @@ class AnniEditViewModel(application: Application) : AndroidViewModel(application
                 action?.invoke()
             }
         }
+    }
+
+    fun saveUri2File(uri: Uri?): String? {
+        val path = uri?.path ?: return null
+        val file = FileUtils.saveBitmapToExternalFilesDir(getApplication(),
+            Environment.DIRECTORY_PICTURES,
+            "${path.substring(path.lastIndexOf("/") + 1, path.length)}.jpg",
+            uri.toBitmap(getApplication()))
+        return file?.path
     }
 }

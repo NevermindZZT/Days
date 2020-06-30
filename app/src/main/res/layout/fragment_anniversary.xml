@@ -27,6 +27,7 @@
             tools:context="com.letter.days.fragment.AnniversaryFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/anni_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorCardBackground">

@@ -1,5 +1,10 @@
 package com.letter.days.activity
 
+import android.app.Activity
+import android.app.startActivityForResult
+import android.content.Intent
+import android.content.getScreenHeight
+import android.content.getScreenWidth
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -21,8 +26,18 @@ import com.letter.days.utils.setTimeInMillis
 import com.letter.days.viewmodel.AnniEditViewModel
 import com.letter.presenter.ViewPresenter
 import android.content.toast
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
+import android.util.Log
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import java.io.File
+
+private const val REQUEST_CODE_IMAGE = 1
+private const val REQUEST_CODE_CROP = 2
+
+private const val TAG = "AnniEditActivity"
 
 /**
  * 纪念日编辑活动
@@ -161,6 +176,48 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
                     }
                     positiveButton(R.string.dialog_positive_button)
                     negativeButton(R.string.dialog_negative_button)
+                }
+            }
+            R.id.image_text -> {
+                startActivityForResult(Intent.ACTION_OPEN_DOCUMENT, REQUEST_CODE_IMAGE) {
+                    type = "image/*"
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.d(TAG, "code: $requestCode, result: $resultCode")
+        when (requestCode) {
+            REQUEST_CODE_IMAGE -> {
+                if (resultCode == Activity.RESULT_OK && data?.data != null) {
+                    startActivityForResult("com.android.camera.action.CROP", REQUEST_CODE_CROP) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                        setDataAndType(data.data, "image/*")
+                        putExtra("crop", "true")
+                        putExtra("aspectY", getScreenHeight())
+                        putExtra("aspectX", getScreenWidth())
+                        putExtra("outputY", getScreenHeight())
+                        putExtra("outputY", getScreenWidth())
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            val uri = Uri.fromFile(File(externalCacheDir!!.absolutePath,
+                                "crop${System.currentTimeMillis()}"))
+                            putExtra("output", uri)
+                        }
+                        putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
+                        putExtra("noFaceDetection", true)
+                        putExtra("return-data", true)
+                    }
+                }
+            }
+            REQUEST_CODE_CROP -> {
+                if (resultCode == Activity.RESULT_OK && data?.data != null) {
+                    model.anniversary.value?.image = model.saveUri2File(data.data)
+                    model.anniversary.notify()
+                    Log.d(TAG, "file: ${model.anniversary.value?.image}")
                 }
             }
         }

@@ -72,6 +72,20 @@ class AnniversaryFragment : Fragment() {
         }
     }
 
+    /**
+     * 刷新进度
+     */
+    fun freshProgress() {
+        ObjectAnimator.ofInt(binding.dayText,
+            "progress",
+            0,
+            365 - (getNextTime(model.daysList.value?.get(anniPosition)) ?: 0))
+            .start {
+                duration = 500
+                interpolator = AccelerateDecelerateInterpolator()
+            }
+    }
+
     companion object {
 
         /**

@@ -12,6 +12,12 @@ import com.letter.days.databinding.ActivityAnniversaryBinding
 import com.letter.days.transformer.AnniViewPagerTransformer
 import com.letter.days.viewmodel.AnniversaryViewModel
 import android.content.startActivity
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import androidx.preference.PreferenceManager
+import com.blankj.utilcode.util.ImageUtils
+import java.io.FileInputStream
+import kotlin.math.abs
 
 /**
  * 纪念日详情界面
@@ -65,6 +71,50 @@ class AnniversaryActivity : BaseActivity() {
      * 初始化视图绑定
      */
     private fun initBinding() {
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            private var lastOffset = 0f
+
+            override fun onPageScrollStateChanged(state: Int) = Unit
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+                if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
+                        .getBoolean("simple_mode", true)) {
+                    return
+                }
+                val fileName = model.daysList.value?.get(if (positionOffset > 0.5f) position + 1 else position)?.image
+                if (fileName != null) {
+                    try {
+                        if ((lastOffset > 0.5f && positionOffset <= 0.5f)
+                            || (lastOffset < 0.5f && positionOffset >= 0.5f)
+                            || binding.root.background == null) {
+                            binding.root.background = BitmapDrawable(
+                                resources,
+                                ImageUtils.fastBlur(
+                                    BitmapFactory.decodeStream(FileInputStream(fileName)),
+                                    0.3f,
+                                    25f
+                                )
+                            )
+                        }
+                        binding.root.background.alpha = ((abs(positionOffset - 0.5f) / 0.5) * 255).toInt()
+                    } catch (e: Exception) {
+
+                    }
+                }
+                lastOffset = positionOffset
+            }
+
+            override fun onPageSelected(position: Int) {
+                try {
+                    model.freshProgress(position)
+                } catch (e: Exception) {
+                }
+            }
+        })
     }
 
     /**

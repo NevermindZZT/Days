@@ -11,4 +11,6 @@
     <color name="textColorItemHint">#999999</color>
 
     <color name="colorRipple">#20000000</color>
+
+    <color name="colorAnniBackgroundTint">#80FFFFFF</color>
     </resources>

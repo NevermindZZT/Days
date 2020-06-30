@@ -115,4 +115,9 @@ class AnniversaryViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun freshProgress(position: Int) {
+        fragmentList.value?.get(position)?.freshProgress()
+    }
 }

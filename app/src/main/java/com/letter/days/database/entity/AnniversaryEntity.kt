@@ -25,7 +25,8 @@ data class AnniversaryEntity
                 @ColumnInfo(name = "name") var name: String? = null,
                 @ColumnInfo(name = "type") var type: Int = ANNI_TYPE_ONLY_ONCE,
                 @ColumnInfo(name = "lunar") var lunar: Boolean = false,
-                @ColumnInfo(name = "color") var color: Int = Color.TRANSPARENT) {
+                @ColumnInfo(name = "color") var color: Int = Color.TRANSPARENT,
+                @ColumnInfo(name = "image") var image: String? = null) {
 
     companion object {
         const val ANNI_TYPE_ONLY_ONCE = 0

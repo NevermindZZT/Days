@@ -41,6 +41,13 @@
             android:key="theme_mode"
             android:title="@string/setting_theme_mode_title"
             android:icon="@drawable/ic_setting_logo_theme" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="simple_mode"
+            android:title="@string/setting_simple_mode_title"
+            android:summary="@string/setting_simple_mode_summary"
+            android:icon="@drawable/ic_setting_logo_simple" />
     </PreferenceCategory>
 
 
