@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.content.isDarkTheme
+import android.view.WindowInsets
 
 /**
  * 基础活动
@@ -19,8 +20,17 @@ open class BaseActivity : AppCompatActivity() {
 
         if (!isDarkTheme()) {
             /* Android O以上支持，设置浅色状态栏 */
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setLightStatusBar(true)
+        }
+    }
+
+    protected fun setLightStatusBar(set: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (set) {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            } else {
+                window.decorView.systemUiVisibility =
+                    window.decorView.systemUiVisibility and (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
             }
         }
     }

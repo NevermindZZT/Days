@@ -14,10 +14,14 @@ import com.letter.days.viewmodel.AnniversaryViewModel
 import android.content.startActivity
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.LayerDrawable
 import androidx.preference.PreferenceManager
 import com.blankj.utilcode.util.ImageUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.FileInputStream
-import kotlin.math.abs
 
 /**
  * 纪念日详情界面
@@ -72,9 +76,18 @@ class AnniversaryActivity : BaseActivity() {
      */
     private fun initBinding() {
         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            private var lastOffset = 0f
 
-            override fun onPageScrollStateChanged(state: Int) = Unit
+            private var lastPosition = 0
+            private var startDragging = false
+            private var background : LayerDrawable? = null
+
+            override fun onPageScrollStateChanged(state: Int) {
+                when (state) {
+                    ViewPager.SCROLL_STATE_DRAGGING -> {
+                        startDragging = true
+                    }
+                }
+            }
 
             override fun onPageScrolled(
                 position: Int,
@@ -85,27 +98,55 @@ class AnniversaryActivity : BaseActivity() {
                         .getBoolean("simple_mode", true)) {
                     return
                 }
-                val fileName = model.daysList.value?.get(if (positionOffset > 0.5f) position + 1 else position)?.image
-                if (fileName != null) {
+                MainScope().launch {
                     try {
-                        if ((lastOffset > 0.5f && positionOffset <= 0.5f)
-                            || (lastOffset < 0.5f && positionOffset >= 0.5f)
-                            || binding.root.background == null) {
-                            binding.root.background = BitmapDrawable(
-                                resources,
-                                ImageUtils.fastBlur(
-                                    BitmapFactory.decodeStream(FileInputStream(fileName)),
-                                    0.3f,
-                                    25f
-                                )
-                            )
+                        if (startDragging || background == null || lastPosition != position) {
+                            startDragging = false
+                            lastPosition = position
+                            withContext(Dispatchers.IO) {
+                                val topDrawable =
+                                    if (!model.daysList.value?.get(position)?.image.isNullOrEmpty()) {
+                                        BitmapDrawable(
+                                            resources,
+                                            ImageUtils.fastBlur(
+                                                BitmapFactory.decodeStream(
+                                                    FileInputStream(model.daysList.value?.get(position)?.image)),
+                                                0.3f,
+                                                25f
+                                            )
+                                        )
+                                    } else {
+                                        null
+                                    }
+                                val bottomDrawable =
+                                    if (!model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
+                                        BitmapDrawable(
+                                            resources,
+                                            ImageUtils.fastBlur(
+                                                BitmapFactory.decodeStream(
+                                                    FileInputStream(model.daysList.value?.get(position + 1)?.image)),
+                                                0.3f,
+                                                25f
+                                            )
+                                        )
+                                    } else {
+                                        null
+                                    }
+                                val layers = arrayOf(bottomDrawable, topDrawable)
+                                background = LayerDrawable(layers)
+                            }
+                            withContext(Dispatchers.Main) {
+                                binding.root.background = background
+                            }
                         }
-                        binding.root.background.alpha = ((abs(positionOffset - 0.5f) / 0.5) * 255).toInt()
                     } catch (e: Exception) {
 
                     }
+                    withContext(Dispatchers.Main) {
+                        background?.getDrawable(0)?.alpha = ((positionOffset / 1f) * 255).toInt()
+                        background?.getDrawable(1)?.alpha = (((1f - positionOffset)  / 1f) * 255).toInt()
+                    }
                 }
-                lastOffset = positionOffset
             }
 
             override fun onPageSelected(position: Int) {
