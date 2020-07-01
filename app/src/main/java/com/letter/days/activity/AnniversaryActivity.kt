@@ -78,16 +78,10 @@ class AnniversaryActivity : BaseActivity() {
         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             private var lastPosition = 0
-            private var startDragging = false
             private var background : LayerDrawable? = null
+            private var lock = false
 
-            override fun onPageScrollStateChanged(state: Int) {
-                when (state) {
-                    ViewPager.SCROLL_STATE_DRAGGING -> {
-                        startDragging = true
-                    }
-                }
-            }
+            override fun onPageScrollStateChanged(state: Int) = Unit
 
             override fun onPageScrolled(
                 position: Int,
@@ -95,13 +89,13 @@ class AnniversaryActivity : BaseActivity() {
                 positionOffsetPixels: Int
             ) {
                 if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
-                        .getBoolean("simple_mode", true)) {
+                        .getBoolean("simple_mode", true) || lock) {
                     return
                 }
                 MainScope().launch {
                     try {
-                        if (startDragging || background == null || lastPosition != position) {
-                            startDragging = false
+                        if (background == null || lastPosition != position) {
+                            lock = true
                             lastPosition = position
                             withContext(Dispatchers.IO) {
                                 val topDrawable =
@@ -119,7 +113,8 @@ class AnniversaryActivity : BaseActivity() {
                                         null
                                     }
                                 val bottomDrawable =
-                                    if (!model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
+                                    if (position + 1 < model.daysList.value?.size ?: 0
+                                        && !model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
                                         BitmapDrawable(
                                             resources,
                                             ImageUtils.fastBlur(
@@ -132,15 +127,16 @@ class AnniversaryActivity : BaseActivity() {
                                     } else {
                                         null
                                     }
+                                topDrawable?.alpha = 0
                                 val layers = arrayOf(bottomDrawable, topDrawable)
                                 background = LayerDrawable(layers)
                             }
                             withContext(Dispatchers.Main) {
                                 binding.root.background = background
                             }
+                            lock = false
                         }
-                    } catch (e: Exception) {
-
+                    } finally {
                     }
                     withContext(Dispatchers.Main) {
                         background?.getDrawable(0)?.alpha = ((positionOffset / 1f) * 255).toInt()
