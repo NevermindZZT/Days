@@ -40,6 +40,48 @@ class AnniversaryActivity : BaseActivity() {
     }
 
     private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
+
+        private var lastPosition = 0
+        private var background : LayerDrawable? = null
+        private var lock = false
+
+        private suspend fun createBackground(position: Int) {
+            withContext(Dispatchers.IO) {
+                val topDrawable =
+                    if (!model.daysList.value?.get(position)?.image.isNullOrEmpty()) {
+                        BitmapDrawable(
+                            resources,
+                            ImageUtils.fastBlur(
+                                BitmapFactory.decodeStream(
+                                    FileInputStream(model.daysList.value?.get(position)?.image)),
+                                0.3f,
+                                25f
+                            )
+                        )
+                    } else {
+                        null
+                    }
+                val bottomDrawable =
+                    if (position + 1 < model.daysList.value?.size ?: 0
+                        && !model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
+                        BitmapDrawable(
+                            resources,
+                            ImageUtils.fastBlur(
+                                BitmapFactory.decodeStream(
+                                    FileInputStream(model.daysList.value?.get(position + 1)?.image)),
+                                0.3f,
+                                25f
+                            )
+                        )
+                    } else {
+                        null
+                    }
+                topDrawable?.alpha = 0
+                val layers = arrayOf(bottomDrawable, topDrawable)
+                background = LayerDrawable(layers)
+            }
+        }
+
         override fun onPageScrollStateChanged(state: Int) = Unit
 
         override fun onPageScrolled(
@@ -48,9 +90,37 @@ class AnniversaryActivity : BaseActivity() {
             positionOffsetPixels: Int
         ) {
             model.currentPosition.value = position
+
+            if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
+                    .getBoolean("simple_mode", true) || lock) {
+                return
+            }
+            MainScope().launch {
+                try {
+                    if (background == null || lastPosition != position) {
+                        lock = true
+                        lastPosition = position
+                        createBackground(position)
+                        withContext(Dispatchers.Main) {
+                            binding.root.background = background
+                        }
+                        lock = false
+                    }
+                } finally {
+                }
+                withContext(Dispatchers.Main) {
+                    background?.getDrawable(0)?.alpha = ((positionOffset / 1f) * 255).toInt()
+                    background?.getDrawable(1)?.alpha = (((1f - positionOffset)  / 1f) * 255).toInt()
+                }
+            }
         }
 
-        override fun onPageSelected(position: Int) = Unit
+        override fun onPageSelected(position: Int) {
+            try {
+                model.freshProgress(position)
+            } catch (e: Exception) {
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,83 +145,10 @@ class AnniversaryActivity : BaseActivity() {
      * 初始化视图绑定
      */
     private fun initBinding() {
-        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
-            private var lastPosition = 0
-            private var background : LayerDrawable? = null
-            private var lock = false
-
-            override fun onPageScrollStateChanged(state: Int) = Unit
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
-                        .getBoolean("simple_mode", true) || lock) {
-                    return
-                }
-                MainScope().launch {
-                    try {
-                        if (background == null || lastPosition != position) {
-                            lock = true
-                            lastPosition = position
-                            withContext(Dispatchers.IO) {
-                                val topDrawable =
-                                    if (!model.daysList.value?.get(position)?.image.isNullOrEmpty()) {
-                                        BitmapDrawable(
-                                            resources,
-                                            ImageUtils.fastBlur(
-                                                BitmapFactory.decodeStream(
-                                                    FileInputStream(model.daysList.value?.get(position)?.image)),
-                                                0.3f,
-                                                25f
-                                            )
-                                        )
-                                    } else {
-                                        null
-                                    }
-                                val bottomDrawable =
-                                    if (position + 1 < model.daysList.value?.size ?: 0
-                                        && !model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
-                                        BitmapDrawable(
-                                            resources,
-                                            ImageUtils.fastBlur(
-                                                BitmapFactory.decodeStream(
-                                                    FileInputStream(model.daysList.value?.get(position + 1)?.image)),
-                                                0.3f,
-                                                25f
-                                            )
-                                        )
-                                    } else {
-                                        null
-                                    }
-                                topDrawable?.alpha = 0
-                                val layers = arrayOf(bottomDrawable, topDrawable)
-                                background = LayerDrawable(layers)
-                            }
-                            withContext(Dispatchers.Main) {
-                                binding.root.background = background
-                            }
-                            lock = false
-                        }
-                    } finally {
-                    }
-                    withContext(Dispatchers.Main) {
-                        background?.getDrawable(0)?.alpha = ((positionOffset / 1f) * 255).toInt()
-                        background?.getDrawable(1)?.alpha = (((1f - positionOffset)  / 1f) * 255).toInt()
-                    }
-                }
-            }
-
-            override fun onPageSelected(position: Int) {
-                try {
-                    model.freshProgress(position)
-                } catch (e: Exception) {
-                }
-            }
-        })
+        binding.viewPager.apply {
+            setPageTransformer(false, AnniViewPagerTransformer())
+            addOnPageChangeListener(onPageChangeListener)
+        }
     }
 
     /**
@@ -166,8 +163,6 @@ class AnniversaryActivity : BaseActivity() {
                         model.currentPosition.value
                             ?: model.getFragmentPosition(intent.getIntExtra("anniId", -1)),
                         true)
-                    setPageTransformer(false, AnniViewPagerTransformer())
-                    addOnPageChangeListener(onPageChangeListener)
                 }
             }
         }
