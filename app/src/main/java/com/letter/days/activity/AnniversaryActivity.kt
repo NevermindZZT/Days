@@ -91,6 +91,8 @@ class AnniversaryActivity : BaseActivity() {
         ) {
             model.currentPosition.value = position
 
+            model.freshProcess(position, positionOffset)
+
             if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
                     .getBoolean("simple_mode", true) || lock) {
                 return
@@ -115,12 +117,7 @@ class AnniversaryActivity : BaseActivity() {
             }
         }
 
-        override fun onPageSelected(position: Int) {
-            try {
-                model.freshProgress(position)
-            } catch (e: Exception) {
-            }
-        }
+        override fun onPageSelected(position: Int) = Unit
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,6 +3,7 @@ package com.letter.days.viewmodel
 import android.content.Intent
 import android.content.startActivity
 import android.os.Environment
+import androidx.annotation.FloatRange
 import androidx.core.content.FileProvider
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -116,8 +117,10 @@ class AnniversaryViewModel : ViewModel() {
         }
     }
 
-
-    fun freshProgress(position: Int) {
-        fragmentList.value?.get(position)?.freshProgress()
+    fun freshProcess(position: Int, @FloatRange(from = 0.0, to = 1.0) process: Float) {
+        fragmentList.value?.get(position)?.setProcess(1f - process)
+        if (position + 1 < (fragmentList.value?.size ?: 0)) {
+            fragmentList.value?.get(position + 1)?.setProcess(process)
+        }
     }
 }
