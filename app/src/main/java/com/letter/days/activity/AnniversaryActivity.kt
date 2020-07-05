@@ -14,6 +14,7 @@ import com.letter.days.viewmodel.AnniversaryViewModel
 import android.content.startActivity
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import androidx.preference.PreferenceManager
 import com.blankj.utilcode.util.ImageUtils
@@ -77,7 +78,7 @@ class AnniversaryActivity : BaseActivity() {
                         null
                     }
                 topDrawable?.alpha = 0
-                val layers = arrayOf(bottomDrawable, topDrawable)
+                val layers = arrayOf(bottomDrawable ?: ColorDrawable(), topDrawable ?: ColorDrawable())
                 background = LayerDrawable(layers)
             }
         }
