@@ -8,6 +8,9 @@
         <import type="com.letter.days.viewmodel.AnniEditViewModel" />
         <import type="com.letter.presenter.ViewPresenter" />
         <import type="android.graphics.Color" />
+        <import type="com.letter.days.LetterApplication" />
+        <import type="androidx.preference.PreferenceManager" />
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="AnniEditViewModel" />
@@ -19,18 +22,23 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/colorAnniBackgroundTint"
+        android:backgroundTintMode="src_over"
+        android:fitsSystemWindows="true"
+        app:blurBackground="@{PreferenceManager.getDefaultSharedPreferences(LetterApplication.instance()).getBoolean(`simple_mode`, true) ? null : vm.anniversary.image}"
         tools:context="com.letter.days.activity.AnniEditActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:elevation="0dp" >
+            android:background="@android:color/transparent"
+            app:elevation="0dp">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@android:color/transparent"
                 android:theme="@style/AppTheme"
                 app:title="@string/activity_anni_edit_title" />
 
@@ -70,8 +78,8 @@
                     android:drawableStart="@drawable/ic_edit_date"
                     android:drawablePadding="16dp"
                     android:focusable="true"
-                    android:padding="16dp"
                     android:onClick="@{view -> presenter.onClick(view)}"
+                    android:padding="16dp"
                     android:text="@{AnniversaryUtilKt.getDateString(vm.anniversary, @string/activity_anni_edit_date_format, @string/activity_anni_edit_date_format_lunar)}"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
@@ -86,8 +94,8 @@
                     android:drawableStart="@drawable/ic_edit_type"
                     android:drawablePadding="16dp"
                     android:focusable="true"
-                    android:padding="16dp"
                     android:onClick="@{view -> presenter.onClick(view)}"
+                    android:padding="16dp"
                     android:text="@{AnniversaryUtilKt.getTypeText(vm.anniversary)}"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="18sp"
@@ -116,7 +124,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{view -> presenter.onClick(view)}" >
+                    android:onClick="@{view -> presenter.onClick(view)}">
 
                     <TextView
                         android:layout_width="0dp"
@@ -125,9 +133,9 @@
                         android:drawableStart="@drawable/ic_edit_theme"
                         android:drawablePadding="16dp"
                         android:padding="16dp"
-                        android:textSize="18sp"
                         android:text="@string/activity_anni_edit_theme_name"
-                        android:textColor="?android:attr/textColorPrimary" />
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="18sp" />
 
                     <com.letter.colorpicker.ColorPane
                         android:layout_width="32dp"
@@ -137,6 +145,22 @@
                         app:color="@{vm.anniversary.color}" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/image_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:drawableStart="@drawable/ic_edit_image"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:onClick="@{view -> presenter.onClick(view)}"
+                    android:padding="16dp"
+                    android:text="@string/activity_anni_edit_image_name"
+                    android:visibility="@{PreferenceManager.getDefaultSharedPreferences(LetterApplication.instance()).getBoolean(`simple_mode`, true) ? View.GONE : View.VISIBLE}"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

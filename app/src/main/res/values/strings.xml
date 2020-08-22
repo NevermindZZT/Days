@@ -9,6 +9,7 @@
     <string name="activity_anni_edit_title">编辑</string>
     <string name="activity_anni_edit_lunar_name">农历</string>
     <string name="activity_anni_edit_theme_name">主题色</string>
+    <string name="activity_anni_edit_image_name">主题图片</string>
     <string name="activity_anni_edit_date_format">%s年 %s月 %s日</string>
     <string name="activity_anni_edit_date_format_lunar">%s年 %s %s</string>
     <string name="activity_anni_edit_toolbar_save">保存</string>
@@ -55,6 +56,8 @@
     <string name="setting_time_line_title">显示时间轴</string>
     <string name="setting_time_line_summary">纪念日列表显示时间轴，同时纪念日会按照时间排列</string>
     <string name="setting_theme_mode_title">主题模式</string>
+    <string name="setting_simple_mode_title">简约模式</string>
+    <string name="setting_simple_mode_summary">简约模式下，纪念日图片等会被禁用</string>
     <string name="setting_backup_title">备份</string>
     <string name="setting_backup_summary">备份纪念日数据到Documents目录</string>
     <string name="setting_restore_title">恢复</string>

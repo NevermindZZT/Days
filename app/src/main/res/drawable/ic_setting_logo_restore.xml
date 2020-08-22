@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item
+        android:top="8dp"
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp">
         <shape
             android:shape="oval">
             <solid android:color="@color/colorCardBackground" />
         </shape>
     </item>
     <item
-        android:top="20dp"
-        android:bottom="20dp"
-        android:left="20dp"
-        android:right="20dp">
+        android:top="24dp"
+        android:bottom="24dp"
+        android:left="24dp"
+        android:right="24dp">
         <bitmap
             android:src="@drawable/ic_setting_restore"
             android:tint="@color/colorAccent" />

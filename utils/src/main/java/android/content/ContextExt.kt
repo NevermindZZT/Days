@@ -6,7 +6,10 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.res.Configuration
+import android.graphics.Point
 import android.os.Build
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
@@ -124,4 +127,52 @@ fun Context.sendBroadcast(action: String, act: (Intent.()->Unit)? = null) {
 fun Context.createNotificationChannel(channelId: String, channelName: String, importance: Int) {
     val channel = NotificationChannel(channelId, channelName, importance)
     (getSystemService(NOTIFICATION_SERVICE) as NotificationManager?)?.createNotificationChannel(channel)
+}
+
+/**
+ * 获取真实屏幕宽度
+ * @receiver Context context
+ * @return Int 宽度
+ */
+fun Context.getRealScreenWidth(): Int {
+    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+    val displayMetrics = DisplayMetrics()
+    windowManager?.defaultDisplay?.getRealMetrics(displayMetrics)
+    return displayMetrics.widthPixels
+}
+
+/**
+ * 获取正式屏幕高度
+ * @receiver Context context
+ * @return Int 高度
+ */
+fun Context.getRealScreenHeight(): Int {
+    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+    val displayMetrics = DisplayMetrics()
+    windowManager?.defaultDisplay?.getRealMetrics(displayMetrics)
+    return displayMetrics.heightPixels
+}
+
+/**
+ * 获取屏幕宽度(应用可用宽度)
+ * @receiver Context context
+ * @return Int 宽度
+ */
+fun Context.getScreenWidth(): Int {
+    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+    val point = Point()
+    windowManager?.defaultDisplay?.getSize(point)
+    return point.x
+}
+
+/**
+ * 获取屏幕高度(应用可用高度)
+ * @receiver Context context
+ * @return Int 高度
+ */
+fun Context.getScreenHeight(): Int {
+    val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager?
+    val point = Point()
+    windowManager?.defaultDisplay?.getSize(point)
+    return point.y
 }

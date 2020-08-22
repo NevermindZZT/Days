@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.letter.days.database.dao.AnniversaryDao
 import com.letter.days.database.dao.WidgetDao
 import com.letter.days.database.entity.AnniversaryEntity
@@ -15,7 +17,7 @@ import com.letter.days.database.entity.WidgetEntity
  * @author Letter(nevermindzzt@gmail.com)
  * @since 1.0.0
  */
-@Database(entities = [AnniversaryEntity::class, WidgetEntity::class], version = 1)
+@Database(entities = [AnniversaryEntity::class, WidgetEntity::class], version = 2)
 abstract class AppDatabase: RoomDatabase() {
 
     /**
@@ -37,6 +39,12 @@ abstract class AppDatabase: RoomDatabase() {
          */
         private var instance: AppDatabase? =null
 
+        private val MIGRATION1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE anniversary ADD COLUMN image TEXT")
+            }
+        }
+
         /**
          * 获取数据库实例
          * @param context Context context
@@ -47,6 +55,7 @@ abstract class AppDatabase: RoomDatabase() {
             if (instance == null) {
                 instance = Room
                     .databaseBuilder(context.applicationContext, AppDatabase::class.java, "user.db")
+                    .addMigrations(MIGRATION1_2)
                     .build()
             }
             return instance!!

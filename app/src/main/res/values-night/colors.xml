@@ -4,11 +4,13 @@
     <color name="colorPrimaryDark">#1A1A1A</color>
     <color name="colorAccent">#5C6BC0</color>
     <color name="colorBackground">#1A1A1A</color>
-    <color name="colorCardBackground">#424242</color>
+    <color name="colorCardBackground">#C0424242</color>
 
     <color name="textColorPrimary">#FAFAFA</color>
     <color name="textColorHint">#888888</color>
     <color name="textColorItemHint">#888888</color>
 
     <color name="colorRipple">#50000000</color>
+
+    <color name="colorAnniBackgroundTint">#A0000000</color>
 </resources>

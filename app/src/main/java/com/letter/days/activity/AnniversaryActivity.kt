@@ -12,6 +12,17 @@ import com.letter.days.databinding.ActivityAnniversaryBinding
 import com.letter.days.transformer.AnniViewPagerTransformer
 import com.letter.days.viewmodel.AnniversaryViewModel
 import android.content.startActivity
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.LayerDrawable
+import androidx.preference.PreferenceManager
+import com.blankj.utilcode.util.ImageUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.FileInputStream
 
 /**
  * 纪念日详情界面
@@ -30,6 +41,48 @@ class AnniversaryActivity : BaseActivity() {
     }
 
     private val onPageChangeListener = object : ViewPager.OnPageChangeListener {
+
+        private var lastPosition = 0
+        private var background : LayerDrawable? = null
+        private var lock = false
+
+        private suspend fun createBackground(position: Int) {
+            withContext(Dispatchers.IO) {
+                val topDrawable =
+                    if (!model.daysList.value?.get(position)?.image.isNullOrEmpty()) {
+                        BitmapDrawable(
+                            resources,
+                            ImageUtils.fastBlur(
+                                BitmapFactory.decodeStream(
+                                    FileInputStream(model.daysList.value?.get(position)?.image)),
+                                0.3f,
+                                25f
+                            )
+                        )
+                    } else {
+                        null
+                    }
+                val bottomDrawable =
+                    if (position + 1 < model.daysList.value?.size ?: 0
+                        && !model.daysList.value?.get(position + 1)?.image.isNullOrEmpty()) {
+                        BitmapDrawable(
+                            resources,
+                            ImageUtils.fastBlur(
+                                BitmapFactory.decodeStream(
+                                    FileInputStream(model.daysList.value?.get(position + 1)?.image)),
+                                0.3f,
+                                25f
+                            )
+                        )
+                    } else {
+                        null
+                    }
+                topDrawable?.alpha = 0
+                val layers = arrayOf(bottomDrawable ?: ColorDrawable(), topDrawable ?: ColorDrawable())
+                background = LayerDrawable(layers)
+            }
+        }
+
         override fun onPageScrollStateChanged(state: Int) = Unit
 
         override fun onPageScrolled(
@@ -38,6 +91,31 @@ class AnniversaryActivity : BaseActivity() {
             positionOffsetPixels: Int
         ) {
             model.currentPosition.value = position
+
+            model.freshProcess(position, positionOffset)
+
+            if (PreferenceManager.getDefaultSharedPreferences(this@AnniversaryActivity)
+                    .getBoolean("simple_mode", true) || lock) {
+                return
+            }
+            MainScope().launch {
+                try {
+                    if (background == null || lastPosition != position) {
+                        lock = true
+                        lastPosition = position
+                        createBackground(position)
+                        withContext(Dispatchers.Main) {
+                            binding.root.background = background
+                        }
+                        lock = false
+                    }
+                } finally {
+                }
+                withContext(Dispatchers.Main) {
+                    background?.getDrawable(0)?.alpha = ((positionOffset / 1f) * 255).toInt()
+                    background?.getDrawable(1)?.alpha = (((1f - positionOffset)  / 1f) * 255).toInt()
+                }
+            }
         }
 
         override fun onPageSelected(position: Int) = Unit
@@ -65,6 +143,10 @@ class AnniversaryActivity : BaseActivity() {
      * 初始化视图绑定
      */
     private fun initBinding() {
+        binding.viewPager.apply {
+            setPageTransformer(false, AnniViewPagerTransformer())
+            addOnPageChangeListener(onPageChangeListener)
+        }
     }
 
     /**
@@ -79,8 +161,6 @@ class AnniversaryActivity : BaseActivity() {
                         model.currentPosition.value
                             ?: model.getFragmentPosition(intent.getIntExtra("anniId", -1)),
                         true)
-                    setPageTransformer(false, AnniViewPagerTransformer())
-                    addOnPageChangeListener(onPageChangeListener)
                 }
             }
         }
