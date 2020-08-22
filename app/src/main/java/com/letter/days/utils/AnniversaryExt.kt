@@ -1,5 +1,6 @@
 package com.letter.days.utils
 
+import android.util.Log
 import com.haibin.calendarview.Calendar
 import com.haibin.calendarview.LunarUtil
 import com.letter.days.database.entity.AnniversaryEntity
@@ -133,7 +134,7 @@ fun AnniversaryEntity.getNextCalendar(): Calendar {
                 val nowDate = LunarUtil.solarToLunar(nowCalendar.year, nowCalendar.month, nowCalendar.day)
                 val nextDate = intArrayOf(nowDate[0], anniDate[1], anniDate[2], anniDate[3])
                 if ((nextDate[0] * 10000 + nextDate[1] * 100 + nextDate[2]) <
-                    (nowDate[0] * 1000 + nowDate[1] * 100 + nowDate[2])) {
+                    (nowDate[0] * 10000 + nowDate[1] * 100 + nowDate[2])) {
                     nextDate[0] += 1
                 }
                 val nextSolarDate = LunarUtil.lunarToSolar(nextDate[0], nextDate[1], nextDate[2], nextDate[3] == 1)
