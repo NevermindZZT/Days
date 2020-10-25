@@ -104,7 +104,7 @@ fun getIntentNotification(context: Context): Notification {
     val pi = PendingIntent.getActivity(context, 0, intent, FLAG_UPDATE_CURRENT)
     val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         Notification.Builder(context.applicationContext,
-            context.getString(R.string.notification_channel_anni_id))
+            context.getString(R.string.notification_channel_intent_id))
     } else {
         Notification.Builder(context.applicationContext)
     }
