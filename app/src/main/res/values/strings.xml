@@ -43,6 +43,7 @@
     <string name="dialog_negative_button">取消</string>
 
     <string name="setting_group_basic">基础设置</string>
+    <string name="setting_group_notify">定时提醒</string>
     <string name="setting_group_theme">主题设置</string>
     <string name="setting_group_backup">备份与恢复</string>
 
@@ -55,6 +56,11 @@
     <string name="setting_intent_notification_summary">通过显示一个前台通知保活，启动后可以将前台通知关闭</string>
     <string name="setting_time_line_title">显示时间轴</string>
     <string name="setting_time_line_summary">纪念日列表显示时间轴，同时纪念日会按照时间排列</string>
+    <string name="setting_enable_notify_title">定时提醒</string>
+    <string name="setting_enable_notify_summary">从定时提醒源自动获取提醒内容，通知提醒</string>
+    <string name="setting_notify_source_title">定时提醒源</string>
+    <string name="setting_notify_source_summary">配置定时提醒的内容源</string>
+    <string name="setting_notify_source_default">https://raw.githubusercontent.com/NevermindZZT/Days/master/notify.json</string>
     <string name="setting_theme_mode_title">主题模式</string>
     <string name="setting_simple_mode_title">简约模式</string>
     <string name="setting_simple_mode_summary">简约模式下，纪念日图片等会被禁用</string>

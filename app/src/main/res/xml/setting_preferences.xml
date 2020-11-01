@@ -33,6 +33,23 @@
             android:icon="@drawable/ic_setting_logo_time_line" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/setting_group_notify">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="enable_notify"
+            android:title="@string/setting_enable_notify_title"
+            android:summary="@string/setting_enable_notify_summary"
+            android:icon="@drawable/ic_setting_logo_notify" />
+
+        <EditTextPreference
+            android:key="notify_source"
+            android:title="@string/setting_notify_source_title"
+            android:summary="@string/setting_notify_source_summary"
+            android:defaultValue="@string/setting_notify_source_default"
+            android:icon="@drawable/ic_setting_logo_notify_source"
+            android:inputType="text"/>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/setting_group_theme">
         <ListPreference
             android:defaultValue="0"
