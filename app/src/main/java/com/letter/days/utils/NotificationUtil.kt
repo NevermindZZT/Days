@@ -33,7 +33,7 @@ fun setAnniversaryAlarm(context: Context, anniversary: AnniversaryEntity) {
     if (time > JCalendar.getInstance().timeInMillis) {
         val intent = Intent(context, CoreService::class.java)
         intent.apply {
-            putExtra(CoreService.EXTRA_IS_NOTIFY, true)
+            putExtra(CoreService.EXTRA_IS_DAYS_NOTIFY, true)
             putExtra(CoreService.EXTRA_ANNI_ID, anniversary.id)
         }
         val pi = PendingIntent.getService(context, anniversary.id, intent, FLAG_UPDATE_CURRENT)

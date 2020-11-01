@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.content.startService
 import android.view.View
 import android.widget.RemoteViews
 import androidx.preference.PreferenceManager
@@ -12,6 +13,7 @@ import com.letter.days.R
 import com.letter.days.activity.AnniEditActivity
 import com.letter.days.activity.AnniversaryActivity
 import com.letter.days.database.AppDatabase
+import com.letter.days.service.CoreService
 import com.letter.days.utils.getClosestAnniversary
 import com.letter.days.utils.getDateString
 import com.letter.days.utils.getDayText
@@ -59,6 +61,7 @@ class AnniversaryWidget : AppWidgetProvider() {
         } else {
             updateAppWidget(context!!, AppWidgetManager.getInstance(context), widgetId)
         }
+        context?.startService(CoreService::class.java)
     }
 
     override fun onDeleted(context: Context?, appWidgetIds: IntArray?) {

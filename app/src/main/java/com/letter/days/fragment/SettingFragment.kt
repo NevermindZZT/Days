@@ -46,6 +46,9 @@ class SettingFragment : PreferenceFragmentCompat() {
             "intent_notification" -> {
                 context?.startService(CoreService::class.java)
             }
+            "enable_notify" -> {
+                context?.startService(CoreService::class.java)
+            }
             "backup" -> {
                 model.backup {
                     MaterialDialog(requireContext()).show {

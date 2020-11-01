@@ -10,7 +10,9 @@ import com.letter.days.database.AppDatabase
 import com.letter.days.utils.setAllAnniversaryAlarm
 import com.letter.days.utils.showAnniversaryNotification
 import android.content.createNotificationChannel
+import android.text.TextUtils
 import androidx.preference.PreferenceManager
+import com.letter.days.repository.NotifyRepo
 import com.letter.days.utils.getIntentNotification
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -54,7 +56,7 @@ class CoreService : Service() {
                 stopForeground(true)
             }
         }
-        if (intent?.getBooleanExtra(EXTRA_IS_NOTIFY, false) == true) {
+        if (intent?.getBooleanExtra(EXTRA_IS_DAYS_NOTIFY, false) == true) {
             val anniId = intent.getIntExtra(EXTRA_ANNI_ID, -1)
             if (anniId != -1) {
                 GlobalScope.launch {
@@ -69,6 +71,20 @@ class CoreService : Service() {
                 }
             }
         }
+        if (PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("enable_notify", false)) {
+            GlobalScope.launch {
+                NotifyRepo().setNotifyAlarm(this@CoreService)
+            }
+        }
+        if (intent?.getBooleanExtra(EXTRA_IS_TIMER_NOTIFY, false) == true) {
+            val title = intent.getStringExtra(EXTRA_NOTIFY_TITLE)
+            if (!TextUtils.isEmpty(title)) {
+                NotifyRepo().showNotification(this,
+                    title,
+                    intent.getStringExtra(EXTRA_NOTIFY_CONTENT))
+            }
+        }
         GlobalScope.launch {
             setAllAnniversaryAlarm(this@CoreService)
         }
@@ -76,7 +92,10 @@ class CoreService : Service() {
     }
 
     companion object {
-        const val EXTRA_IS_NOTIFY = "is_notify"
+        const val EXTRA_IS_DAYS_NOTIFY = "is_days_notify"
         const val EXTRA_ANNI_ID = "anni_id"
+        const val EXTRA_IS_TIMER_NOTIFY = "is_timer_notify"
+        const val EXTRA_NOTIFY_TITLE = "notify_title"
+        const val EXTRA_NOTIFY_CONTENT = "notify_content"
     }
 }
