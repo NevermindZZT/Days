@@ -194,7 +194,7 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
                 if (resultCode == Activity.RESULT_OK && data?.data != null) {
                     startActivityForResult("com.android.camera.action.CROP", REQUEST_CODE_CROP) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                         }
                         setDataAndType(data.data, "image/*")
                         putExtra("crop", "true")
@@ -202,9 +202,9 @@ class AnniEditActivity : BaseActivity(), ViewPresenter {
                         putExtra("aspectX", getScreenWidth())
                         putExtra("outputY", getScreenHeight())
                         putExtra("outputY", getScreenWidth())
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                            val uri = Uri.fromFile(File(externalCacheDir!!.absolutePath,
-                                "crop${System.currentTimeMillis()}"))
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && Build.VERSION.SDK_INT < Build.VERSION_CODES.R ) {
+                            val uri = Uri.fromFile(File(getExternalFilesDir("Pictures"),
+                                "crop${System.currentTimeMillis()}.jpg"))
                             putExtra("output", uri)
                         }
                         putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())

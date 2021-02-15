@@ -7,5 +7,5 @@ package com.letter.presenter
  * @since 1.0.0
  */
 interface ItemLongClickPresenter{
-    fun onItemClick(adapter: Any, position: Int): Boolean
+    fun onItemLongClick(adapter: Any, position: Int): Boolean
 }

@@ -80,6 +80,17 @@ fun <T: Activity> Context.startActivity(clazz: Class<T>, act: (Intent.()->Unit)?
 /**
  * 启动活动
  * @receiver Context context
+ * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
+ */
+fun Context.startActivity(act: (Intent.()->Unit)? = null) {
+    val intent = Intent()
+    act?.invoke(intent)
+    startActivity(intent)
+}
+
+/**
+ * 启动活动
+ * @receiver Context context
  * @param action String 动作
  * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
  */
@@ -99,6 +110,18 @@ fun <T: Service> Context.startService(clazz: Class<T>, act: (Intent.()->Unit)? =
     val intent = Intent(this, clazz)
     act?.invoke(intent)
     startService(intent)
+}
+
+/**
+ * stop 服务
+ * @receiver Context context
+ * @param clazz Class<T> 服务
+ * @param act [@kotlin.ExtensionFunctionType] Function1<Intent, Unit>? Intent执行动作
+ */
+fun <T: Service> Context.stopService(clazz: Class<T>, act: (Intent.()->Unit)? = null) {
+    val intent = Intent(this, clazz)
+    act?.invoke(intent)
+    stopService(intent)
 }
 
 /**
