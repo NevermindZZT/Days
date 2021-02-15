@@ -29,21 +29,28 @@ class OpenSourceViewModel(application: Application) : AndroidViewModel(applicati
      * 初始化数据
      */
     private fun initData() {
-        openSourceList.add(OpenSourceBean("material-dialogs",
-            "afollestad",
-            "https://github.com/afollestad/material-dialogs",
-            "A beautiful, fluid, and extensible dialogs API for Kotlin & Android."))
-        openSourceList.add(OpenSourceBean("CalendarView",
-            "huanghaibin-dev",
-            "https://github.com/huanghaibin-dev/CalendarView",
-            "Android上一个优雅、万能自定义UI、支持周视图、自定义周起始、性能高效的日历控件"))
-        openSourceList.add(OpenSourceBean("AndroidUtilCode",
-            "Blankj",
-            "https://github.com/Blankj/AndroidUtilCode",
-            "AndroidUtilCode is a powerful & easy to use library for Android."))
-        openSourceList.add(OpenSourceBean("gson",
-            "google",
-            "https://github.com/google/gson",
-            "A Java serialization/deserialization library to convert Java Objects into JSON and back"))
+        openSourceList.apply {
+            add(OpenSourceBean("material-dialogs",
+                "afollestad",
+                "https://github.com/afollestad/material-dialogs",
+                "A beautiful, fluid, and extensible dialogs API for Kotlin & Android."))
+            add(OpenSourceBean("CalendarView",
+                "huanghaibin-dev",
+                "https://github.com/huanghaibin-dev/CalendarView",
+                "Android上一个优雅、万能自定义UI、支持周视图、自定义周起始、性能高效的日历控件"))
+            add(OpenSourceBean("AndroidUtilCode",
+                "Blankj",
+                "https://github.com/Blankj/AndroidUtilCode",
+                "AndroidUtilCode is a powerful & easy to use library for Android."))
+            add(OpenSourceBean("gson",
+                "google",
+                "https://github.com/google/gson",
+                "A Java serialization/deserialization library to convert Java Objects into JSON and back"))
+            add(OpenSourceBean("okhttp",
+                "square",
+                "https://github.com/square/okhttp",
+                "Square’s meticulous HTTP client for the JVM, Android, and GraalVM.")
+            )
+        }
     }
 }

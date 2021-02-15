@@ -53,7 +53,7 @@
     <string name="setting_widget_background_title">Widget背景透明</string>
     <string name="setting_widget_background_summary">设置桌面Widget控件是否背景透明</string>
     <string name="setting_intent_notification_title">使用前台服务</string>
-    <string name="setting_intent_notification_summary">通过显示一个前台通知保活，启动后可以将前台通知关闭</string>
+    <string name="setting_intent_notification_summary">通过显示一个前台通知保活，启动后可以在系统设置中将前台通知关闭</string>
     <string name="setting_time_line_title">显示时间轴</string>
     <string name="setting_time_line_summary">纪念日列表显示时间轴，同时纪念日会按照时间排列</string>
     <string name="setting_enable_notify_title">定时提醒</string>

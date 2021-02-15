@@ -106,7 +106,7 @@ class NotifyRepo {
 
     suspend fun getNotifyBeanSorted(context: Context, url: String?): NotifyBean? {
         val notifyBean = getNotifyBean(context, url)
-        notifyBean?.notify = notifyBean?.notify?.sortedWith(compareBy({it.hour}, {it.minute}))?.reversed()
+        notifyBean?.notify = notifyBean?.notify?.sortedWith(compareBy({it.hour}, {it.minute}))
         return notifyBean
     }
 
