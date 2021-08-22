@@ -1,5 +1,6 @@
 package com.letter.days.adapter
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
@@ -23,10 +24,17 @@ import java.io.FileInputStream
 fun View.setBlurBackground(content: String?) {
     try {
         if (content?.isNotEmpty() == true) {
+            val src = BitmapFactory.decodeStream(FileInputStream(content))
             background = BitmapDrawable(
                 context.resources,
                 ImageUtils.fastBlur(
-                    BitmapFactory.decodeStream(FileInputStream(content)),
+                    Bitmap.createBitmap(
+                        src,
+                        src.width / 8 * 3,
+                        src.height / 8 * 3,
+                        src.width / 4,
+                        src.height / 4
+                    ),
                     0.3f,
                     25f
                 )

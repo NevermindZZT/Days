@@ -1,11 +1,10 @@
 package com.letter.days.activity
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.view.View
 import android.content.isDarkTheme
-import android.view.WindowInsets
+import android.os.Build
+import android.view.View
+import android.view.WindowInsetsController
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * 基础活动
@@ -15,17 +14,18 @@ import android.view.WindowInsets
  */
 open class BaseActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if (!isDarkTheme()) {
-            /* Android O以上支持，设置浅色状态栏 */
-            setLightStatusBar(true)
-        }
+    override fun onResume() {
+        super.onResume()
+        setLightStatusBar(!isDarkTheme())
     }
 
     protected fun setLightStatusBar(set: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.decorView.windowInsetsController
+                ?.setSystemBarsAppearance(
+                    if (set) WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS else 0,
+                    WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (set) {
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             } else {

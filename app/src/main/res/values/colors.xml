@@ -13,4 +13,5 @@
     <color name="colorRipple">#20000000</color>
 
     <color name="colorAnniBackgroundTint">#80FFFFFF</color>
+    <color name="colorAnniBackgroundTintDeep">#C0FFFFFF</color>
     </resources>

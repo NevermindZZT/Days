@@ -22,7 +22,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="@color/colorAnniBackgroundTint"
+        android:backgroundTint="@color/colorAnniBackgroundTintDeep"
         android:backgroundTintMode="src_over"
         android:fitsSystemWindows="true"
         app:blurBackground="@{PreferenceManager.getDefaultSharedPreferences(LetterApplication.instance()).getBoolean(`simple_mode`, true) ? null : vm.anniversary.image}"
