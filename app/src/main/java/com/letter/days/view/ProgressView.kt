@@ -103,7 +103,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
      * 绘制View
      * @param canvas Canvas 画布
      */
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         diameter = min(width, height)
@@ -112,7 +112,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
         backgroundPaint.color = background
         backgroundPaint.style = Paint.Style.FILL
         backgroundPaint.isAntiAlias = true
-        canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
+        canvas.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
             (min(width, height) / 2 - if (strokeWidth > 0) 1 else 0).toFloat(), backgroundPaint)
 
         /* 绘制边框背景 */
@@ -120,7 +120,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
         strokeBackgroundPaint.style = Paint.Style.STROKE
         strokeBackgroundPaint.isAntiAlias = true
         strokeBackgroundPaint.strokeWidth = strokeWidth
-        canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
+        canvas.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
             (diameter / 2).toFloat() - (strokeWidth) / 2, strokeBackgroundPaint)
 
         /* 绘制边框 */
@@ -128,7 +128,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
         strokePaint.style = Paint.Style.STROKE
         strokePaint.isAntiAlias = true
         strokePaint.strokeWidth = strokeWidth
-        canvas?.drawArc(((width - diameter) / 2).toFloat() + (strokeWidth) / 2,
+        canvas.drawArc(((width - diameter) / 2).toFloat() + (strokeWidth) / 2,
             ((height - diameter) / 2).toFloat() + (strokeWidth) / 2,
             (width - (width - diameter) / 2).toFloat() - (strokeWidth) / 2,
             (height - (height - diameter) / 2).toFloat() - (strokeWidth) / 2,
@@ -145,7 +145,7 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int=0, de
             textPaint.textSize = textSize
             textPaint.textAlign = Paint.Align.CENTER
             val fontMetricsInt = textPaint.fontMetricsInt
-            canvas?.drawText(text!!,
+            canvas.drawText(text!!,
                 (width / 2).toFloat(),
                 (height / 2 - fontMetricsInt.descent + (fontMetricsInt.bottom - fontMetricsInt.top) / 2).toFloat(),
                 textPaint)

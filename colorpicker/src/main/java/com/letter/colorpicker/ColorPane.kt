@@ -67,20 +67,20 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int, defS
      * 绘制View
      * @param canvas 画布
      */
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         paint.color = color
         paint.style = Paint.Style.FILL
 
-        canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
+        canvas.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
             (min(width, height) / 2 - if (strokeWidth > 0) 1 else 0).toFloat(), paint)
 
         if (strokeWidth > 0) {
             paint.color = strokeColor
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = strokeWidth
-            canvas?.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
+            canvas.drawCircle(width.toFloat() / 2, height.toFloat() / 2,
                 (min(width, height) / 2).toFloat() - (strokeWidth) / 2, paint)
         }
 
@@ -99,10 +99,10 @@ constructor(context: Context, attrs: AttributeSet?=null, defStyleAttr: Int, defS
             val offsetY = diameter.toFloat() / 8 + (if (height > width) (height - width) / 2 else 0)
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = lineWidth
-            canvas?.drawLine(diameter.toFloat() / 3 + offsetX, diameter.toFloat() / 3 + offsetY,
+            canvas.drawLine(diameter.toFloat() / 3 + offsetX, diameter.toFloat() / 3 + offsetY,
                 diameter.toFloat() / 2 + lineWidth / 2.828f + offsetX,
                 diameter.toFloat() / 2 + lineWidth / 2.828f + offsetY, paint)
-            canvas?.drawLine(diameter.toFloat() / 2 + offsetX, diameter.toFloat() / 2 + offsetY,
+            canvas.drawLine(diameter.toFloat() / 2 + offsetX, diameter.toFloat() / 2 + offsetY,
                 diameter.toFloat() / 4 * 3 + offsetX, diameter.toFloat() / 4 + offsetY, paint)
         }
     }

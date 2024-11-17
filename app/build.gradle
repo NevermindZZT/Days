@@ -2,22 +2,24 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.devtools.ksp' version '1.9.21-1.0.16'
 }
 
 apply from: '../config.gradle'
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.letter.days2"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 10004
-        versionName "1.0.4"
+        targetSdkVersion 35
+        versionCode 10005
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        setProperty("archivesBaseName", "Days-${versionName}")
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -64,27 +66,28 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    namespace 'com.letter.days'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.preference:preference-ktx:1.1.1'
-    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'com.google.android.material:material:1.10.0'
 
-    def lifecycle_version = "2.2.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-    kapt "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+    def lifecycle_version = "2.8.7"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
-    def navigation_version = "2.3.1"
+    def navigation_version = "2.6.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
@@ -92,28 +95,29 @@ dependencies {
 
 //    implementation "androidx.palette:palette-ktx:1.0.0"
 
-    def room_version = "2.2.5"
+    def room_version = "2.5.1"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
 
-    implementation 'com.haibin:calendarview:3.6.6'
+//    implementation 'com.haibin:calendarview:3.7.1'
+    implementation 'com.github.angcyo:CalendarView:3.7.1.37'
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:color:3.2.1'
     implementation 'com.afollestad.material-dialogs:files:3.2.1'
 
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.blankj:utilcodex:1.29.0'
+    implementation 'com.blankj:utilcodex:1.31.1'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 
 //    implementation 'com.github.bumptech.glide:glide:4.11.0'
 //    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
-    testImplementation 'junit:junit:4.13'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation project(path: ':utils')
     implementation project(path: ':colorpicker')
 }

@@ -33,12 +33,12 @@ object AppUtils {
         val pm = context.packageManager
         getPackageList(context, type).forEach {
             appInfoList.add(AppInfo(
-                it.applicationInfo.loadLabel(pm).toString(),
+                it.applicationInfo?.loadLabel(pm)?.toString(),
                 it.packageName,
-                it.applicationInfo.loadIcon(pm),
+                it.applicationInfo?.loadIcon(pm),
                 it.versionName,
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) it.longVersionCode else it.versionCode.toLong(),
-                it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0,
+                (it.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM != 0,
                 pm.getLaunchIntentForPackage(it.packageName) != null
             ))
         }
@@ -49,12 +49,12 @@ object AppUtils {
         val pm = context.packageManager
         val packageInfo = pm.getPackageInfo(packageName, type)
         return AppInfo(
-            packageInfo.applicationInfo.loadLabel(pm).toString(),
+            packageInfo.applicationInfo?.loadLabel(pm).toString(),
             packageInfo.packageName,
-            packageInfo.applicationInfo.loadIcon(pm),
+            packageInfo.applicationInfo?.loadIcon(pm),
             packageInfo.versionName,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) packageInfo.longVersionCode else packageInfo.versionCode.toLong(),
-            packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0,
+            (packageInfo.applicationInfo?.flags ?: 0) and ApplicationInfo.FLAG_SYSTEM != 0,
             pm.getLaunchIntentForPackage(packageInfo.packageName) != null
         )
     }

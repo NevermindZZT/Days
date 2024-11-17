@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Context.ALARM_SERVICE
 import android.content.Context.NOTIFICATION_SERVICE
@@ -36,7 +35,7 @@ fun setAnniversaryAlarm(context: Context, anniversary: AnniversaryEntity) {
             putExtra(CoreService.EXTRA_IS_DAYS_NOTIFY, true)
             putExtra(CoreService.EXTRA_ANNI_ID, anniversary.id)
         }
-        val pi = PendingIntent.getService(context, anniversary.id, intent, FLAG_UPDATE_CURRENT)
+        val pi = PendingIntent.getService(context, anniversary.id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         (context.getSystemService(ALARM_SERVICE) as AlarmManager?)?.set(
             AlarmManager.RTC_WAKEUP,
             time,
@@ -70,7 +69,7 @@ fun showAnniversaryNotification(context: Context, anniversary: AnniversaryEntity
         putExtra("anniId", anniversary.id)
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
-    val pi = PendingIntent.getActivity(context, anniversary.id, intent, FLAG_UPDATE_CURRENT)
+    val pi = PendingIntent.getActivity(context, anniversary.id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
     val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Notification.Builder(context.applicationContext,
@@ -101,7 +100,7 @@ fun getIntentNotification(context: Context): Notification {
     intent.apply {
         addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
     }
-    val pi = PendingIntent.getActivity(context, 0, intent, FLAG_UPDATE_CURRENT)
+    val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         Notification.Builder(context.applicationContext,
             context.getString(R.string.notification_channel_intent_id))

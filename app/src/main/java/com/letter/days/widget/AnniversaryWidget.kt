@@ -108,7 +108,7 @@ internal fun updateAppWidget(
             val itemPI = PendingIntent.getActivity(context,
                 (0..Int.MAX_VALUE).random(),
                 itemIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT)
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             views.setOnClickPendingIntent(R.id.anni_layout, itemPI)
 
             val addIntent = Intent(context, AnniEditActivity::class.java)
@@ -116,7 +116,7 @@ internal fun updateAppWidget(
             val addPI = PendingIntent.getActivity(context,
                 (0..Int.MAX_VALUE).random(),
                 addIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT)
+                PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             views.setOnClickPendingIntent(R.id.add_image, addPI)
 
             if (widget.anniversaryId != -1) {

@@ -52,7 +52,7 @@ class NotifyRepo {
     }
 
     @Synchronized
-    suspend fun saveNotifyBean(context: Context, content: String) {
+    fun saveNotifyBean(context: Context, content: String) {
         var out: FileOutputStream? = null
         var writer: BufferedWriter? = null
         try {

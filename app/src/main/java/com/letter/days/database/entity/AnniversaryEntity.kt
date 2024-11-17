@@ -3,6 +3,7 @@ package com.letter.days.database.entity
 import android.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 /**
@@ -19,14 +20,18 @@ import androidx.room.PrimaryKey
  * @since 1.0.0
  */
 @Entity(tableName = "anniversary")
-data class AnniversaryEntity
-    constructor(@PrimaryKey(autoGenerate = true) var id: Int = 0,
-                @ColumnInfo(name = "time") var time: Long = System.currentTimeMillis(),
-                @ColumnInfo(name = "name") var name: String? = null,
-                @ColumnInfo(name = "type") var type: Int = ANNI_TYPE_ONLY_ONCE,
-                @ColumnInfo(name = "lunar") var lunar: Boolean = false,
-                @ColumnInfo(name = "color") var color: Int = Color.TRANSPARENT,
-                @ColumnInfo(name = "image") var image: String? = null) {
+data class AnniversaryEntity (
+    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @ColumnInfo(name = "time") var time: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "name") var name: String? = null,
+    @ColumnInfo(name = "type") var type: Int = ANNI_TYPE_ONLY_ONCE,
+    @ColumnInfo(name = "lunar") var lunar: Boolean = false,
+    @ColumnInfo(name = "color") var color: Int = Color.TRANSPARENT,
+    @ColumnInfo(name = "image") var image: String? = null
+) {
+
+    @Ignore
+    constructor() : this(0)
 
     companion object {
         const val ANNI_TYPE_ONLY_ONCE = 0

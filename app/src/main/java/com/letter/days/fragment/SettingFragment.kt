@@ -36,8 +36,8 @@ class SettingFragment : PreferenceFragmentCompat() {
         }
     }
 
-    override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-        when (preference?.key) {
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when (preference.key) {
             "widget_background" -> {
                 context?.sendBroadcast("android.appwidget.action.APPWIDGET_UPDATE") {
                     putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
@@ -59,7 +59,8 @@ class SettingFragment : PreferenceFragmentCompat() {
             }
             "restore" -> {
                 model.requestPermission {
-                    val initialFolder = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+//                    val initialFolder = requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+                    val initialFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
                     MaterialDialog(requireContext()).show {
                         fileChooser(requireContext(), initialDirectory = initialFolder) { dialog, file ->
